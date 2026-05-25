@@ -6,7 +6,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   const { pathname } = event.url;
 
   if (pathname === '/docs' || pathname.startsWith('/docs/')) {
-    const upstream = new URL(pathname + event.url.search, DOCS_ORIGIN);
+    const upstream = new URL(pathname, DOCS_ORIGIN);
 
     const headers = new Headers(event.request.headers);
     headers.delete('host');

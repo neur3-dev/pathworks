@@ -1,6 +1,6 @@
 ---
 title: 'Welcome to Launch Week <i>001</i>'
-description: 'We are excited to announce our first launch week for ClassroomIO.com. We will be sharing a new feature every day for 5 days.'
+description: 'We are excited to announce our first launch week for PathWorks.com. We will be sharing a new feature every day for 5 days.'
 imageUrl: 'https://assets.cdn.clsrio.com/blog/launch-week-001.png'
 date: '2024-10-07'
 author: Rotimi Best
@@ -11,9 +11,9 @@ published: true
 ---
 
 ![classroomio-launch-week-001](https://assets.cdn.clsrio.com/blog/launch-week-001.png)
-_ClassroomIO Launch Week 001_
+_PathWorks Launch Week 001_
 
-Welcome to our first launch week for ClassroomIO.com.
+Welcome to our first launch week for PathWorks.com.
 
 I have personally enjoyed watching the likes of Supabase, Resend, Documenso and many other amazing products do launch weeks and I decided why not give it a try.
 
@@ -34,7 +34,7 @@ Below are all the features for each day that we will be sharing. As the day goes
 
 1. Day 1 - [Brand Customisations](/blog/brand-customisations)
 2. Day 2 - [Multi-Language Support](/blog/multi-language)
-3. Day 3 - [Self-host ClassroomIO on your Servers](/blog/self-host)
+3. Day 3 - [Self-host PathWorks on your Servers](/blog/self-host)
 4. Day 4 - [Free Tools](/blog/free-tools)
 5. Day 5 - [Custom Domains](/blog/custom-domain)
 6. Extras - 😍😍😍😍
