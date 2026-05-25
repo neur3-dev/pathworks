@@ -13,11 +13,8 @@
   import { courseApi } from '$features/course/api';
   import ContentCreateModal from '$features/course/components/content/content-create-modal.svelte';
   import CourseCompletionModal from '$features/course/components/ceritficate/course-completion-modal.svelte';
-  import { aiAssistantPanelDefinition } from '$features/ai-assistant';
-  import { initialChatPrompt, openAiAssistant } from '$features/ai-assistant/utils/store';
   import { sidePanel, SidePanelRail } from '$features/side-panel';
   import { transcriptPanelDefinition } from '$features/course/components/lesson/video/transcript-panel-definition';
-  import { get } from 'svelte/store';
   import { profile } from '$lib/utils/store/user';
   import { isOrgAdmin } from '$lib/utils/store/org';
   import { t } from '$lib/utils/functions/translations';
@@ -29,7 +26,6 @@
     COURSE_SIDEBAR_STORAGE_KEY
   } from '$features/course/components/sidebar/constants';
 
-  sidePanel.register(aiAssistantPanelDefinition);
   sidePanel.register(transcriptPanelDefinition);
 
   interface Props {
@@ -105,10 +101,6 @@
     }
 
     hasLoadedSidebarWidth = true;
-
-    if (get(initialChatPrompt)) {
-      openAiAssistant();
-    }
   });
 
   $effect(() => {
@@ -125,7 +117,7 @@
 </script>
 
 <svelte:head>
-  <title>{courseApi.course?.title || 'ClassroomIO Course'}</title>
+  <title>{courseApi.course?.title || 'PathWorks Course'}</title>
 </svelte:head>
 
 {#if isCourseReady}

@@ -64,7 +64,7 @@
 </script>
 
 <svelte:head>
-  <title>Student Dashboard - ClassroomIO</title>
+  <title>Student Dashboard - PathWorks</title>
 </svelte:head>
 
 <Page.Root class="mx-auto w-full max-w-4xl">

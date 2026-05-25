@@ -23,6 +23,7 @@ export const ZLessonUpdate = z.object({
   sectionId: z.string().optional(),
   order: z.number().int().min(0).optional(),
   callUrl: z.string().optional(),
+  contentWarning: z.string().optional(),
   lessonAt: z.string().optional(),
   teacherId: z.string().optional(),
   isUnlocked: z.boolean().optional(),

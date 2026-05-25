@@ -2,7 +2,7 @@
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import * as Alert from '@cio/ui/base/alert';
   import { Button } from '@cio/ui/base/button';
-  import SparklesIcon from '@lucide/svelte/icons/sparkles';
+  import { Sparkles as SparklesIcon } from '@lucide/svelte';
 
   const { Story } = defineMeta({
     title: 'Atom/Alert',

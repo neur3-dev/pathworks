@@ -1,11 +1,11 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import FolderCodeIcon from '@lucide/svelte/icons/folder-code';
-  import CloudIcon from '@lucide/svelte/icons/cloud';
-  import BellIcon from '@lucide/svelte/icons/bell';
-  import PlusIcon from '@lucide/svelte/icons/plus';
-  import RefreshCcwIcon from '@lucide/svelte/icons/refresh-ccw';
-  import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
+  import { FolderCode as FolderCodeIcon } from '@lucide/svelte';
+  import { Cloud as CloudIcon } from '@lucide/svelte';
+  import { Bell as BellIcon } from '@lucide/svelte';
+  import { Plus as PlusIcon } from '@lucide/svelte';
+  import { RefreshCcw as RefreshCcwIcon } from '@lucide/svelte';
+  import { ArrowUpRight as ArrowUpRightIcon } from '@lucide/svelte';
 
   import * as Empty from '@cio/ui/base/empty';
   import * as Avatar from '@cio/ui/base/avatar';

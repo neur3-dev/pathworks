@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-  <title>Reset Password - ClassroomIO</title>
+  <title>Reset Password - PathWorks</title>
 </svelte:head>
 
 <AuthUI

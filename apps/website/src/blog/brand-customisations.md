@@ -11,7 +11,7 @@ published: true
 ---
 
 ![classroomio-brand-customisations](https://assets.cdn.clsrio.com/blog/brand-customisations.png)
-_ClassroomIO Brand Customisations_
+_PathWorks Brand Customisations_
 
 We are excited to announce more customisations coming into our learning management system (LMS). In this blog post, we will like to share with you how we've made _YOUR_ _STUDENT DASHBOARD_ much more customisable than before.
 
@@ -21,10 +21,10 @@ We are excited to announce more customisations coming into our learning manageme
 
 ## Your Student Dashboard
 
-Firstly let me quickly break down what we mean when we say _YOUR STUDENT DASHBOARD._ As an organisation or educator when you sign up on [classroomio.com](https://classroomio.com), you'd have to first create your organisation and then create your first course. This whole process is done within the admin dashboard - [app.classroomio.com](https://app.classroomio.com).
+Firstly let me quickly break down what we mean when we say _YOUR STUDENT DASHBOARD._ As an organisation or educator when you sign up on [pathworks.neur3.dev](https://pathworks.neur3.dev), you'd have to first create your organisation and then create your first course. This whole process is done within the admin dashboard - [pathworks.neur3.dev](https://pathworks.neur3.dev).
 
 ![classroomio-courses-page](https://brand.cdn.clsrio.com/classroomio-courses.png)
-_The admin dashboard - app.classroomio.com_
+_The admin dashboard - pathworks.neur3.dev_
 
 Within your dashboard you can do the following:
 
@@ -38,9 +38,9 @@ Within your dashboard you can do the following:
 However that is not the UI that your audience will see when they consume your course. When a student signs up for your course, they get redirected to this UI
 
 ![classroomio-lms-student-dashboard](https://brand.cdn.clsrio.com/classroomio-lms-courses.png)
-_The LMS aka Student dashboard - yourorg.classroomio.com_
+_The LMS aka Student dashboard - yourorg.pathworks.neur3.dev_
 
-Typically this page can be found at _yourorg.classroomio.com_, where _yourorg_ is a slug you set when you first set up your account. For example, we've built an internal bootcamp called ClassroomIO Developers, in this bootcamp we train other developers on some of the key tools we use internally. You can checkout our page here: [ciodevs.classroomio.com](https://ciodevs.classroomio.com), in this case you can see that our slug is _ciodevs_ and you should be able to easily see yours when you log into the dashboard `/org/{yourorg}`.
+Typically this page can be found at _yourorg.pathworks.neur3.dev_, where _yourorg_ is a slug you set when you first set up your account. For example, we've built an internal bootcamp called PathWorks Developers, in this bootcamp we train other developers on some of the key tools we use internally. You can checkout our page here: [ciodevs.pathworks.neur3.dev](https://ciodevs.pathworks.neur3.dev), in this case you can see that our slug is _ciodevs_ and you should be able to easily see yours when you log into the dashboard `/org/{yourorg}`.
 
 In your student dashboard, your audience can:
 
@@ -59,7 +59,7 @@ With the above foundation I already laid out, I will like to share some of the n
 ![classroomio-customise-lms-in-admin](https://brand.cdn.clsrio.com/customise-lms.png)
 _Customise LMS settings in admin dashboard_
 
-You can now go into your [settings page](https://app.classroomio.com/org/*/settings/customize-lms) and now disable the features within the student dashboard you don't need. For example, if you run a certificate program and you don't want students talking to other students rather you only need the students to take the course and then take tests - thanks to this feature you can now achieve that.
+You can now go into your [settings page](https://pathworks.neur3.dev/org/*/settings/customize-lms) and now disable the features within the student dashboard you don't need. For example, if you run a certificate program and you don't want students talking to other students rather you only need the students to take the course and then take tests - thanks to this feature you can now achieve that.
 
 Any setting you disable within your dashboard will be reflected in your student dashboard on refresh.
 

@@ -12,7 +12,7 @@ export const load = async ({ parent, cookies }) => {
   }
 
   const result = await safeServerApi<CommunityQuestionsSuccess>(() =>
-    classroomio.community.$get({ query: { orgId } }, getApiHeaders(cookies, orgId))
+    pathworks.neur3.devmunity.$get({ query: { orgId } }, getApiHeaders(cookies, orgId))
   );
   const questions = result.ok ? result.body.data : [];
 

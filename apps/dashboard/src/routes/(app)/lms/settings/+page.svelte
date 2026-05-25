@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Settings - ClassroomIO</title>
+  <title>Settings - PathWorks</title>
 </svelte:head>
 
 <Page.Header isSticky>

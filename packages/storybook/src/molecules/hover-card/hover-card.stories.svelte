@@ -1,8 +1,8 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
-  import CalendarDaysIcon from '@lucide/svelte/icons/calendar-days';
-  import UsersIcon from '@lucide/svelte/icons/users';
-  import BookOpenIcon from '@lucide/svelte/icons/book-open';
+  import { CalendarDays as CalendarDaysIcon } from '@lucide/svelte';
+  import { Users as UsersIcon } from '@lucide/svelte';
+  import { BookOpen as BookOpenIcon } from '@lucide/svelte';
 
   import * as HoverCard from '@cio/ui/base/hover-card';
   import * as Avatar from '@cio/ui/base/avatar';

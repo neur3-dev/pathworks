@@ -1,4 +1,3 @@
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
 import { env } from '$env/dynamic/private';
 import { getApiKeyHeaders } from '$lib/utils/services/api/server';
 import { getOrgBySiteName } from '$features/org/api/org.server';
@@ -13,7 +12,7 @@ export const load = async ({ params, url, cookies }) => {
   const isOrgSite = subdomain && !APP_SUBDOMAINS.includes(subdomain);
 
   // If this is LMS but user is on org site, redirect to LMS
-  if (isOrgSite && PUBLIC_IS_SELFHOSTED !== 'true') {
+  if (isOrgSite && env.PUBLIC_IS_SELFHOSTED !== 'true') {
     console.log('isOrgSite redirecting to lms');
     redirect(307, `/lms`);
   }

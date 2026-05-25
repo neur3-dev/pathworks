@@ -3,7 +3,7 @@ import { currentOrg, mergeAccountOrgFromServer, orgs } from '$lib/utils/store/or
 import { defaultProfileState, defaultUserState, profile, user } from '$lib/utils/store/user';
 
 import type { AccountResponse } from './types';
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import type { TUser } from '@cio/db/types';
 import { authClient } from '$lib/utils/services/auth/client';
 import { get } from 'svelte/store';
@@ -180,7 +180,7 @@ class AppInitApi extends BaseApi {
 
     const isStudent = get(isOrgStudent);
     const userHasOrganizations = this.data.organizations.length > 0;
-    const isCloud = PUBLIC_IS_SELFHOSTED !== 'true';
+    const isCloud = env.PUBLIC_IS_SELFHOSTED !== 'true';
 
     // CLOUD: when user has no orgs and isOrgSite is false, route to /onboarding
     // isOrgSite - means the user is on a multi tenant organization site, we don't want to redirect to /onboarding in this case

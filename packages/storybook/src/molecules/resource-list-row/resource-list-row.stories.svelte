@@ -9,14 +9,14 @@
   import { Badge } from '@cio/ui/base/badge';
   import { Button } from '@cio/ui/base/button';
 
-  import BookOpenIcon from '@lucide/svelte/icons/book-open';
-  import ListChecksIcon from '@lucide/svelte/icons/list-checks';
-  import ClockIcon from '@lucide/svelte/icons/clock';
-  import EllipsisVerticalIcon from '@lucide/svelte/icons/ellipsis-vertical';
-  import GitBranchIcon from '@lucide/svelte/icons/git-branch';
-  import GitCommitHorizontalIcon from '@lucide/svelte/icons/git-commit-horizontal';
-  import MoreHorizontalIcon from '@lucide/svelte/icons/more-horizontal';
-  import UserIcon from '@lucide/svelte/icons/user';
+  import { BookOpen as BookOpenIcon } from '@lucide/svelte';
+  import { ListChecks as ListChecksIcon } from '@lucide/svelte';
+  import { Clock as ClockIcon } from '@lucide/svelte';
+  import { EllipsisVertical as EllipsisVerticalIcon } from '@lucide/svelte';
+  import { GitBranch as GitBranchIcon } from '@lucide/svelte';
+  import { GitCommitHorizontal as GitCommitHorizontalIcon } from '@lucide/svelte';
+  import { MoreHorizontal as MoreHorizontalIcon } from '@lucide/svelte';
+  import { User as UserIcon } from '@lucide/svelte';
 
   import { FIELDS } from './fields';
 

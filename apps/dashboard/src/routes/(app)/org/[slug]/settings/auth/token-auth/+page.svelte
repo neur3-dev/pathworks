@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>{t.get('settings.auth.tabs.token_auth')} - ClassroomIO</title>
+  <title>{t.get('settings.auth.tabs.token_auth')} - PathWorks</title>
 </svelte:head>
 
 <Page.Header>

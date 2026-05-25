@@ -1,7 +1,7 @@
 import { currentOrg, currentOrgPath } from './org';
 import { derived, writable } from 'svelte/store';
 
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { ROLE } from '@cio/utils/constants';
 
 export const globalStore = writable<{
@@ -25,7 +25,7 @@ export const isOrgStudent = derived(currentOrg, ($currentOrg) => {
  * Self-hosted: derived from isOrgStudent (role-based).
  */
 export const isStudentExperience = derived([globalStore, isOrgStudent], ([$gs, $isStudent]) => {
-  const isCloud = PUBLIC_IS_SELFHOSTED !== 'true';
+  const isCloud = env.PUBLIC_IS_SELFHOSTED !== 'true';
   if (isCloud) return $gs.isOrgSite;
 
   return $isStudent ?? false;

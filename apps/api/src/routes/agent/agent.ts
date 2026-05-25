@@ -707,6 +707,16 @@ const agentCoreRouter = new Hono()
   });
 
 export const agentRouter = new Hono()
+  .use('*', async (c) => {
+    return c.json(
+      {
+        success: false,
+        error: 'AI-assisted course generation and tutoring are disabled in PathWorks.',
+        code: 'PATHWORKS_AI_DISABLED'
+      },
+      410
+    );
+  })
   .use('*', agentContentTypeRewrite)
   .route('/', agentCoreRouter)
   .route('/history', agentHistoryRouter)

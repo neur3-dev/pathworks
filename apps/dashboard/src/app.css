@@ -60,6 +60,22 @@ html .dark {
   scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
 
+:focus-visible {
+  outline: 3px solid color-mix(in oklch, var(--primary) 80%, white);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 html .dark {
   --scrollbarBG: #000;
 }
@@ -309,11 +325,21 @@ iframe.iframe {
 }
 
 body[data-theme='default'] {
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  --primary: #1a5ad7;
+  --primary-foreground: #f7fafc;
+  --accent: #00f5a0;
+  --accent-foreground: #0d1b2a;
+  --background: #f7fafc;
+  --sidebar: #0d1b2a;
+  --sidebar-primary: #00f5a0;
+  --sidebar-primary-foreground: #0d1b2a;
+  --sidebar-accent: #13283d;
+  --sidebar-accent-foreground: #f7fafc;
+  --chart-1: #00f5a0;
+  --chart-2: #1a5ad7;
+  --chart-3: #0d1b2a;
+  --chart-4: #74ffd0;
+  --chart-5: #5d8ee8;
 }
 
 body[data-theme='blue'] {
