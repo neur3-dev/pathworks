@@ -29,9 +29,9 @@
 <script lang="ts">
   import { LessonIcon, ExerciseIcon } from '@cio/ui/custom/moving-icons';
   import { Button } from '@cio/ui/base/button';
-  import SendIcon from '@lucide/svelte/icons/send';
-  import PaperclipIcon from '@lucide/svelte/icons/paperclip';
-  import SquareIcon from '@lucide/svelte/icons/square';
+  import { Send as SendIcon } from '@lucide/svelte';
+  import { Paperclip as PaperclipIcon } from '@lucide/svelte';
+  import { Square as SquareIcon } from '@lucide/svelte';
 
   let value = $state('');
   let sentMessages: string[] = $state([]);

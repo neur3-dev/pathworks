@@ -1,25 +1,25 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
 
-  import SearchIcon from '@lucide/svelte/icons/search';
-  import MailIcon from '@lucide/svelte/icons/mail';
-  import LockIcon from '@lucide/svelte/icons/lock';
-  import CreditCardIcon from '@lucide/svelte/icons/credit-card';
-  import UserIcon from '@lucide/svelte/icons/user';
-  import MessageSquareIcon from '@lucide/svelte/icons/message-square';
-  import GlobeIcon from '@lucide/svelte/icons/globe';
-  import EyeIcon from '@lucide/svelte/icons/eye';
-  import EyeOffIcon from '@lucide/svelte/icons/eye-off';
-  import KeyIcon from '@lucide/svelte/icons/key';
-  import FileTextIcon from '@lucide/svelte/icons/file-text';
-  import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
-  import PlusIcon from '@lucide/svelte/icons/plus';
-  import CopyIcon from '@lucide/svelte/icons/copy';
-  import MoreHorizontalIcon from '@lucide/svelte/icons/more-horizontal';
-  import StarIcon from '@lucide/svelte/icons/star';
-  import InfoIcon from '@lucide/svelte/icons/info';
-  import LoaderIcon from '@lucide/svelte/icons/loader';
-  import Link2Icon from '@lucide/svelte/icons/link-2';
+  import { Search as SearchIcon } from '@lucide/svelte';
+  import { Mail as MailIcon } from '@lucide/svelte';
+  import { Lock as LockIcon } from '@lucide/svelte';
+  import { CreditCard as CreditCardIcon } from '@lucide/svelte';
+  import { User as UserIcon } from '@lucide/svelte';
+  import { MessageSquare as MessageSquareIcon } from '@lucide/svelte';
+  import { Globe as GlobeIcon } from '@lucide/svelte';
+  import { Eye as EyeIcon } from '@lucide/svelte';
+  import { EyeOff as EyeOffIcon } from '@lucide/svelte';
+  import { Key as KeyIcon } from '@lucide/svelte';
+  import { FileText as FileTextIcon } from '@lucide/svelte';
+  import { ChevronDown as ChevronDownIcon } from '@lucide/svelte';
+  import { Plus as PlusIcon } from '@lucide/svelte';
+  import { Copy as CopyIcon } from '@lucide/svelte';
+  import { MoreHorizontal as MoreHorizontalIcon } from '@lucide/svelte';
+  import { Star as StarIcon } from '@lucide/svelte';
+  import { Info as InfoIcon } from '@lucide/svelte';
+  import { Loader as LoaderIcon } from '@lucide/svelte';
+  import { Link2 as Link2Icon } from '@lucide/svelte';
 
   import { CopyButton } from '@cio/ui/base/copy-button';
 
