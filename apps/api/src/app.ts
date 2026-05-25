@@ -27,6 +27,7 @@ import { onboardingRouter } from '@api/routes/onboarding';
 import { organizationRouter } from '@api/routes/organization';
 import { organizationSsoRouter } from '@api/routes/organization/sso';
 import { organizationTokenAuthRouter } from '@api/routes/organization/token-auth';
+import { pathworksRouter } from '@api/routes/pathworks';
 import { prettyJSON } from 'hono/pretty-json';
 import { programRouter } from '@api/routes/program';
 import { publicCourseRouter } from '@api/routes/org-site';
@@ -190,6 +191,7 @@ export const app = new Hono()
     });
   })
   .route('/onboarding', onboardingRouter)
+  .route('/pathworks', pathworksRouter)
   .route('/account', accountRouter)
   .route('/course', courseRouter)
   .route('/domain', domainRouter)

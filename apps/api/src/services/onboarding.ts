@@ -15,6 +15,7 @@ import { ROLE } from '@cio/utils/constants';
 import { PLAN } from '@cio/utils/plans';
 import { db } from '@cio/db/drizzle';
 import { enqueueTransactionalEmail } from '@api/services/jobs';
+import { seedStarterLearningPathsForOrg } from '@api/services/pathworks';
 
 export async function createOrganizationWithOwner(
   profileId: string,
@@ -78,6 +79,8 @@ export async function createOrganizationWithOwner(
 
       return { organization, member };
     });
+
+    await seedStarterLearningPathsForOrg(result.organization.id);
 
     // Fetch updated organizations list
     const organizations = await getOrganizationByProfileId(profileId);
