@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 COMPOSE_FILE="${ROOT_DIR}/docker/docker-compose.yaml"
-PROJECT_NAME="classroomio"
+PROJECT_NAME="pathworks"
 ENV_FILE="${ROOT_DIR}/.env"
 BUILD_IMAGES=true
 COMPOSE_PROFILES="--profile minio"
@@ -189,7 +189,7 @@ if [[ "${COMPOSE_PROFILES}" == *"minio"* ]]; then
   ensure_minio_env
 fi
 
-echo "Starting ClassroomIO Docker full stack..."
+echo "Starting PathWorks Docker full stack..."
 if [[ "${COMPOSE_PROFILES}" != "" ]]; then
   echo "Including MinIO (object storage, default)..."
 fi
