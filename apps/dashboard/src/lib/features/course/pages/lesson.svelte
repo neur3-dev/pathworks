@@ -4,7 +4,7 @@
   import { goto } from '$app/navigation';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { resolve } from '$app/paths';
-  import { untrack } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import isEmpty from 'lodash/isEmpty';
   import { writable } from 'svelte/store';
   import { fade } from 'svelte/transition';
@@ -18,9 +18,10 @@
   import { isOrgStudent } from '$lib/utils/store/app';
   import { currentOrg } from '$lib/utils/store/org';
   import { snackbar } from '$features/ui/snackbar/store';
-  import { RefreshPageData, UnsavedChanges } from '$features/ui';
+  import { RefreshPageData } from '$features/ui';
   import LessonVersionHistory from '$features/course/components/lesson/lesson-version-history.svelte';
   import { courseApi, lessonApi } from '$features/course/api';
+  import { pathworksApi } from '$features/pathworks/api.svelte';
   import { isHtmlValueEmpty } from '$lib/utils/functions/toHtml';
   import { lessonVideoUpload, lessonDocUpload } from '$features/course/components/lesson/store';
   import { t } from '$lib/utils/functions/translations';
@@ -152,6 +153,38 @@
   const viewModeComponents = $derived(getViewModeComponents(tabs));
 
   const isMaterialsEmpty = $derived(tabs.every((tab) => tab.badgeValue === 0));
+  const courseContentItems = $derived.by(() => {
+    const content = courseApi.course?.content;
+    if (!content) return [];
+
+    if (content.grouped) {
+      return content.sections.flatMap((section) => section.items);
+    }
+
+    return content.items ?? [];
+  });
+  const lessonItems = $derived(courseContentItems.filter((item) => item.type === ContentType.Lesson));
+  const lessonIndex = $derived(
+    Math.max(
+      0,
+      lessonItems.findIndex((item) => item.id === lessonId)
+    )
+  );
+  const lessonCount = $derived(Math.max(lessonItems.length, 1));
+  const lessonProgressPercent = $derived(Math.round(((lessonIndex + 1) / lessonCount) * 100));
+  const estimatedTime = $derived(lessonApi.lesson?.videos?.[0]?.metadata?.duration ? 'About 10 minutes' : 'Self-paced');
+  const whatYouWillLearn = $derived([
+    `Review ${lessonTitle}`,
+    'Move through the material without autoplay',
+    'Pause, leave, and come back without losing your place'
+  ]);
+  const contentWarning = $derived(
+    (lessonApi.lesson as { contentWarning?: string | null } | null)?.contentWarning ?? ''
+  );
+
+  let overviewAccepted = $state(false);
+  let warningDismissed = $state(false);
+  let contentSkipped = $state(false);
 
   let timeoutId: NodeJS.Timeout | undefined;
 
@@ -290,16 +323,46 @@
       return;
     }
 
-    const shouldRestore = window.confirm(t.get('course.navItem.lessons.draft_recovery'));
-    if (shouldRestore) {
-      if (!lessonApi.translations[lessonId]) {
-        lessonApi.translations[lessonId] = {} as Record<TLocale, string>;
-      }
-      lessonApi.translations[lessonId][lessonApi.currentLocale] = draft.content;
-      lessonApi.isDirty = true;
-    } else {
-      clearDraft(lessonId, lessonApi.currentLocale);
+    if (!lessonApi.translations[lessonId]) {
+      lessonApi.translations[lessonId] = {} as Record<TLocale, string>;
     }
+    lessonApi.translations[lessonId][lessonApi.currentLocale] = draft.content;
+    lessonApi.isDirty = true;
+  });
+
+  $effect(() => {
+    if (!lessonId) return;
+    overviewAccepted = false;
+    warningDismissed = false;
+    contentSkipped = false;
+  });
+
+  function saveParticipantProgress(status: 'in_progress' | 'completed', lastPosition = 0) {
+    if (!$isOrgStudent || !courseId || !lessonId) return;
+
+    pathworksApi.saveParticipantProgress({
+      courseId,
+      lessonId,
+      status,
+      lastPosition
+    });
+  }
+
+  function skipLesson() {
+    contentSkipped = true;
+    saveParticipantProgress('completed');
+  }
+
+  onMount(() => {
+    if (!browser) return;
+
+    const handleBlur = () => saveParticipantProgress('in_progress');
+    window.addEventListener('blur', handleBlur);
+
+    return () => {
+      handleBlur();
+      window.removeEventListener('blur', handleBlur);
+    };
   });
 
   // Only autosave after real edits, not on every reactive update.
@@ -417,6 +480,25 @@
 <Page.Body>
   {#snippet child()}
     <div class={`overflow-x-hidden py-6 ${mode === MODES.edit ? 'lg:w-full xl:w-11/12' : 'mx-auto w-full max-w-3xl'}`}>
+      {#if mode === MODES.view && $isOrgStudent}
+        <div
+          class="sticky top-0 z-10 mb-6 rounded-lg border border-slate-200 bg-white/95 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-950/95"
+        >
+          <div
+            class="mb-2 flex items-center justify-between gap-3 text-sm font-medium text-slate-800 dark:text-slate-100"
+          >
+            <span>Lesson {lessonIndex + 1} of {lessonCount}</span>
+            <span>{lessonProgressPercent}%</span>
+          </div>
+          <div class="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800" aria-hidden="true">
+            <div
+              class="h-full bg-[linear-gradient(135deg,#1A5AD7_0%,#00F5A0_100%)]"
+              style={`width: ${lessonProgressPercent}%;`}
+            ></div>
+          </div>
+        </div>
+      {/if}
+
       {#if $isOrgStudent && lessonApi.lesson && !isLessonUnlocked}
         <Empty
           title={$t('course.navItem.lessons.content_locked_title')}
@@ -425,6 +507,60 @@
           variant="page"
           class="text-center"
         />
+      {:else if mode === MODES.view && $isOrgStudent && lessonApi.lesson && !overviewAccepted}
+        <section
+          class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-950"
+        >
+          <p class="mb-2 text-sm font-medium text-blue-800 dark:text-blue-200">Module overview</p>
+          <h2 class="text-2xl font-semibold tracking-normal text-slate-950 dark:text-white">{lessonTitle}</h2>
+          <p class="mt-3 text-slate-700 dark:text-slate-300">
+            {courseApi.course?.description ?? 'Take this lesson at your own pace. You can pause and return anytime.'}
+          </p>
+          <dl class="mt-5 grid gap-3 text-sm sm:grid-cols-2">
+            <div>
+              <dt class="font-medium text-slate-950 dark:text-white">Estimated time</dt>
+              <dd class="text-slate-700 dark:text-slate-300">{estimatedTime}</dd>
+            </div>
+            <div>
+              <dt class="font-medium text-slate-950 dark:text-white">Lessons in this course</dt>
+              <dd class="text-slate-700 dark:text-slate-300">{lessonCount}</dd>
+            </div>
+          </dl>
+          <h3 class="mt-5 text-base font-semibold text-slate-950 dark:text-white">What you'll learn</h3>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
+            {#each whatYouWillLearn as item}
+              <li>{item}</li>
+            {/each}
+          </ul>
+          <Button
+            class="mt-6"
+            onclick={() => {
+              overviewAccepted = true;
+              saveParticipantProgress('in_progress');
+            }}
+          >
+            Start
+          </Button>
+        </section>
+      {:else if mode === MODES.view && $isOrgStudent && lessonApi.lesson && contentWarning && !warningDismissed && !contentSkipped}
+        <section
+          class="rounded-lg border border-amber-300 bg-amber-50 p-6 text-amber-950 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-50"
+        >
+          <p class="mb-2 text-sm font-medium">Content warning</p>
+          <h2 class="text-xl font-semibold tracking-normal">Take care before continuing</h2>
+          <p class="mt-3">{contentWarning}</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <Button onclick={() => (warningDismissed = true)}>Continue</Button>
+            <Button variant="outline" onclick={skipLesson}>Skip this lesson</Button>
+          </div>
+        </section>
+      {:else if contentSkipped}
+        <section
+          class="rounded-lg border border-slate-200 bg-white p-6 text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+        >
+          <h2 class="text-xl font-semibold tracking-normal">Lesson skipped</h2>
+          <p class="mt-2">This lesson was marked complete. You can return to it later if you want.</p>
+        </section>
       {:else if mode === MODES.edit}
         <UnderlineTabs.Root
           bind:value={currentTabValue}
@@ -509,8 +645,6 @@
     </div>
   {/snippet}
 </Page.Body>
-
-<UnsavedChanges bind:hasUnsavedChanges />
 
 {#if isVersionDrawerOpen && window.innerWidth >= 1024}
   <LessonVersionHistory

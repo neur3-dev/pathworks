@@ -7,7 +7,7 @@ export const load = async ({ params, parent, cookies }) => {
   const slug = params.cslug || '';
 
   const questionResult = await safeServerApi<CommunityQuestionSuccess>(() =>
-    classroomio.community[':slug'].$get({ param: { slug } }, getApiHeaders(cookies, orgId))
+    pathworks.neur3.devmunity[':slug'].$get({ param: { slug } }, getApiHeaders(cookies, orgId))
   );
   const question = questionResult.ok ? questionResult.body.data : null;
 
