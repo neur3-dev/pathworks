@@ -119,7 +119,7 @@
 </script>
 
 <svelte:head>
-  <title>Join {data.course?.title ?? 'Course'} on ClassroomIO</title>
+  <title>Join {data.course?.title ?? 'Course'} on PathWorks</title>
   <meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

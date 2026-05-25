@@ -11,12 +11,10 @@
   import { page } from '$app/state';
   import { currentOrg, currentOrgDomain } from '$lib/utils/store/org';
   import { isStudentExperience } from '$lib/utils/store/app';
-  import SparklesIcon from '@lucide/svelte/icons/sparkles';
   import { setupProgressApi } from '$features/setup/api/setup-progress.svelte';
   import { courseApi } from '$features/course/api';
   import { openCoursePreview } from '$features/course/utils/course-preview';
   import { getActiveCourseNavKey } from '$features/course/utils/functions';
-  import { toggleAiAssistant } from '$features/ai-assistant/utils/store';
   import { t } from '$lib/utils/functions/translations';
   import CoursePublishBadge from './course-publish-badge.svelte';
   import CoursePublicBadge from './course-public-badge.svelte';
@@ -68,11 +66,6 @@
     </div>
 
     <span class="grow"></span>
-
-    <Button variant="outline" size="sm" onclick={toggleAiAssistant}>
-      <SparklesIcon size={14} />
-      {$t('course.navItems.nav_ai_assistant')}
-    </Button>
 
     <Popover.Root>
       <Popover.Trigger>

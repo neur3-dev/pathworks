@@ -183,7 +183,7 @@
 </script>
 
 <svelte:head>
-  <title>Partner Training | ClassroomIO</title>
+  <title>Partner Training | PathWorks</title>
   <meta
     name="description"
     content="Run a partner academy alongside your customer one. Separate brand, separate domain, same account. Certify resellers, agencies, and integrators with programs, certificates, and analytics."
@@ -206,7 +206,7 @@
         resellers, agencies, and integrators with programs and assessments that stay in sync as your product changes.
       </HeroSubtitle>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Button data-cal-config="'layout':'month_view'" data-cal-link="classroomio/demo">Book a Demo</Button>
+        <Button data-cal-config="'layout':'month_view'" data-cal-link="pathworks/demo">Book a Demo</Button>
         <Button href="/signup" variant="outline">Start free</Button>
       </div>
       <div class="mt-7 flex flex-wrap items-center justify-center gap-5 text-xs text-gray-500">
@@ -267,11 +267,11 @@
   <EmbedCodePreview
     eyebrow="Embed anywhere"
     title="Drop a learning widget into any site."
-    description="Generate a published widget payload for any course, paste the snippet into your partner portal, intranet, or marketing page. Progress, marks, and certificates sync back to ClassroomIO automatically."
+    description="Generate a published widget payload for any course, paste the snippet into your partner portal, intranet, or marketing page. Progress, marks, and certificates sync back to PathWorks automatically."
     fileName="partner-portal.html"
     codeLines={[
       '<span class="text-slate-500">&lt;!-- in your partner portal --&gt;</span>',
-      '<span class="text-pink-400">&lt;script</span> <span class="text-sky-300">src</span><span class="text-slate-500">=</span><span class="text-emerald-300">"https://cdn.classroomio.com/widget.js"</span><span class="text-pink-400">&gt;&lt;/script&gt;</span>',
+      '<span class="text-pink-400">&lt;script</span> <span class="text-sky-300">src</span><span class="text-slate-500">=</span><span class="text-emerald-300">"https://cdn.pathworks.neur3.dev/widget.js"</span><span class="text-pink-400">&gt;&lt;/script&gt;</span>',
       '',
       '<span class="text-pink-400">&lt;div</span> <span class="text-sky-300">data-cio-widget</span><span class="text-slate-500">=</span><span class="text-emerald-300">"partner-onboarding"</span>',
       '  <span class="text-sky-300">data-org</span><span class="text-slate-500">=</span><span class="text-emerald-300">"yourcompany"</span>',

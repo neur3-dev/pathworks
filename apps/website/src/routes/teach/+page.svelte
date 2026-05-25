@@ -24,7 +24,7 @@
   const steps = [
     {
       title: 'Sign up',
-      subText: 'Create a free account on our platform by going to classroomio.com/signup'
+      subText: 'Create a free account on our platform by going to pathworks.neur3.dev/signup'
     },
     {
       title: 'Record a course',
@@ -44,13 +44,13 @@
   const faqs = [
     {
       value: 'tutors',
-      question: 'What kind of tutors does ClassroomIO look for?',
+      question: 'What kind of tutors does PathWorks look for?',
       answer:
         'We are looking for all kinds of tutors. The most important thing is that you have some experience teaching and you have proven track record of excellent communication'
     },
     {
       value: 'equipment',
-      question: 'What equipment do I need to teach on ClassroomIO?',
+      question: 'What equipment do I need to teach on PathWorks?',
       answer: 'You just need internet access and a laptop.'
     },
     {
@@ -69,15 +69,15 @@
 </script>
 
 <svelte:head>
-  <title>Teach | ClassroomIO</title>
+  <title>Teach | PathWorks</title>
   <meta property="og:image" itemprop="image" content="https://brand.cdn.clsrio.com/og/teach.png" />
-  <meta property="og:title" content="Teach on ClassroomIO" />
-  <meta property="og:description" content="On ClassroomIO you can make side income while doing what you love." />
+  <meta property="og:title" content="Teach on PathWorks" />
+  <meta property="og:description" content="On PathWorks you can make side income while doing what you love." />
 
   <meta property="og:image:secure_url" itemprop="image" content="https://brand.cdn.clsrio.com/og/teach.png" />
 
-  <meta name="twitter:title" content="Teach on ClassroomIO" />
-  <meta name="twitter:description" content="On ClassroomIO you can make side income while doing what you love." />
+  <meta name="twitter:title" content="Teach on PathWorks" />
+  <meta name="twitter:description" content="On PathWorks you can make side income while doing what you love." />
   <meta name="twitter:image" content="https://brand.cdn.clsrio.com/og/teach.png" />
 </svelte:head>
 
@@ -86,7 +86,7 @@
     <div>
       <h1 class="text-3xl lg:text-5xl">Teach with us</h1>
       <p class="my-5 text-center lg:w-[77%] lg:text-left">
-        With ClassroomIO, you can make side income while teaching the subject you love
+        With PathWorks, you can make side income while teaching the subject you love
       </p>
 
       <Button href="/teach/register" target="_blank">Register</Button>
@@ -150,7 +150,7 @@
         class="relative mx-auto mt-10 w-full rounded-md border bg-white py-6 text-center shadow-sm before:absolute before:top-0 before:left-0 before:h-full before:w-[4.5%] before:rounded-tl-md before:rounded-bl-md before:bg-[#0233BD] md:w-2/4"
       >
         <h1 class="mx-auto w-[77%] text-base leading-5 font-medium">
-          With ClassroomIO, I am training over 100 students. I am making more money than expected with little effort and
+          With PathWorks, I am training over 100 students. I am making more money than expected with little effort and
           my students are happy. Love the product
         </h1>
         <div class="mt-3 flex flex-row items-center justify-center gap-4">

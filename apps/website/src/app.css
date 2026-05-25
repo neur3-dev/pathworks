@@ -145,5 +145,8 @@ svg.lucide-icon:not(.custom) {
 }
 
 body {
-  --primary: var(--color-blue-700);
+  --primary: #1a5ad7;
+  --accent: #00f5a0;
+  --sidebar: #0d1b2a;
+  --background: #f7fafc;
 }

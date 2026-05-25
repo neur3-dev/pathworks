@@ -32,6 +32,9 @@ const mdsvexOptions = {
 const config = {
   kit: {
     adapter: adapter(),
+    prerender: {
+      handleMissingId: 'warn'
+    },
     alias: {
       $lib: path.resolve('./src/lib'),
       '$src/tools': path.resolve('./node_modules/@cio/ui/src/tools/index.ts'),

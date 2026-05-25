@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Custom domain - ClassroomIO</title>
+  <title>Custom domain - PathWorks</title>
 </svelte:head>
 
 <Page.Header>

@@ -151,9 +151,9 @@
 </script>
 
 <svelte:head>
-  <title>Pomodoro Timer | ClassroomIO</title>
+  <title>Pomodoro Timer | PathWorks</title>
   <meta property="og:image" itemprop="image" content="" />
-  <meta property="og:title" content="Pomodoro Timer | ClassroomIO" />
+  <meta property="og:title" content="Pomodoro Timer | PathWorks" />
   <meta
     property="og:description"
     content="Make your workday more engaging and effective with the Pomodoro timer, break work into 25-minute focused intervals called 'pomodoros', followed by 5-minute breaks"
@@ -161,7 +161,7 @@
 
   <meta property="og:image:secure_url" itemprop="image" content="" />
 
-  <meta name="twitter:title" content="Pomodoro Timer | ClassroomIO" />
+  <meta name="twitter:title" content="Pomodoro Timer | PathWorks" />
   <meta
     name="twitter:description"
     content="Make your workday more engaging and effective with the Pomodoro timer, break work into 25-minute focused intervals called 'pomodoros', followed by 5-minute breaks"

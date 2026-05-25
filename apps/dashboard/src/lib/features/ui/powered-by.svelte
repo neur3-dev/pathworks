@@ -44,7 +44,7 @@
   />
 {:else if $isFreePlan}
   <a
-    href={`https://classroomio.com?utm_source=${$currentOrg.siteName}.classroomio.com`}
+    href={`https://github.com/neur3-dev/pathworks?utm_source=${$currentOrg.siteName}.pathworks.local`}
     target="_blank"
     class={cn('group fixed right-9 bottom-14 z-50 hover:no-underline', className)}
   >
@@ -62,7 +62,7 @@
       />
       <img src="/logo-192.png" alt="logo" class="h-[24px] opacity-100 group-hover:opacity-0" />
       {#if !showOnlyLogo}
-        {$t('course.navItem.landing_page.powered_by')} ClassroomIO
+        {$t('course.navItem.landing_page.powered_by')} PathWorks
       {/if}
     </span>
   </a>

@@ -47,7 +47,7 @@
     },
     {
       title: 'Embedable Course',
-      desc: 'You can embed selected course form ClassroomIO on any website of your choice'
+      desc: 'You can embed selected course form PathWorks on any website of your choice'
     },
     {
       title: 'Landing page builder',
@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-  <title>Roadmap | ClassroomIO</title>
+  <title>Roadmap | PathWorks</title>
 </svelte:head>
 
 <PageHeader className="flex flex-col items-center justify-center text-center">

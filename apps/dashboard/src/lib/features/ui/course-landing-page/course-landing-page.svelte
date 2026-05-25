@@ -63,7 +63,7 @@
       : 'ui:w-full ui:bg-background ui:text-foreground ui:font-sans'
   );
 
-  const orgNameForNav = $derived($currentOrg.name || get(courseData, 'org.name', '') || 'ClassroomIO');
+  const orgNameForNav = $derived($currentOrg.name || get(courseData, 'org.name', '') || 'PathWorks');
   const logoUrlForNav = $derived($currentOrg.avatarUrl || undefined);
 
   const authAction = $derived(

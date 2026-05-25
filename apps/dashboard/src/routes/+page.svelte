@@ -26,7 +26,7 @@
   const hasSetupError = $derived(!appInitApi.loading && !!appInitApi.error);
 
   const pageTitle = $derived(
-    data.isOrgSite && data.org ? data.org.name : "ClassroomIO - The Course Platform That's Actually Easy To Use"
+    data.isOrgSite && data.org ? data.org.name : "PathWorks - The Course Platform That's Actually Easy To Use"
   );
 
   const authAction = $derived(
@@ -93,7 +93,7 @@
     <p class="my-2 text-red-500">{appInitApi.error}</p>
     <div class="flex gap-2">
       <Button variant="secondary" onclick={() => window.location.reload()}>Reload Page</Button>
-      <Button variant="default" href="https://classroomio.com/contact">Contact Us</Button>
+      <Button variant="default" href="https://pathworks.neur3.dev/contact">Contact Us</Button>
     </div>
   </Empty>
 {:else}

@@ -5,7 +5,7 @@ import merge from 'lodash/merge';
 import type { AccountOrg } from '$features/app/types';
 import type { OrgTeamMember } from '../types/org';
 import { PLAN } from '@cio/utils/plans';
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { ROLE, TENANT_ROOT_DOMAIN } from '@cio/utils/constants';
 import { STEPS } from '../constants/quiz';
 import type { Writable } from 'svelte/store';
@@ -77,7 +77,7 @@ export const currentOrgPath = derived(currentOrg, ($currentOrg) =>
 );
 
 export const currentOrgDomain = derived(currentOrg, ($currentOrg) => {
-  if (PUBLIC_IS_SELFHOSTED === 'true') return window.location.origin;
+  if (env.PUBLIC_IS_SELFHOSTED === 'true') return window.location.origin;
 
   const browserOrigin = dev && browser && window.location.origin;
 
@@ -91,7 +91,7 @@ export const currentOrgDomain = derived(currentOrg, ($currentOrg) => {
 });
 
 export const isFreePlan = derived(currentOrg, ($currentOrg) => {
-  if (!$currentOrg.id || PUBLIC_IS_SELFHOSTED === 'true') return false;
+  if (!$currentOrg.id || env.PUBLIC_IS_SELFHOSTED === 'true') return false;
 
   const plan = getActivePlan($currentOrg);
 
@@ -99,7 +99,7 @@ export const isFreePlan = derived(currentOrg, ($currentOrg) => {
 });
 
 export const isEnterprisePlan = derived(currentOrg, ($currentOrg) => {
-  if (PUBLIC_IS_SELFHOSTED === 'true') return true;
+  if (env.PUBLIC_IS_SELFHOSTED === 'true') return true;
 
   const plan = getActivePlan($currentOrg);
 
