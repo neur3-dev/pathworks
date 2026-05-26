@@ -7,6 +7,14 @@ function parseCspDomains(value: string | undefined): string[] {
     .map((d) => (d.startsWith('http://') || d.startsWith('https://') ? d : `https://${d}`));
 }
 
+function isPlainHttpLocalOrigin(value: string | undefined): boolean {
+  return /^http:\/\/(localhost|127\.0\.0\.1|\d{1,3}(\.\d{1,3}){3})(:\d+)?$/i.test(value || '');
+}
+
+function shouldStripUpgradeInsecureRequests(): boolean {
+  return isPlainHttpLocalOrigin(process.env.DASHBOARD_ORIGIN || process.env.ORIGIN);
+}
+
 function buildCspExtensions(): Record<string, string[]> {
   const allDomains = parseCspDomains(process.env.ALLOWED_EXTERNAL_DOMAINS);
 
@@ -51,10 +59,13 @@ function getExtensions(): Record<string, string[]> {
 }
 
 function extendHeader(header: string, extensions: Record<string, string[]>): string {
+  const stripUpgradeInsecureRequests = shouldStripUpgradeInsecureRequests();
+
   return header
     .split(';')
     .map((d) => d.trim())
     .filter(Boolean)
+    .filter((directive) => !stripUpgradeInsecureRequests || directive !== 'upgrade-insecure-requests')
     .map((directive) => {
       const spaceIdx = directive.indexOf(' ');
       const name = spaceIdx === -1 ? directive : directive.substring(0, spaceIdx);
@@ -66,7 +77,6 @@ function extendHeader(header: string, extensions: Record<string, string[]>): str
 
 export function applyCspExtensions(response: Response): Response {
   const extensions = getExtensions();
-  if (Object.keys(extensions).length === 0) return response;
 
   for (const name of ['content-security-policy', 'content-security-policy-report-only']) {
     const header = response.headers.get(name);
