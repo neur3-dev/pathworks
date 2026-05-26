@@ -71,3 +71,31 @@ After the fix and a fresh `pnpm --filter @cio/dashboard build && preview`, axe r
 
 - Audit authenticated dashboard routes (real `/counselor`, `/lms/mylearning`, lesson player) against a running API. Bring up the stack with `./run-docker-full-stack.sh` first.
 - Add `@axe-core/playwright` to a CI job once routes stabilize, so regressions are caught on every PR.
+
+## Phase 4 Audit - 2026-05-26
+
+### Audit run
+
+Ran the authenticated Playwright axe runner against the local Docker full stack:
+
+- API: `http://127.0.0.1:3081`
+- Dashboard: `http://127.0.0.1:3082`
+- Fixture seed: `node audits/seed-a11y-fixtures.mjs audits/axe-phase4-fixtures.json`
+- Report: `audits/axe-2026-05-26-auth.json`
+
+Routes covered:
+
+- `/lms/settings/accessibility`
+- `/counselor`
+- `/counselor/[participantId]`
+
+### Result
+
+The run completed with 0 axe violations across all 3 authenticated URLs. Critical and serious violation counts are 0.
+
+One `color-contrast` item was reported as incomplete on `/lms/settings/accessibility`, meaning axe could not determine the contrast automatically. It was not a violation. Keep this on the manual QA checklist for the next visual pass.
+
+### Local stack note
+
+The first Phase 4 Docker build exposed a duplicate `contentWarning` key in `ZLessonUpdate`. That was fixed in `d3af2775f`, after which `./run-docker-full-stack.sh` built and started the API and dashboard successfully.
+

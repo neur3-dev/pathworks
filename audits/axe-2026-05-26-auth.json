@@ -1,0 +1,53 @@
+{
+  "tool": "@axe-core/playwright via playwright/chromium",
+  "date": "2026-05-26",
+  "generated_by": "audits/run-axe.mjs",
+  "results": [
+    {
+      "url": "http://127.0.0.1:3082/lms/settings/accessibility",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:3082/lms/settings/accessibility",
+      "counts": {
+        "violations": 0,
+        "incomplete": 1,
+        "passes": 35,
+        "inapplicable": 54
+      },
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "nodes": 2
+        }
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3082/counselor?token=REDACTED",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:3082/counselor?token=REDACTED",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 25,
+        "inapplicable": 64
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "url": "http://127.0.0.1:3082/counselor/11111111-1111-4111-8111-111111111111?token=REDACTED",
+      "http_status": 200,
+      "final_url": "http://127.0.0.1:3082/counselor/11111111-1111-4111-8111-111111111111?token=REDACTED",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 24,
+        "inapplicable": 65
+      },
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}
