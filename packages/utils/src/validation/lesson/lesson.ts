@@ -29,7 +29,6 @@ export const ZLessonUpdate = z.object({
   teacherId: z.string().optional(),
   isUnlocked: z.boolean().optional(),
   public: z.boolean().optional(),
-  contentWarning: z.string().optional(),
   slug: ZSlug.optional(),
   isComplete: z.boolean().optional(),
   videoUrl: z.url().optional(),
