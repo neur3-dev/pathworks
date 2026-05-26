@@ -1,10 +1,72 @@
 {
-  "tool": "@axe-core/cli / axe-core via Playwright",
-  "url": "http://127.0.0.1:4173/counselor",
+  "tool": "@axe-core/playwright via playwright/chromium",
   "date": "2026-05-26",
-  "status": "blocked",
-  "blockingError": "Chromium could not launch on this server because libasound.so.2 is missing and sudo apt install requires an interactive password. @axe-core/cli also failed before audit because no Chrome binary was installed.",
-  "violations": null,
-  "incomplete": null,
-  "passes": null
+  "generated_by": "claude-code rerun (post-Codex Phase 2)",
+  "results": [
+    {
+      "url": "http://127.0.0.1:4173/",
+      "http_status": 500,
+      "final_url": "http://127.0.0.1:4173/",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 27,
+        "inapplicable": 62
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "url": "http://127.0.0.1:4173/login",
+      "http_status": 500,
+      "final_url": "http://127.0.0.1:4173/login",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 27,
+        "inapplicable": 62
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "url": "http://127.0.0.1:4173/signin",
+      "http_status": 500,
+      "final_url": "http://127.0.0.1:4173/login?redirect=%2Fsignin",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 27,
+        "inapplicable": 62
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "url": "http://127.0.0.1:4173/counselor",
+      "http_status": 500,
+      "final_url": "http://127.0.0.1:4173/login?redirect=%2Fcounselor",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 27,
+        "inapplicable": 62
+      },
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "url": "http://127.0.0.1:4173/onboarding",
+      "http_status": 500,
+      "final_url": "http://127.0.0.1:4173/login?redirect=%2Fonboarding",
+      "counts": {
+        "violations": 0,
+        "incomplete": 0,
+        "passes": 27,
+        "inapplicable": 62
+      },
+      "violations": [],
+      "incomplete": []
+    }
+  ]
 }
