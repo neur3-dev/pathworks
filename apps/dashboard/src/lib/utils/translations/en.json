@@ -223,7 +223,7 @@
     },
     "exercise": {
       "submit": "Check my answers",
-      "try_again": "Try again",
+      "try_again": "Give it another try",
       "practice_again": "Practice again",
       "attempt_option": "Attempt {attemptNumber} - {correct}/{total}",
       "attempts_select_aria": "Your attempts",
@@ -2544,7 +2544,7 @@
                 "remove": "Remove",
                 "add_option": "Add option",
                 "correct_badge": "Correct",
-                "incorrect_badge": "Incorrect",
+                "incorrect_badge": "Not quite",
                 "not_set": "Not set"
               },
               "navigation": {
@@ -2575,7 +2575,7 @@
                   "video_invalid_link": "Please enter a valid YouTube link.",
                   "upload_error_only_images": "Only image files are supported.",
                   "upload_error_skipped": "Some files were skipped because they are not images.",
-                  "upload_error_failed": "Failed to upload image. Try again."
+                  "upload_error_failed": "The image did not upload. Give it another try."
                 }
               },
               "radio": {
@@ -2744,7 +2744,7 @@
                   "retry_upload": "Retry upload",
                   "uploading": "Uploading recording...",
                   "uploaded": "Recording uploaded",
-                  "upload_failed": "Upload failed. Try again.",
+                  "upload_failed": "The upload did not finish. Give it another try.",
                   "replaces_previous": "A new accepted take replaces the previous answer after upload."
                 },
                 "preview": {

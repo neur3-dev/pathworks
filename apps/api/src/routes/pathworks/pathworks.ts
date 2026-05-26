@@ -12,7 +12,22 @@ const ZLearningPathsQuery = z.object({
 
 const ZParticipantProfile = z.object({
   fullname: z.string().min(1).max(120).optional(),
+  disabilityCategory: z
+    .enum([
+      'physical',
+      'sensory_visual',
+      'sensory_hearing',
+      'cognitive',
+      'psychiatric',
+      'tbi',
+      'substance_use',
+      'other'
+    ])
+    .optional()
+    .nullable(),
   ipeVocationalGoal: z.string().max(500).optional().nullable(),
+  counselorName: z.string().max(120).optional().nullable(),
+  counselorEmail: z.string().email().max(255).optional().nullable(),
   prefExtendedTime: z.boolean().default(true),
   prefNoAutoplay: z.boolean().default(true),
   prefContentWarnings: z.boolean().default(true),
@@ -28,7 +43,52 @@ const ZParticipantProgress = z.object({
   attempts: z.number().int().min(0).default(0)
 });
 
+const ZParticipantProgressQuery = z.object({
+  courseId: z.string().uuid(),
+  lessonId: z.string().uuid().optional()
+});
+
 export const pathworksRouter = new Hono()
+  .get('/participant-profile', authMiddleware, async (c) => {
+    try {
+      const user = c.get('user')!;
+
+      const rows = (await db.execute(sql`
+        SELECT
+          id,
+          user_id AS "userId",
+          disability_category AS "disabilityCategory",
+          pref_extended_time AS "prefExtendedTime",
+          pref_no_autoplay AS "prefNoAutoplay",
+          pref_content_warnings AS "prefContentWarnings",
+          pref_microlearning AS "prefMicrolearning",
+          ipe_vocational_goal AS "ipeVocationalGoal",
+          counselor_name AS "counselorName",
+          counselor_email AS "counselorEmail",
+          created_at AS "createdAt",
+          updated_at AS "updatedAt"
+        FROM vr_participants
+        WHERE user_id = ${user.id}
+        LIMIT 1
+      `)) as unknown as Array<Record<string, unknown>>;
+
+      return c.json(
+        {
+          success: true,
+          data: rows[0] ?? {
+            userId: user.id,
+            prefExtendedTime: true,
+            prefNoAutoplay: true,
+            prefContentWarnings: true,
+            prefMicrolearning: true
+          }
+        },
+        200
+      );
+    } catch (error) {
+      return handleError(c, error, 'Failed to load participant profile');
+    }
+  })
   .get('/learning-paths', authMiddleware, zValidator('query', ZLearningPathsQuery), async (c) => {
     try {
       const user = c.get('user')!;
@@ -97,28 +157,37 @@ export const pathworksRouter = new Hono()
       const rows = (await db.execute(sql`
         INSERT INTO vr_participants (
           user_id,
+          disability_category,
           pref_extended_time,
           pref_no_autoplay,
           pref_content_warnings,
           pref_microlearning,
           ipe_vocational_goal,
+          counselor_name,
+          counselor_email,
           updated_at
         )
         VALUES (
           ${user.id},
+          ${data.disabilityCategory ?? null}::"VR_DISABILITY_CATEGORY",
           ${data.prefExtendedTime},
           ${data.prefNoAutoplay},
           ${data.prefContentWarnings},
           ${data.prefMicrolearning},
           ${data.ipeVocationalGoal ?? null},
+          ${data.counselorName ?? null},
+          ${data.counselorEmail ?? null},
           now()
         )
         ON CONFLICT (user_id) DO UPDATE SET
+          disability_category = excluded.disability_category,
           pref_extended_time = excluded.pref_extended_time,
           pref_no_autoplay = excluded.pref_no_autoplay,
           pref_content_warnings = excluded.pref_content_warnings,
           pref_microlearning = excluded.pref_microlearning,
           ipe_vocational_goal = excluded.ipe_vocational_goal,
+          counselor_name = excluded.counselor_name,
+          counselor_email = excluded.counselor_email,
           updated_at = now()
         RETURNING *
       `)) as unknown as Array<Record<string, unknown>>;
@@ -128,36 +197,89 @@ export const pathworksRouter = new Hono()
       return handleError(c, error, 'Failed to save participant profile');
     }
   })
+  .get('/participant-progress', authMiddleware, zValidator('query', ZParticipantProgressQuery), async (c) => {
+    try {
+      const user = c.get('user')!;
+      const data = c.req.valid('query');
+
+      const rows = (await db.execute(sql`
+        SELECT
+          id,
+          user_id AS "userId",
+          course_id AS "courseId",
+          lesson_id AS "lessonId",
+          status,
+          last_position AS "lastPosition",
+          score,
+          attempts,
+          completed_at AS "completedAt",
+          updated_at AS "updatedAt"
+        FROM participant_progress
+        WHERE user_id = ${user.id}
+          AND course_id = ${data.courseId}
+          AND lesson_id IS NOT DISTINCT FROM ${data.lessonId ?? null}
+        ORDER BY updated_at DESC
+        LIMIT 1
+      `)) as unknown as Array<Record<string, unknown>>;
+
+      return c.json({ success: true, data: rows[0] ?? null }, 200);
+    } catch (error) {
+      return handleError(c, error, 'Failed to load participant progress');
+    }
+  })
   .post('/participant-progress', authMiddleware, zValidator('json', ZParticipantProgress), async (c) => {
     try {
       const user = c.get('user')!;
       const data = c.req.valid('json');
 
-      const rows = (await db.execute(sql`
-        INSERT INTO participant_progress (
-          user_id,
-          course_id,
-          lesson_id,
-          status,
-          last_position,
-          score,
-          attempts,
-          completed_at,
-          updated_at
-        )
-        VALUES (
-          ${user.id},
-          ${data.courseId},
-          ${data.lessonId ?? null},
-          ${data.status}::"PARTICIPANT_PROGRESS_STATUS",
-          ${data.lastPosition},
-          ${data.score ?? null},
-          ${data.attempts},
-          CASE WHEN ${data.status} = 'completed' THEN now() ELSE null END,
-          now()
-        )
-        RETURNING *
-      `)) as unknown as Array<Record<string, unknown>>;
+      const existing = (await db.execute(sql`
+        SELECT id
+        FROM participant_progress
+        WHERE user_id = ${user.id}
+          AND course_id = ${data.courseId}
+          AND lesson_id IS NOT DISTINCT FROM ${data.lessonId ?? null}
+        ORDER BY updated_at DESC
+        LIMIT 1
+      `)) as unknown as Array<{ id: string }>;
+
+      const rows = existing[0]?.id
+        ? ((await db.execute(sql`
+            UPDATE participant_progress
+            SET
+              status = ${data.status}::"PARTICIPANT_PROGRESS_STATUS",
+              last_position = ${data.lastPosition},
+              score = ${data.score ?? null},
+              attempts = ${data.attempts},
+              completed_at = CASE WHEN ${data.status} = 'completed' THEN now() ELSE completed_at END,
+              updated_at = now()
+            WHERE id = ${existing[0].id}
+            RETURNING *
+          `)) as unknown as Array<Record<string, unknown>>)
+        : ((await db.execute(sql`
+            INSERT INTO participant_progress (
+              user_id,
+              course_id,
+              lesson_id,
+              status,
+              last_position,
+              score,
+              attempts,
+              completed_at,
+              updated_at
+            )
+            VALUES (
+              ${user.id},
+              ${data.courseId},
+              ${data.lessonId ?? null},
+              ${data.status}::"PARTICIPANT_PROGRESS_STATUS",
+              ${data.lastPosition},
+              ${data.score ?? null},
+              ${data.attempts},
+              CASE WHEN ${data.status} = 'completed' THEN now() ELSE null END,
+              now()
+            )
+            RETURNING *
+          `)) as unknown as Array<Record<string, unknown>>);
 
       return c.json({ success: true, data: rows[0] ?? null }, 200);
     } catch (error) {

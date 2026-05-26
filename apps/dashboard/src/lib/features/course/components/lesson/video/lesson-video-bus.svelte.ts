@@ -9,6 +9,8 @@ class LessonVideoBus {
   currentTimeSeconds = $state(0);
   /** True after the user (or autoplay) has started playback at least once for the current asset. */
   hasPlayed = $state(false);
+  /** Optional resume target supplied by the lesson page after participant confirmation. */
+  resumeSeconds = $state(0);
   /** Latest transcript payload for the active asset; null if none / still loading. */
   transcript = $state<AssetTranscriptPayload | null>(null);
   /** True while the transcript fetch is in flight. */
@@ -24,6 +26,10 @@ class LessonVideoBus {
     this.seekFn(seconds);
   }
 
+  setResumeSeconds(seconds: number) {
+    this.resumeSeconds = Math.max(0, Math.round(seconds));
+  }
+
   /** Reset all per-lesson state (called when the upload asset changes or the player unmounts). */
   reset(opts?: { keepAssetId?: boolean }) {
     if (!opts?.keepAssetId) {
@@ -31,6 +37,7 @@ class LessonVideoBus {
     }
 
     this.currentTimeSeconds = 0;
+    this.resumeSeconds = 0;
     this.hasPlayed = false;
     this.transcript = null;
     this.transcriptLoading = false;
