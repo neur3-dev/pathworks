@@ -59,7 +59,7 @@
     placeholder={placeholder || $t('app.search.placeholder')}
     bind:value
     readonly
-    role="button"
+    aria-label={placeholder || $t('app.search.placeholder')}
     aria-haspopup="dialog"
     on:focus={handleFocus}
     on:blur={onBlur}

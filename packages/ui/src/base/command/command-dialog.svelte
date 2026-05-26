@@ -24,11 +24,11 @@
 </script>
 
 <Dialog.Root bind:open {...restProps}>
-  <Dialog.Header class="sr-only">
-    <Dialog.Title>{title}</Dialog.Title>
-    <Dialog.Description>{description}</Dialog.Description>
-  </Dialog.Header>
   <Dialog.Content class="ui:overflow-hidden ui:p-0" {portalProps}>
+    <Dialog.Header class="sr-only">
+      <Dialog.Title>{title}</Dialog.Title>
+      <Dialog.Description>{description}</Dialog.Description>
+    </Dialog.Header>
     <Command
       class="ui:[&_[data-command-group]:not([hidden])_~[data-command-group]]:pt-0 ui:**:data-command-group:px-2 ui:[&_[data-command-input-wrapper]_svg]:h-5 ui:[&_[data-command-input-wrapper]_svg]:w-5 ui:**:data-command-input:h-12 ui:**:data-command-item:px-2 ui:**:data-command-item:py-3 ui:[&_[data-command-item]_svg]:h-5 ui:[&_[data-command-item]_svg]:w-5 **:data-[slot=command-input-wrapper]:h-12"
       {...restProps}

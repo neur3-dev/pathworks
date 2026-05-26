@@ -50,14 +50,14 @@ Five violations, each present on all 5 URLs (because all 5 hit the same error pa
 | `page-has-heading-one` | moderate | Page should contain a level-one heading |
 | `region` | moderate | All page content should be contained by landmarks |
 
-Root cause: `apps/dashboard/src/error.html` was rendered standalone by SvelteKit (it's the fallback when the app itself fails to render) but only contained a body fragment — no `<html>`, `<head>`, `<title>`, `<main>`, `<h1>`.
+Root cause: `apps/dashboard/src/error.html` was rendered standalone by SvelteKit (it's the fallback when the app itself fails to render) but only contained a body fragment - no `<html>`, `<head>`, `<title>`, `<main>`, `<h1>`.
 
 ### Fix applied this PR
 
 `apps/dashboard/src/error.html` rewritten as a complete HTML document:
 
 - `<!DOCTYPE html>` + `<html lang="en">`
-- `<head>` with `<title>Something unexpected happened — PathWorks</title>` and viewport meta
+- `<head>` with `<title>Something unexpected happened - PathWorks</title>` and viewport meta
 - `<main>` landmark with `aria-labelledby`
 - Promoted the heading from `<h2>` to `<h1>` (only one heading on the page; styling kept identical)
 - Decorative 500-error icon marked `aria-hidden="true"` with empty `alt`

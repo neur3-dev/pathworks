@@ -9,17 +9,21 @@ type ParticipantProgressResponse = Extract<InferResponseType<ParticipantProgress
 type CounselorLoginRequest = (typeof pathworks.pathworks)['counselor-login']['$post'];
 type CounselorProgressRequest = (typeof pathworks.pathworks)['counselor-progress']['$get'];
 type CounselorProgressResponse = Extract<InferResponseType<CounselorProgressRequest>, { success: true }>;
+type CounselorParticipantRequest = (typeof pathworks.pathworks)['counselor-participant']['$get'];
+type CounselorParticipantResponse = Extract<InferResponseType<CounselorParticipantRequest>, { success: true }>;
 
 export type LearningPath = LearningPathsResponse['data'][number];
 export type ParticipantProfile = ParticipantProfileResponse['data'];
 export type ParticipantProgress = ParticipantProgressResponse['data'];
 export type CounselorProgress = CounselorProgressResponse['data'];
+export type CounselorParticipant = CounselorParticipantResponse['data'];
 
 export class PathWorksApi extends BaseApiWithErrors {
   learningPaths = $state<LearningPath[]>([]);
   participantProfile = $state<ParticipantProfile | null>(null);
   participantProgress = $state<ParticipantProgress | null>(null);
   counselorProgress = $state<CounselorProgress | null>(null);
+  counselorParticipant = $state<CounselorParticipant | null>(null);
 
   async requestCounselorLogin(email: string) {
     return this.execute<CounselorLoginRequest>({
@@ -40,6 +44,19 @@ export class PathWorksApi extends BaseApiWithErrors {
       logContext: 'fetching PathWorks counselor progress',
       onSuccess: (response) => {
         this.counselorProgress = response.data;
+      }
+    });
+  }
+
+  async getCounselorParticipant(token: string, participantId: string) {
+    return this.execute<CounselorParticipantRequest>({
+      requestFn: () =>
+        pathworks.pathworks['counselor-participant'].$get({
+          query: { token, participantId }
+        }),
+      logContext: 'fetching PathWorks counselor participant detail',
+      onSuccess: (response) => {
+        this.counselorParticipant = response.data;
       }
     });
   }

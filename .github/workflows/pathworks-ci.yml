@@ -104,9 +104,12 @@ jobs:
         run: ./run-docker-full-stack.sh
       - name: Wait for dashboard
         run: pnpm --filter @cio/dashboard exec wait-on http://127.0.0.1:3082/
-      - name: Run axe smoke audit
+      - name: Seed authenticated axe fixtures
+        run: node audits/seed-a11y-fixtures.mjs audits/axe-fixtures.json
+      - name: Run axe authenticated audit
         env:
           PATHWORKS_AXE_BASE_URL: http://127.0.0.1:3082
+          PATHWORKS_AXE_FIXTURE_FILE: ${{ github.workspace }}/audits/axe-fixtures.json
         run: |
           cd /tmp/pathworks-axe
           node ${{ github.workspace }}/audits/run-axe.mjs ${{ github.workspace }}/audits/axe-ci-$(date +%Y%m%d).json

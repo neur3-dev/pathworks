@@ -203,15 +203,32 @@ echo
 echo "Current service status:"
 docker compose --env-file "${ENV_FILE}" -p "${PROJECT_NAME}" -f "${COMPOSE_FILE}" ps
 
+wait_for_endpoint() {
+  local name="$1"
+  local url="$2"
+  local curl_args="$3"
+  local attempt
+
+  for attempt in {1..60}; do
+    if curl -fsS ${curl_args} --max-time 10 "${url}" >/dev/null; then
+      echo "${name} is reachable on ${url}"
+      return 0
+    fi
+
+    sleep 2
+  done
+
+  echo "Error: ${name} was not reachable on ${url} after 120 seconds."
+  return 1
+}
+
 if command -v curl >/dev/null 2>&1; then
   echo
   echo "Checking API endpoint..."
-  curl -fsS --max-time 10 http://localhost:3081/ >/dev/null
-  echo "API is reachable on http://localhost:3081/"
+  wait_for_endpoint "API" "http://localhost:3081/" ""
 
   echo "Checking dashboard endpoint..."
-  curl -fsSI --max-time 10 http://localhost:3082/ >/dev/null
-  echo "Dashboard is reachable on http://localhost:3082/"
+  wait_for_endpoint "Dashboard" "http://localhost:3082/" "-I"
 else
   echo
   echo "curl not found, skipped endpoint checks."

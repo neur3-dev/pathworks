@@ -15,13 +15,20 @@
 // System deps for Chromium on Ubuntu/Debian (one-time, requires sudo):
 //   sudo apt install -y libasound2t64 libnss3 libgbm1 libxshmfence1 libxkbcommon0
 
-import { chromium } from 'playwright';
-import AxeBuilder from '@axe-core/playwright';
+import { createRequire } from 'node:module';
 import fs from 'node:fs/promises';
 
+const axeRequire = createRequire(`${process.env.PATHWORKS_AXE_NODE_MODULES || '/tmp/pathworks-axe/node_modules'}/`);
+const { chromium } = axeRequire('playwright');
+const AxeBuilderModule = axeRequire('@axe-core/playwright');
+const AxeBuilder = AxeBuilderModule.default ?? AxeBuilderModule;
+
 const DEFAULT_PATHS = ['/', '/login', '/signin', '/counselor', '/onboarding'];
-const BASE_URL = (process.env.PATHWORKS_AXE_BASE_URL || 'http://127.0.0.1:4173').replace(/\/$/, '');
-const URLS = (process.env.PATHWORKS_AXE_URLS || DEFAULT_PATHS.join(','))
+const fixturePath = process.env.PATHWORKS_AXE_FIXTURE_FILE;
+const fixture = fixturePath ? JSON.parse(await fs.readFile(fixturePath, 'utf8')) : {};
+const BASE_URL = (process.env.PATHWORKS_AXE_BASE_URL || fixture.baseUrl || 'http://127.0.0.1:4173').replace(/\/$/, '');
+const pathSource = process.env.PATHWORKS_AXE_URLS || fixture.urls?.join(',') || DEFAULT_PATHS.join(',');
+const URLS = pathSource
   .split(',')
   .map((url) => url.trim())
   .filter(Boolean)
@@ -34,6 +41,16 @@ const outPath = process.argv[2] || '/tmp/axe-result.json';
 const browser = await chromium.launch({ headless: true });
 const ctx = await browser.newContext({ ignoreHTTPSErrors: true });
 const results = [];
+
+if (fixture.participantLoginUrl) {
+  const loginPage = await ctx.newPage();
+  await loginPage
+    .goto(fixture.participantLoginUrl, { waitUntil: 'domcontentloaded', timeout: 30000 })
+    .catch((error) => {
+      results.push({ url: fixture.participantLoginUrl, login_error: error.message });
+    });
+  await loginPage.close();
+}
 
 for (const url of URLS) {
   const page = await ctx.newPage();
@@ -103,4 +120,9 @@ await fs.writeFile(
 );
 
 const total = results.reduce((acc, r) => acc + (r.counts?.violations || 0), 0);
-console.log(`audited ${results.length} URLs · total violations: ${total} · wrote ${outPath}`);
+const errored = results.filter((r) => r.error || r.login_error || r.axe_error);
+console.log(`audited ${results.length} URLs - total violations: ${total} - wrote ${outPath}`);
+
+if (total > 0 || errored.length > 0) {
+  process.exitCode = 1;
+}

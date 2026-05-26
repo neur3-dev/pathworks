@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { resolve } from '$app/paths';
   import { Button } from '@cio/ui/base/button';
   import { Input } from '@cio/ui/base/input';
   import * as Field from '@cio/ui/base/field';
@@ -66,10 +67,16 @@
             </tr>
           </thead>
           <tbody>
-            {#each pathworksApi.counselorProgress.participants as participant (participant.participantId + (participant.courseId || none))}
+            {#each pathworksApi.counselorProgress.participants as participant (participant.participantId + (participant.courseId || 'none'))}
               <tr class="border-t border-slate-200 dark:border-slate-800">
                 <td class="px-4 py-3">
-                  <div class="font-medium">{participant.fullname || 'Participant'}</div>
+                  <a
+                    class="font-medium text-blue-700 hover:underline dark:text-blue-300"
+                    href={resolve('/counselor/[participantId]?token=[token]', {
+                      participantId: participant.participantId as string,
+                      token
+                    })}>{participant.fullname || 'Participant'}</a
+                  >
                   <div class="text-xs text-slate-500">{participant.email}</div>
                 </td>
                 <td class="px-4 py-3">{participant.currentModule || 'Not started yet'}</td>

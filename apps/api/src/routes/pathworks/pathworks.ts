@@ -59,6 +59,10 @@ const ZCounselorToken = z.object({
   token: z.string().min(10).max(2048)
 });
 
+const ZCounselorParticipantQuery = ZCounselorToken.extend({
+  participantId: z.string().uuid()
+});
+
 function getCounselorSecret(): Uint8Array {
   const secret = process.env.BETTER_AUTH_SECRET?.trim() || env.PRIVATE_SERVER_KEY?.trim();
 
@@ -188,6 +192,83 @@ export const pathworksRouter = new Hono()
       return c.json({ success: true, data: { counselorEmail, participants: rows } }, 200);
     } catch (error) {
       return handleError(c, error, 'Failed to load counselor progress');
+    }
+  })
+  .get('/counselor-participant', zValidator('query', ZCounselorParticipantQuery), async (c) => {
+    try {
+      const { token, participantId } = c.req.valid('query');
+      const counselorEmail = await verifyCounselorToken(token);
+
+      if (!counselorEmail) {
+        return c.json({ success: false, error: 'Invalid or expired counselor link' }, 401);
+      }
+
+      const participants = (await db.execute(sql`
+        SELECT
+          vp.user_id AS "participantId",
+          p.fullname,
+          p.email,
+          vp.disability_category AS "disabilityCategory",
+          vp.pref_extended_time AS "prefExtendedTime",
+          vp.pref_no_autoplay AS "prefNoAutoplay",
+          vp.pref_content_warnings AS "prefContentWarnings",
+          vp.pref_microlearning AS "prefMicrolearning",
+          vp.ipe_vocational_goal AS "ipeVocationalGoal",
+          vp.counselor_name AS "counselorName",
+          vp.counselor_email AS "counselorEmail",
+          vp.updated_at AS "updatedAt"
+        FROM vr_participants vp
+        JOIN profile p ON p.id = vp.user_id
+        WHERE vp.user_id = ${participantId}
+          AND lower(vp.counselor_email) = ${counselorEmail}
+        LIMIT 1
+      `)) as unknown as Array<Record<string, unknown>>;
+
+      if (!participants[0]) {
+        return c.json({ success: false, error: 'Participant not found for this counselor link' }, 404);
+      }
+
+      const courses = (await db.execute(sql`
+        SELECT
+          c.id AS "courseId",
+          c.title AS "courseTitle",
+          COUNT(l.id)::int AS "lessonCount",
+          COUNT(pp.id) FILTER (WHERE pp.status = 'completed')::int AS "completedCount",
+          MAX(pp.updated_at) AS "lastActivity",
+          COALESCE(
+            json_agg(
+              json_build_object(
+                'lessonId', l.id,
+                'title', l.title,
+                'status', pp.status,
+                'lastPosition', pp.last_position,
+                'updatedAt', pp.updated_at
+              )
+              ORDER BY l."order" ASC NULLS LAST, l.created_at ASC
+            ) FILTER (WHERE l.id IS NOT NULL),
+            '[]'::json
+          ) AS lessons
+        FROM participant_progress pp
+        JOIN course c ON c.id = pp.course_id
+        LEFT JOIN lesson l ON l.course_id = c.id
+        WHERE pp.user_id = ${participantId}
+        GROUP BY c.id, c.title
+        ORDER BY MAX(pp.updated_at) DESC NULLS LAST, c.title ASC
+      `)) as unknown as Array<Record<string, unknown>>;
+
+      return c.json(
+        {
+          success: true,
+          data: {
+            counselorEmail,
+            participant: participants[0],
+            courses
+          }
+        },
+        200
+      );
+    } catch (error) {
+      return handleError(c, error, 'Failed to load counselor participant detail');
     }
   })
   .get('/participant-profile', authMiddleware, async (c) => {
