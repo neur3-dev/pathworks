@@ -43,6 +43,13 @@
       "when": 1779681807752,
       "tag": "0005_pathworks_complete_build",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779755134637,
+      "tag": "0006_pathworks_lesson_content",
+      "breakpoints": true
     }
   ]
 }
