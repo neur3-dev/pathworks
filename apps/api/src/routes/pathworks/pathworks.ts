@@ -1,6 +1,12 @@
 import { Hono } from '@api/utils/hono';
 import { authMiddleware } from '@api/middlewares/auth';
 import { db, sql } from '@cio/db/drizzle';
+import {
+  counselorCanAccessParticipant,
+  createCounselorNote,
+  listCounselorCompletedProgressRows,
+  listCounselorNotes
+} from '@cio/db/queries/pathworks';
 import { handleError } from '@api/utils/errors';
 import { env } from '@api/config/env';
 import { enqueueRawEmail } from '@api/services/jobs';
@@ -63,6 +69,10 @@ const ZCounselorParticipantQuery = ZCounselorToken.extend({
   participantId: z.string().uuid()
 });
 
+const ZCounselorNote = ZCounselorParticipantQuery.extend({
+  note: z.string().trim().min(1).max(2000)
+});
+
 function getCounselorSecret(): Uint8Array {
   const secret = process.env.BETTER_AUTH_SECRET?.trim() || env.PRIVATE_SERVER_KEY?.trim();
 
@@ -94,6 +104,32 @@ async function signCounselorToken(email: string): Promise<string> {
     exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
   });
   return `${payload}.${signTokenPart(payload)}`;
+}
+
+function formatCsvValue(value: unknown): string {
+  if (value === null || value === undefined) return '';
+  const text = String(value);
+  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function buildCounselorProgressCsv(
+  rows: Array<{
+    courseTitle: string | null;
+    lessonTitle: string | null;
+    status: string | null;
+    score: string | null;
+    completedAt: string | null;
+    updatedAt: string | null;
+  }>
+): string {
+  const header = ['Course', 'Lesson', 'Status', 'Score', 'Completed at', 'Updated at'];
+  const lines = rows.map((row) =>
+    [row.courseTitle, row.lessonTitle, row.status, row.score, row.completedAt, row.updatedAt]
+      .map(formatCsvValue)
+      .join(',')
+  );
+
+  return [header.join(','), ...lines].join('\n') + '\n';
 }
 
 async function verifyCounselorToken(token: string): Promise<string | null> {
@@ -184,12 +220,31 @@ export const pathworksRouter = new Hono()
           course_id AS "courseId",
           course_title AS "currentModule",
           CASE WHEN lesson_count > 0 THEN ROUND((completed_count::numeric / lesson_count::numeric) * 100)::int ELSE 0 END AS "percentComplete",
-          last_activity AS "lastActivity"
+          last_activity AS "lastActivity",
+          ARRAY_REMOVE(
+            ARRAY[
+              CASE WHEN last_activity IS NULL OR last_activity < now() - interval '14 days' THEN 'No activity in last 14 days' END,
+              CASE
+                WHEN MAX(last_activity) FILTER (WHERE last_activity IS NOT NULL) OVER (PARTITION BY user_id) < now() - interval '7 days'
+                  AND completed_count < lesson_count
+                THEN 'Last lesson stuck more than 7 days'
+              END
+            ],
+            NULL
+          ) AS "attentionReasons",
+          (last_activity IS NULL OR last_activity < now() - interval '14 days' OR (last_activity < now() - interval '7 days' AND completed_count < lesson_count)) AS "needsAttention"
         FROM participant_courses
         ORDER BY last_activity DESC NULLS LAST, fullname ASC
       `)) as unknown as Array<Record<string, unknown>>;
 
-      return c.json({ success: true, data: { counselorEmail, participants: rows } }, 200);
+      const needsAttentionCount = new Set(
+        rows.filter((row) => row.needsAttention).map((row) => row.participantId as string)
+      ).size;
+
+      return c.json(
+        { success: true, data: { counselorEmail, summary: { needsAttentionCount }, participants: rows } },
+        200
+      );
     } catch (error) {
       return handleError(c, error, 'Failed to load counselor progress');
     }
@@ -256,19 +311,61 @@ export const pathworksRouter = new Hono()
         ORDER BY MAX(pp.updated_at) DESC NULLS LAST, c.title ASC
       `)) as unknown as Array<Record<string, unknown>>;
 
+      const notes = await listCounselorNotes({ counselorEmail, participantId });
+
       return c.json(
         {
           success: true,
           data: {
             counselorEmail,
             participant: participants[0],
-            courses
+            courses,
+            notes
           }
         },
         200
       );
     } catch (error) {
       return handleError(c, error, 'Failed to load counselor participant detail');
+    }
+  })
+  .post('/counselor-note', zValidator('json', ZCounselorNote), async (c) => {
+    try {
+      const { token, participantId, note } = c.req.valid('json');
+      const counselorEmail = await verifyCounselorToken(token);
+
+      if (!counselorEmail) {
+        return c.json({ success: false, error: 'Invalid or expired counselor link' }, 401);
+      }
+
+      const canAccess = await counselorCanAccessParticipant(counselorEmail, participantId);
+      if (!canAccess) {
+        return c.json({ success: false, error: 'Participant not found for this counselor link' }, 404);
+      }
+
+      const created = await createCounselorNote({ counselorEmail, participantId, note });
+      return c.json({ success: true, data: created }, 201);
+    } catch (error) {
+      return handleError(c, error, 'Failed to save counselor note');
+    }
+  })
+  .get('/counselor-progress-export', zValidator('query', ZCounselorParticipantQuery), async (c) => {
+    try {
+      const { token, participantId } = c.req.valid('query');
+      const counselorEmail = await verifyCounselorToken(token);
+
+      if (!counselorEmail) {
+        return c.json({ success: false, error: 'Invalid or expired counselor link' }, 401);
+      }
+
+      const rows = await listCounselorCompletedProgressRows({ counselorEmail, participantId });
+      const csv = buildCounselorProgressCsv(rows);
+
+      c.header('Content-Type', 'text/csv; charset=utf-8');
+      c.header('Content-Disposition', `attachment; filename="pathworks-participant-${participantId}-progress.csv"`);
+      return c.body(csv, 200);
+    } catch (error) {
+      return handleError(c, error, 'Failed to export counselor participant progress');
     }
   })
   .get('/participant-profile', authMiddleware, async (c) => {

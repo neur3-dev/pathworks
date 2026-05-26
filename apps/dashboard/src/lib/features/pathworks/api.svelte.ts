@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, pathworks, type InferResponseType } from '$lib/utils/services/api';
+import { BaseApiWithErrors, getRequestBaseUrl, pathworks, type InferResponseType } from '$lib/utils/services/api';
 
 type LearningPathsRequest = (typeof pathworks.pathworks)['learning-paths']['$get'];
 type LearningPathsResponse = Extract<InferResponseType<LearningPathsRequest>, { success: true }>;
@@ -11,6 +11,7 @@ type CounselorProgressRequest = (typeof pathworks.pathworks)['counselor-progress
 type CounselorProgressResponse = Extract<InferResponseType<CounselorProgressRequest>, { success: true }>;
 type CounselorParticipantRequest = (typeof pathworks.pathworks)['counselor-participant']['$get'];
 type CounselorParticipantResponse = Extract<InferResponseType<CounselorParticipantRequest>, { success: true }>;
+type CounselorNoteRequest = (typeof pathworks.pathworks)['counselor-note']['$post'];
 
 export type LearningPath = LearningPathsResponse['data'][number];
 export type ParticipantProfile = ParticipantProfileResponse['data'];
@@ -59,6 +60,24 @@ export class PathWorksApi extends BaseApiWithErrors {
         this.counselorParticipant = response.data;
       }
     });
+  }
+
+  async saveCounselorNote(token: string, participantId: string, note: string) {
+    return this.execute<CounselorNoteRequest>({
+      requestFn: () =>
+        pathworks.pathworks['counselor-note'].$post({
+          json: { token, participantId, note }
+        }),
+      logContext: 'saving PathWorks counselor note'
+    });
+  }
+
+  getCounselorProgressExportUrl(token: string, participantId: string) {
+    const baseUrl = getRequestBaseUrl();
+    const url = new URL('/pathworks/counselor-progress-export', baseUrl || window.location.origin);
+    url.searchParams.set('token', token);
+    url.searchParams.set('participantId', participantId);
+    return url.toString();
   }
 
   async getLearningPaths(orgId?: string) {

@@ -16,6 +16,10 @@
     }
   });
 
+  function getAttentionReasons(value: unknown) {
+    return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
+  }
+
   async function requestLink() {
     requested = false;
     await pathworksApi.requestCounselorLogin(email);
@@ -56,6 +60,13 @@
         </div>
       </div>
     {:else if pathworksApi.counselorProgress}
+      <div class="rounded-md border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <p class="text-sm font-medium text-slate-600 dark:text-slate-300">Participants needing attention</p>
+        <p class="mt-2 text-4xl font-semibold tracking-normal">
+          {pathworksApi.counselorProgress.summary?.needsAttentionCount ?? 0}
+        </p>
+      </div>
+
       <div class="overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
         <table class="w-full text-left text-sm">
           <thead class="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
@@ -64,6 +75,7 @@
               <th class="px-4 py-3 font-medium">Current module</th>
               <th class="px-4 py-3 font-medium">Complete</th>
               <th class="px-4 py-3 font-medium">Last activity</th>
+              <th class="px-4 py-3 font-medium">Attention</th>
             </tr>
           </thead>
           <tbody>
@@ -86,10 +98,24 @@
                     ? new Date(participant.lastActivity as string).toLocaleDateString()
                     : 'No activity yet'}</td
                 >
+                <td class="px-4 py-3">
+                  {#if participant.needsAttention}
+                    <span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-medium text-amber-900"
+                      >Needs attention</span
+                    >
+                    <div class="mt-2 space-y-1 text-xs text-slate-500">
+                      {#each getAttentionReasons(participant.attentionReasons) as reason}
+                        <div>{reason}</div>
+                      {/each}
+                    </div>
+                  {:else}
+                    <span class="text-slate-500">On track</span>
+                  {/if}
+                </td>
               </tr>
             {:else}
               <tr>
-                <td class="px-4 py-6 text-slate-600 dark:text-slate-300" colspan="4"
+                <td class="px-4 py-6 text-slate-600 dark:text-slate-300" colspan="5"
                   >No participants are connected to this counselor email yet.</td
                 >
               </tr>

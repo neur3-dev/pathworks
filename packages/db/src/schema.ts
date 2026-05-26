@@ -1113,6 +1113,27 @@ export const learningPathCourse = pgTable(
   ]
 );
 
+export const pathworksCounselorNote = pgTable(
+  'pathworks_counselor_notes',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    participantUserId: uuid('participant_user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    counselorEmail: text('counselor_email').notNull(),
+    note: text('note').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    index('idx_pathworks_counselor_notes_participant').on(table.participantUserId),
+    index('idx_pathworks_counselor_notes_counselor').on(table.counselorEmail),
+    index('idx_pathworks_counselor_notes_created_at').on(table.createdAt)
+  ]
+);
+
 export const participantProgress = pgTable(
   'participant_progress',
   {
