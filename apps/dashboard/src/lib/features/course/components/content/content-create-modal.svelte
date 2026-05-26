@@ -230,7 +230,7 @@
               canCreate={canCreateLessonOrExercise}
               onCreated={(lessonId) => {
                 closeModal();
-                goto(resolve(`/courses/${courseApi.course?.id}/lessons/${lessonId}`, {}));
+                goto(resolve(`/courses/${courseApi.course?.id}/lessons/${lessonId}/edit`, {}));
               }}
             />
           {:else if selectedType === ContentType.Exercise}

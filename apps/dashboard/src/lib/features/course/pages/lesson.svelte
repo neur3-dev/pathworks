@@ -34,6 +34,7 @@
   import * as Page from '@cio/ui/base/page';
   import * as UnderlineTabs from '@cio/ui/custom/underline-tabs';
   import { Empty } from '@cio/ui/custom/empty';
+  import { Label } from '@cio/ui/base/label';
   import { RoleBasedSecurity } from '$features/ui';
 
   import {
@@ -58,11 +59,12 @@
   interface Props {
     courseId: string;
     lessonId: string;
+    forceEdit?: boolean;
   }
 
-  let { courseId, lessonId }: Props = $props();
+  let { courseId, lessonId, forceEdit = false }: Props = $props();
 
-  const mode = $derived($page.url.searchParams.get('mode') === 'edit' ? MODES.edit : MODES.view);
+  const mode = $derived(forceEdit || $page.url.searchParams.get('mode') === 'edit' ? MODES.edit : MODES.view);
 
   let prevModeParam = $state<string | null>(null);
   let isDeletingLesson = $state(false);
@@ -79,6 +81,9 @@
   const lessonSlug = $derived(lessonApi.lesson?.slug ?? '');
   const isPublicCourse = $derived(courseApi.course?.type === 'PUBLIC');
 
+  const canEditLesson = $derived(!$isOrgStudent);
+  const publishStateLabel = $derived(lessonApi.lesson?.public ? 'Published' : 'Draft');
+
   function setModeQueryParam(value: (typeof MODES)[keyof typeof MODES]) {
     const params = new SvelteURLSearchParams($page.url.searchParams);
     params.set('mode', value);
@@ -90,13 +95,20 @@
     goto(resolve(`${$page.url.pathname}?${params.toString()}`, {}), { replaceState: false });
   }
 
-  function toggleMode() {
+  async function toggleMode() {
     if (mode === MODES.edit && lessonApi.isDirty) {
       if (timeoutId) clearTimeout(timeoutId);
       timeoutId = undefined;
-      saveLesson();
+      await saveLesson();
     }
+
     hasUnsavedChanges = false;
+
+    if (forceEdit && mode === MODES.edit) {
+      await goto(resolve(`/courses/${courseId}/lessons/${lessonId}`, {}));
+      return;
+    }
+
     setModeQueryParam(mode === MODES.edit ? MODES.view : MODES.edit);
   }
 
@@ -248,7 +260,8 @@
       hasNoteContent: hasLessonNoteContent(lessonApi.lesson.id),
       hasSlideContent: Boolean(lessonApi.lesson.slideUrl?.trim()),
       videosCount: Array.isArray(lessonApi.lesson.videos) ? lessonApi.lesson.videos.length : 0,
-      documentsCount: Array.isArray(lessonApi.lesson.documents) ? lessonApi.lesson.documents.length : 0
+      documentsCount: Array.isArray(lessonApi.lesson.documents) ? lessonApi.lesson.documents.length : 0,
+      isPublished: lessonApi.lesson.public ?? false
     });
   }
 
@@ -262,6 +275,8 @@
         slideUrl: lessonApi.lesson.slideUrl || undefined,
         videos: lessonApi.lesson.videos || [],
         documents: lessonApi.lesson.documents || [],
+        public: lessonApi.lesson.public ?? false,
+        contentWarning: lessonApi.lesson.contentWarning || undefined,
         slug: isPublicCourse && lessonApi.lesson.slug ? lessonApi.lesson.slug : undefined
       }),
       saveOrUpdateTranslation(lessonApi.currentLocale, lessonId)
@@ -280,6 +295,14 @@
 
   function handleLessonSlugChange(value: string) {
     lessonApi.updateLessonState('slug', value);
+  }
+
+  function handleContentWarningChange(value: string) {
+    lessonApi.updateLessonState('contentWarning', value);
+  }
+
+  function handlePublishChange(checked: boolean) {
+    lessonApi.updateLessonState('public', checked);
   }
 
   function handleToggleLessonLock() {
@@ -567,7 +590,15 @@
 <Page.Body>
   {#snippet child()}
     <div class={`overflow-x-hidden py-6 ${mode === MODES.edit ? 'lg:w-full xl:w-11/12' : 'mx-auto w-full max-w-3xl'}`}>
-      {#if mode === MODES.view && $isOrgStudent}
+      {#if mode === MODES.edit && !canEditLesson}
+        <Empty
+          title="Lesson editor unavailable"
+          description="Only PathWorks operators and administrators can edit lessons."
+          icon={Pencil}
+          variant="page"
+          class="text-center"
+        />
+      {:else if mode === MODES.view && $isOrgStudent}
         <div
           class="sticky top-0 z-10 mb-6 rounded-lg border border-slate-200 bg-white/95 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-950/95"
         >
@@ -622,7 +653,40 @@
           <h2 class="text-xl font-semibold tracking-normal">Lesson skipped</h2>
           <p class="mt-2">This lesson was marked complete. You can return to it later if you want.</p>
         </section>
-      {:else if mode === MODES.edit}
+      {:else if mode === MODES.edit && canEditLesson}
+        <section
+          class="mb-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950"
+        >
+          <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div class="flex-1">
+              <Label for="lesson-content-warning">Content warning</Label>
+              <textarea
+                id="lesson-content-warning"
+                class="mt-2 min-h-24 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                value={lessonApi.lesson?.contentWarning ?? ''}
+                oninput={(event) => handleContentWarningChange(event.currentTarget.value)}
+                placeholder="Optional note shown before participants open this lesson"
+              ></textarea>
+            </div>
+            <div class="min-w-48 rounded-md border border-slate-200 p-3 dark:border-slate-700">
+              <Label for="lesson-publish-toggle">Publish state</Label>
+              <label
+                class="mt-3 flex cursor-pointer items-center gap-3 text-sm font-medium"
+                for="lesson-publish-toggle"
+              >
+                <input
+                  id="lesson-publish-toggle"
+                  type="checkbox"
+                  class="size-4 rounded border-slate-300"
+                  checked={lessonApi.lesson?.public ?? false}
+                  onchange={(event) => handlePublishChange(event.currentTarget.checked)}
+                />
+                {publishStateLabel}
+              </label>
+            </div>
+          </div>
+        </section>
+
         <UnderlineTabs.Root
           bind:value={currentTabValue}
           onValueChange={(e) => {

@@ -33,6 +33,14 @@ export const contentCreateStoreUtils = {
       skipTypeSelection: false
     });
   },
+  openLesson: () => {
+    contentCreateStore.set({
+      open: true,
+      sectionId: '',
+      initialType: ContentType.Lesson,
+      skipTypeSelection: true
+    });
+  },
   close: () => {
     contentCreateStore.set({
       open: false,

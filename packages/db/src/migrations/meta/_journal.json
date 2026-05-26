@@ -50,6 +50,13 @@
       "when": 1779755134637,
       "tag": "0006_pathworks_lesson_content",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1779804167877,
+      "tag": "0007_pathworks_lesson_authoring",
+      "breakpoints": true
     }
   ]
 }
