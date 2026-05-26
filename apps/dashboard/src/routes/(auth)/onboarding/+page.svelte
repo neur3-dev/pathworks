@@ -6,6 +6,7 @@
   import * as Field from '@cio/ui/base/field';
   import { profile } from '$lib/utils/store/user';
   import { pathworksApi } from '$features/pathworks/api.svelte';
+  import { ParticipantProfileForm, type ParticipantProfileFormValue } from '$features/pathworks/components';
 
   const goalOptions = [
     'Healthcare support',
@@ -21,16 +22,20 @@
   let fullname = $state('');
   let goal = $state('');
   let selectedGoal = $state('');
-  let prefs = $state({
-    moduleOverview: true,
-    contentWarnings: true,
-    saveProgress: true,
-    microlearning: true,
-    noAutoplay: true
+  let preferences = $state<ParticipantProfileFormValue>({
+    disabilityCategory: null,
+    counselorName: '',
+    counselorEmail: '',
+    prefExtendedTime: true,
+    prefNoAutoplay: true,
+    prefContentWarnings: true,
+    prefMicrolearning: true,
+    saveProgress: true
   });
   let nameError = $state('');
 
-  const progress = $derived(Math.round((step / 4) * 100));
+  const totalSteps = 5;
+  const progress = $derived(Math.round((step / totalSteps) * 100));
   const vocationalGoal = $derived(goal.trim() || selectedGoal || null);
 
   async function finish() {
@@ -44,10 +49,13 @@
     await pathworksApi.saveParticipantProfile({
       fullname: fullname.trim(),
       ipeVocationalGoal: vocationalGoal,
-      prefExtendedTime: true,
-      prefNoAutoplay: prefs.noAutoplay,
-      prefContentWarnings: prefs.contentWarnings,
-      prefMicrolearning: prefs.microlearning
+      disabilityCategory: preferences.disabilityCategory,
+      counselorName: preferences.counselorName.trim() || null,
+      counselorEmail: preferences.counselorEmail.trim() || null,
+      prefExtendedTime: preferences.prefExtendedTime,
+      prefNoAutoplay: preferences.prefNoAutoplay,
+      prefContentWarnings: preferences.prefContentWarnings,
+      prefMicrolearning: preferences.prefMicrolearning
     });
 
     await goto(resolve('/lms/mylearning', {}));
@@ -69,7 +77,7 @@
 
       <div
         class="mb-8 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
-        aria-label={`Step ${step} of 4`}
+        aria-label={`Step ${step} of ${totalSteps}`}
       >
         <div class="h-full bg-[linear-gradient(135deg,#1A5AD7_0%,#00F5A0_100%)]" style={`width: ${progress}%;`}></div>
       </div>
@@ -120,24 +128,16 @@
       {:else if step === 3}
         <div class="space-y-6">
           <h2 class="text-3xl font-semibold tracking-normal">How you learn best</h2>
-          <p class="text-slate-700 dark:text-slate-300">We want to set things up in a way that works for you.</p>
-          <div class="space-y-3">
-            <label class="flex items-center gap-3"
-              ><input type="checkbox" bind:checked={prefs.moduleOverview} /> Show me what's in a module before I start</label
-            >
-            <label class="flex items-center gap-3"
-              ><input type="checkbox" bind:checked={prefs.contentWarnings} /> Warn me before sensitive topics</label
-            >
-            <label class="flex items-center gap-3"
-              ><input type="checkbox" bind:checked={prefs.saveProgress} /> Let me take breaks without losing my place</label
-            >
-            <label class="flex items-center gap-3"
-              ><input type="checkbox" bind:checked={prefs.microlearning} /> Keep lessons short (10 minutes or less)</label
-            >
-            <label class="flex items-center gap-3"
-              ><input type="checkbox" bind:checked={prefs.noAutoplay} /> Don't autoplay videos</label
-            >
-          </div>
+          <p class="text-slate-700 dark:text-slate-300">All supports start on. Change anything that does not fit.</p>
+          <ParticipantProfileForm bind:value={preferences} showCounselor={false} />
+        </div>
+      {:else if step === 4}
+        <div class="space-y-6">
+          <h2 class="text-3xl font-semibold tracking-normal">Counselor connection</h2>
+          <p class="text-slate-700 dark:text-slate-300">
+            Optional. Add a counselor if you want them to receive read-only progress access.
+          </p>
+          <ParticipantProfileForm bind:value={preferences} showProfilePreferences={false} />
         </div>
       {:else}
         <div class="space-y-4">
@@ -150,10 +150,10 @@
 
       <div class="mt-10 flex justify-between gap-3">
         <Button variant="ghost" disabled={step === 1} onclick={() => (step = Math.max(1, step - 1))}>Back</Button>
-        {#if step < 4}
-          <Button onclick={() => (step = Math.min(4, step + 1))}>
-            {step === 1 ? "Let's get started" : 'Continue'}
-          </Button>
+        {#if step < totalSteps}
+          <Button onclick={() => (step = Math.min(totalSteps, step + 1))}
+            >{step === 1 ? "Let's get started" : 'Continue'}</Button
+          >
         {:else}
           <Button loading={pathworksApi.isLoading} onclick={finish}>Take me to my learning paths</Button>
         {/if}
