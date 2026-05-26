@@ -66,7 +66,7 @@
             </tr>
           </thead>
           <tbody>
-            {#each pathworksApi.counselorProgress.participants as participant}
+            {#each pathworksApi.counselorProgress.participants as participant (participant.participantId + (participant.courseId || none))}
               <tr class="border-t border-slate-200 dark:border-slate-800">
                 <td class="px-4 py-3">
                   <div class="font-medium">{participant.fullname || 'Participant'}</div>

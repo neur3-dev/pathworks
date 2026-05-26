@@ -7,7 +7,8 @@
 //   npm install playwright @axe-core/playwright
 //   npx playwright install chromium     # downloads Chromium to ~/.cache/ms-playwright
 //
-// Run from a fresh `pnpm --filter @cio/dashboard preview` on :4173:
+// Run from a fresh dashboard preview or the Docker full stack. Set
+// PATHWORKS_AXE_BASE_URL when not using :4173.
 //   cd /tmp/axe-runner
 //   node /path/to/repo/audits/run-axe.mjs /path/to/repo/audits/axe-YYYY-MM-DD.json
 //
@@ -18,13 +19,15 @@ import { chromium } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs/promises';
 
-const URLS = [
-  'http://127.0.0.1:4173/',
-  'http://127.0.0.1:4173/login',
-  'http://127.0.0.1:4173/signin',
-  'http://127.0.0.1:4173/counselor',
-  'http://127.0.0.1:4173/onboarding'
-];
+const DEFAULT_PATHS = ['/', '/login', '/signin', '/counselor', '/onboarding'];
+const BASE_URL = (process.env.PATHWORKS_AXE_BASE_URL || 'http://127.0.0.1:4173').replace(/\/$/, '');
+const URLS = (process.env.PATHWORKS_AXE_URLS || DEFAULT_PATHS.join(','))
+  .split(',')
+  .map((url) => url.trim())
+  .filter(Boolean)
+  .map((url) =>
+    url.startsWith('http://') || url.startsWith('https://') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`
+  );
 
 const outPath = process.argv[2] || '/tmp/axe-result.json';
 

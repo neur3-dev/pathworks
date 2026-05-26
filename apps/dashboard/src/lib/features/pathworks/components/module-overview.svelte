@@ -29,7 +29,7 @@
   </dl>
   <h3 class="mt-5 text-base font-semibold text-slate-950 dark:text-white">What you'll learn</h3>
   <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
-    {#each whatYouWillLearn as item}
+    {#each whatYouWillLearn as item (item)}
       <li>{item}</li>
     {/each}
   </ul>

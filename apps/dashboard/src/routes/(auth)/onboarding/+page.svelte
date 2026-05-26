@@ -109,7 +109,7 @@
           <h2 class="text-3xl font-semibold tracking-normal">What kind of work are you aiming for?</h2>
           <p class="text-slate-700 dark:text-slate-300">This is optional. You can change it later.</p>
           <div class="grid gap-2 sm:grid-cols-2">
-            {#each goalOptions as option}
+            {#each goalOptions as option (option)}
               <label class="flex items-center gap-2 rounded-md border border-slate-300 p-3 dark:border-slate-700">
                 <input type="radio" bind:group={selectedGoal} value={option} />
                 <span>{option}</span>

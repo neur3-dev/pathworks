@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ProfilePage } from '$features/settings/pages';
+  import { resolve } from '$app/paths';
   import { t } from '$lib/utils/functions/translations';
   import { Button } from '@cio/ui/base/button';
   import * as Page from '@cio/ui/base/page';
@@ -33,8 +34,9 @@
 </Page.Header>
 <Page.Body>
   <div class="mb-6 rounded-md border border-slate-200 p-4 dark:border-slate-800">
-    <a class="text-sm font-medium text-blue-700 hover:underline dark:text-blue-300" href="/lms/settings/accessibility"
-      >Accessibility preferences</a
+    <a
+      class="text-sm font-medium text-blue-700 hover:underline dark:text-blue-300"
+      href={resolve('/lms/settings/accessibility', {})}>Accessibility preferences</a
     >
     <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
       Adjust PathWorks learning supports, content warnings, autoplay, and counselor connection.

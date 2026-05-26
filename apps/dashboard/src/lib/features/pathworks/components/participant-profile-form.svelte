@@ -84,7 +84,7 @@
         name="disability_category"
       >
         <option value={null}>Prefer not to say</option>
-        {#each disabilityOptions as option}
+        {#each disabilityOptions as option (option.value)}
           <option value={option.value}>{option.label}</option>
         {/each}
       </select>
@@ -92,7 +92,7 @@
     </Field.Field>
 
     <div class="space-y-3">
-      {#each preferenceItems as item}
+      {#each preferenceItems as item (item.key)}
         <label class="flex gap-3 rounded-md border border-slate-200 p-3 dark:border-slate-800">
           <input
             class="mt-1 h-4 w-4"
