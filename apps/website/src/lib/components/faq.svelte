@@ -11,8 +11,8 @@
       class="ui:text-muted-foreground text-sm font-normal tracking-normal md:text-lg lg:px-[20%] lg:text-xl lg:tracking-wide"
     >
       Can't find the answer you're looking for?
-      <a class="text-blue-700 hover:underline" href="mailto:help@classroomio.com" target="_blank">Shoot us an email</a> and
-      we'll get back to you ASAP.
+      <a class="text-blue-700 hover:underline" href="mailto:hello@neur3.dev" target="_blank">Shoot us an email</a> and we'll
+      get back to you ASAP.
     </p>
   </header>
 
@@ -33,6 +33,6 @@
     header="Your Custom Academy – Up & Running in Minutes!"
     subText="Try before you buy. No credit card required."
     btnLabel="Book a demo"
-    link="classroomio/demo"
+    link="pathworks/demo"
   />
 </div>

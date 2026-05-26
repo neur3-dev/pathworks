@@ -49,7 +49,7 @@ const envSchema = z.object({
   PUBLIC_IS_SELFHOSTED: z.string().optional(),
   /** License key for enterprise features (SSO, token-auth, no-tracking, etc.) */
   LICENSE_KEY: z.string().optional(),
-  /** Dashboard origin for invite/email links (e.g. https://app.yourdomain.com). When set, all email links point here instead of app.classroomio.com. Required for self-hosted. */
+  /** Dashboard origin for invite/email links (e.g. https://app.yourdomain.com). When set, all email links point here instead of app.pathworks.com. Required for self-hosted. */
   DASHBOARD_ORIGIN: z.string().optional(),
   /**
    * Comma-separated list of Better Auth user emails allowed to access the

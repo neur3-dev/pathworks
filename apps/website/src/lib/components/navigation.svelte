@@ -95,8 +95,8 @@
     {
       key: 'self-hosting',
       title: 'Self-hosting & Docs',
-      subtitle: 'Run ClassroomIO in your own VPC.',
-      href: 'https://classroomio.com/docs'
+      subtitle: 'Run PathWorks in your own VPC.',
+      href: 'https://pathworks.neur3.dev/docs'
     },
     {
       key: 'mcp-recipes',
@@ -251,8 +251,8 @@
   <div class="mx-auto flex w-full items-center justify-between gap-20 px-4 py-1 lg:w-[90%] lg:px-0">
     <a href="/" class="w-[10%]">
       <div class="flex w-full items-center">
-        <img loading="lazy" width="28" height="28" src="/logo-512.png" alt="classroomio logo" class="w-7" />
-        <h1 class="ml-2 text-base font-medium">ClassroomIO</h1>
+        <img loading="lazy" width="28" height="28" src="/logo-512.png" alt="PathWorks logo" class="w-7" />
+        <h1 class="ml-2 text-base font-medium">PathWorks</h1>
       </div>
     </a>
 
@@ -328,7 +328,7 @@
       </div>
       <a
         class="text-sm font-medium transition-opacity duration-200 after:ml-2 after:content-['→'] hover:opacity-80"
-        href="https://app.classroomio.com"
+        href="/signup"
       >
         Dashboard
       </a>
@@ -345,7 +345,7 @@
         class="absolute top-0 right-0 h-screen w-[60%] border-2 bg-white px-3 pt-3 pb-2 sm:block md:w-[40%] md:p-7 lg:hidden"
       >
         <div class="mb-5 flex justify-between py-2">
-          <img loading="lazy" width="20" height="20" src="/logo-512.png" alt="classroomio logo" class="w-[15%]" />
+          <img loading="lazy" width="20" height="20" src="/logo-512.png" alt="PathWorks logo" class="w-[15%]" />
           <button class="mr-5" onclick={handleShowSolutions}>
             <X size={24} />
           </button>
@@ -423,7 +423,7 @@
           </a>
           <a
             class="w-full rounded-md px-4 py-4 text-left text-sm font-semibold transition-all duration-200 after:ml-2 after:content-['→'] hover:bg-gray-100 md:text-lg"
-            href="https://app.classroomio.com"
+            href="/signup"
           >
             Dashboard
           </a>

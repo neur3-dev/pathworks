@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>Pricing | ClassroomIO</title>
+  <title>Pricing | PathWorks</title>
 </svelte:head>
 
 <section>

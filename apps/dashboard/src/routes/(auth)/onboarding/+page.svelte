@@ -1,202 +1,163 @@
 <script lang="ts">
-  import * as Select from '@cio/ui/base/select';
-  import { Input } from '@cio/ui/base/input';
-  import { DomainInput } from '@cio/ui/custom/domain-input';
-  import * as Field from '@cio/ui/base/field';
+  import { goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
   import { Button } from '@cio/ui/base/button';
-  import { UserProfileIcon } from '$features/ui/icons';
+  import { Input } from '@cio/ui/base/input';
+  import * as Field from '@cio/ui/base/field';
   import { profile } from '$lib/utils/store/user';
-  import { onboardingApi } from '$features/onboarding/api/onboarding.svelte';
-  import { generateSitename } from '$lib/utils/functions/org';
-  import { t } from '$lib/utils/functions/translations';
-  import { GOALS, ONBOARDING_STEPS, SOURCES, DROPDOWN_ITEMS } from '$features/onboarding/utils/constants';
-  import type { OnboardingField } from '$features/onboarding/utils/types';
-  import { untrack } from 'svelte';
+  import { pathworksApi } from '$features/pathworks/api.svelte';
+  import { ParticipantProfileForm, type ParticipantProfileFormValue } from '$features/pathworks/components';
 
-  let fields: OnboardingField = $state({
-    fullname: '',
-    orgName: '',
-    siteName: '',
-    locale: 'en'
+  const goalOptions = [
+    'Healthcare support',
+    'Office / admin',
+    'Retail / customer service',
+    'Skilled trades',
+    'Technology',
+    'Food service',
+    "I'm not sure yet"
+  ];
+
+  let step = $state(1);
+  let fullname = $state('');
+  let goal = $state('');
+  let selectedGoal = $state('');
+  let preferences = $state<ParticipantProfileFormValue>({
+    disabilityCategory: null,
+    counselorName: '',
+    counselorEmail: '',
+    prefExtendedTime: true,
+    prefNoAutoplay: true,
+    prefContentWarnings: true,
+    prefMicrolearning: true,
+    saveProgress: true
   });
-  let isSiteNameTouched = $state(false);
+  let nameError = $state('');
 
-  const progress = $derived(Math.round((onboardingApi.step / Object.keys(ONBOARDING_STEPS).length) * 100));
+  const totalSteps = 5;
+  const progress = $derived(Math.round((step / totalSteps) * 100));
+  const vocationalGoal = $derived(goal.trim() || selectedGoal || null);
 
-  function updateSiteName(sname?: string) {
-    if (!sname) return;
+  async function finish() {
+    nameError = '';
+    if (!fullname.trim()) {
+      nameError = 'Enter your name so PathWorks can personalize your learning space.';
+      step = 1;
+      return;
+    }
 
-    untrack(() => {
-      fields.siteName = generateSitename(sname);
+    await pathworksApi.saveParticipantProfile({
+      fullname: fullname.trim(),
+      ipeVocationalGoal: vocationalGoal,
+      disabilityCategory: preferences.disabilityCategory,
+      counselorName: preferences.counselorName.trim() || null,
+      counselorEmail: preferences.counselorEmail.trim() || null,
+      prefExtendedTime: preferences.prefExtendedTime,
+      prefNoAutoplay: preferences.prefNoAutoplay,
+      prefContentWarnings: preferences.prefContentWarnings,
+      prefMicrolearning: preferences.prefMicrolearning
     });
+
+    await goto(resolve('/lms/mylearning', {}));
   }
-
-  $effect(() => {
-    updateSiteName(fields.siteName);
-  });
-
-  function setOrgSiteName(orgName: string | undefined, isTouched: boolean) {
-    if (!orgName || isTouched) return;
-
-    untrack(() => {
-      fields.siteName = orgName
-        ?.toLowerCase()
-        ?.replace(/\s+/g, '-')
-        ?.replace(/[^a-zA-Z0-9-]/g, '');
-    });
-  }
-
-  $effect(() => {
-    setOrgSiteName(fields.orgName, isSiteNameTouched);
-  });
 </script>
 
 {#if $profile.id}
-  <div class="flex min-h-screen w-full justify-center dark:bg-neutral-900">
-    <div class="flex w-9/12 max-w-md flex-col items-center justify-center">
-      <!-- Header With Logo -->
-      <div class="flex flex-col items-center">
-        <div class="mb-4 flex w-full items-center justify-center">
-          <img src="/logo-192.png" alt="ClassroomIO logo" height="50" width="50" data-atf="1" />
-          <h4 class="text-xl dark:text-white">ClassroomIO</h4>
-        </div>
-
-        <!-- Loggedin Email -->
-        <div
-          class="mb-6 flex w-64 items-center justify-center rounded-2xl border border-gray-300 bg-gray-100 py-6 dark:bg-neutral-800"
-        >
-          <UserProfileIcon />
-          <p class="ml-2 text-sm dark:text-white">{$profile.email}</p>
+  <main
+    class="flex min-h-screen w-full items-center justify-center bg-slate-50 px-4 py-8 text-slate-950 dark:bg-slate-950 dark:text-white"
+  >
+    <section class="w-full max-w-2xl" aria-labelledby="pathworks-onboarding-title">
+      <div class="mb-8 flex items-center gap-3">
+        <img src="/logo-192.png" alt="PathWorks logo" height="48" width="48" />
+        <div>
+          <p class="text-sm text-slate-600 dark:text-slate-300">{$profile.email}</p>
+          <h1 id="pathworks-onboarding-title" class="text-2xl font-semibold tracking-normal">PathWorks</h1>
         </div>
       </div>
 
-      <div class="form-container w-full overflow-y-auto px-2">
-        {#if onboardingApi.step === ONBOARDING_STEPS.ORG_SETUP}
-          <!-- Name/Organization Question -->
-          <Field.Group class="mb-6">
-            <!-- Full name -->
-            <Field.Field>
-              <Field.Label>{$t('onboarding.fullname')}</Field.Label>
-              <Input bind:value={fields.fullname} name="fullname" type="text" placeholder="e.g Joke Silva" />
-              {#if onboardingApi.errors.fullname}
-                <Field.Error>{onboardingApi.errors.fullname}</Field.Error>
-              {/if}
-            </Field.Field>
+      <div
+        class="mb-8 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
+        aria-label={`Step ${step} of ${totalSteps}`}
+      >
+        <div class="h-full bg-[linear-gradient(135deg,#1A5AD7_0%,#00F5A0_100%)]" style={`width: ${progress}%;`}></div>
+      </div>
 
-            <!-- Org name -->
-            <Field.Field>
-              <Field.Label>{$t('onboarding.name')}</Field.Label>
-              <Input bind:value={fields.orgName} name="orgname" type="text" placeholder="e.g My School Name" />
-              {#if onboardingApi.errors.orgName}
-                <Field.Error>{onboardingApi.errors.orgName}</Field.Error>
-              {/if}
-            </Field.Field>
-
-            <!-- Org Site Name -->
-            <Field.Field>
-              <Field.Label>{$t('onboarding.organisation_sitename')}</Field.Label>
-              <DomainInput
-                bind:value={fields.siteName}
-                placeholder="myschool"
-                prefix="https://"
-                suffix=".classroomio.com"
-                oninput={() => {
-                  isSiteNameTouched = true;
-                }}
-              />
-              {#if onboardingApi.errors.siteName}
-                <Field.Error>{onboardingApi.errors.siteName}</Field.Error>
-              {/if}
-            </Field.Field>
-          </Field.Group>
-        {:else}
-          <!-- Goal/Source Question -->
-          <div id="goal-question" class="mb-6 flex flex-col items-center">
-            <div class="w-10/12">
-              <!-- Goal Question -->
-              <div class="mb-10 flex w-full flex-col items-start justify-between">
-                <label for="text-field" class="m-0 mb-3 text-lg font-normal dark:text-white">
-                  {$t('onboarding.what_brings')}
-                </label>
-
-                <!-- Loop through Goals -->
-                {#each GOALS as goal}
-                  <label class="mb-1 inline-flex w-full items-center font-light dark:text-white">
-                    <input type="radio" bind:group={fields.goal} name="goal" value={goal.value} class="mr-2" />
-                    {$t(goal.label)}
-                  </label>
-                {/each}
-                <!-- Goal: Error message -->
-                {#if onboardingApi.errors.goal}
-                  <p class="text-sm text-red-500">
-                    {onboardingApi.errors.goal}
-                  </p>
-                {/if}
-              </div>
-
-              <!-- Source Question -->
-              <div class="flex w-full flex-col items-start justify-between">
-                <label for="text-field" class="m-0 mb-3 text-lg font-normal dark:text-white">
-                  {$t('onboarding.how')}
-                </label>
-
-                <!-- Loop through Goals -->
-                {#each SOURCES as source}
-                  <label class="mb-1 inline-flex w-full items-center font-light dark:text-white">
-                    <input type="radio" bind:group={fields.source} name="source" value={source.value} class="mr-2" />
-                    {$t(source.label)}
-                  </label>
-                {/each}
-                <!-- Goal: Error message -->
-                {#if onboardingApi.errors.source}
-                  <p class="text-sm text-red-500">
-                    {onboardingApi.errors.source}
-                  </p>
-                {/if}
-              </div>
-
-              <!-- Language Picker -->
-              <div class="mt-10">
-                <span class="dark:text-white">{$t('content.toggle_label')}: </span>
-                <Select.Root type="single" bind:value={fields.locale}>
-                  <Select.Trigger class="w-full">
-                    <p>{DROPDOWN_ITEMS.find((item) => item.id === fields.locale)?.text}</p>
-                  </Select.Trigger>
-                  <Select.Content>
-                    {#each DROPDOWN_ITEMS as item}
-                      <Select.Item value={item.id}>{item.text}</Select.Item>
-                    {/each}
-                  </Select.Content>
-                </Select.Root>
-              </div>
-            </div>
+      {#if step === 1}
+        <div class="space-y-6">
+          <div class="space-y-3">
+            <h2 class="text-3xl font-semibold tracking-normal">Welcome to PathWorks.</h2>
+            <p class="text-lg leading-8 text-slate-700 dark:text-slate-200">
+              This is your personal learning space for building work skills at your own pace. Everything here is
+              designed to work with you, not against you.
+            </p>
           </div>
+          <Field.Field>
+            <Field.Label>Name</Field.Label>
+            <Input
+              bind:value={fullname}
+              name="fullname"
+              autocomplete="name"
+              aria-invalid={nameError ? 'true' : undefined}
+            />
+            {#if nameError}
+              <Field.Error>{nameError}</Field.Error>
+            {/if}
+          </Field.Field>
+        </div>
+      {:else if step === 2}
+        <div class="space-y-6">
+          <h2 class="text-3xl font-semibold tracking-normal">What kind of work are you aiming for?</h2>
+          <p class="text-slate-700 dark:text-slate-300">This is optional. You can change it later.</p>
+          <div class="grid gap-2 sm:grid-cols-2">
+            {#each goalOptions as option}
+              <label class="flex items-center gap-2 rounded-md border border-slate-300 p-3 dark:border-slate-700">
+                <input type="radio" bind:group={selectedGoal} value={option} />
+                <span>{option}</span>
+              </label>
+            {/each}
+          </div>
+          <Field.Field>
+            <Field.Label>Another goal</Field.Label>
+            <Input
+              bind:value={goal}
+              name="vocational_goal"
+              placeholder="Certified nursing assistant, office admin..."
+            />
+          </Field.Field>
+        </div>
+      {:else if step === 3}
+        <div class="space-y-6">
+          <h2 class="text-3xl font-semibold tracking-normal">How you learn best</h2>
+          <p class="text-slate-700 dark:text-slate-300">All supports start on. Change anything that does not fit.</p>
+          <ParticipantProfileForm bind:value={preferences} showCounselor={false} />
+        </div>
+      {:else if step === 4}
+        <div class="space-y-6">
+          <h2 class="text-3xl font-semibold tracking-normal">Counselor connection</h2>
+          <p class="text-slate-700 dark:text-slate-300">
+            Optional. Add a counselor if you want them to receive read-only progress access.
+          </p>
+          <ParticipantProfileForm bind:value={preferences} showProfilePreferences={false} />
+        </div>
+      {:else}
+        <div class="space-y-4">
+          <h2 class="text-3xl font-semibold tracking-normal">You're all set.</h2>
+          <p class="text-lg leading-8 text-slate-700 dark:text-slate-200">
+            Your learning paths are ready. Start whenever you like. There are no deadlines here.
+          </p>
+        </div>
+      {/if}
+
+      <div class="mt-10 flex justify-between gap-3">
+        <Button variant="ghost" disabled={step === 1} onclick={() => (step = Math.max(1, step - 1))}>Back</Button>
+        {#if step < totalSteps}
+          <Button onclick={() => (step = Math.min(totalSteps, step + 1))}
+            >{step === 1 ? "Let's get started" : 'Continue'}</Button
+          >
+        {:else}
+          <Button loading={pathworksApi.isLoading} onclick={finish}>Take me to my learning paths</Button>
         {/if}
       </div>
-
-      <!-- Footer -->
-      <div class="mt-8 flex w-full items-center justify-between">
-        <div class="relative h-2 w-24 bg-gray-300">
-          <span class="progress bg-primary-700 absolute top-0 left-0 h-full" style="width: {progress}%;"></span>
-        </div>
-
-        <div class="flex">
-          {#if onboardingApi.step > ONBOARDING_STEPS.ORG_SETUP}
-            <Button variant="ghost" onclick={() => (onboardingApi.step = ONBOARDING_STEPS.ORG_SETUP)}>
-              {$t('onboarding.back')}
-            </Button>
-          {/if}
-          <Button loading={onboardingApi.isLoading} onclick={() => onboardingApi.submit(fields)}>
-            {$t('onboarding.continue')}
-          </Button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
+  </main>
 {/if}
-
-<style>
-  .form-container {
-    max-height: 66%;
-  }
-</style>

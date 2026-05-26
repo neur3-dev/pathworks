@@ -4,7 +4,7 @@
   import { goto } from '$app/navigation';
   import { SvelteURLSearchParams } from 'svelte/reactivity';
   import { resolve } from '$app/paths';
-  import { untrack } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import isEmpty from 'lodash/isEmpty';
   import { writable } from 'svelte/store';
   import { fade } from 'svelte/transition';
@@ -18,9 +18,11 @@
   import { isOrgStudent } from '$lib/utils/store/app';
   import { currentOrg } from '$lib/utils/store/org';
   import { snackbar } from '$features/ui/snackbar/store';
-  import { RefreshPageData, UnsavedChanges } from '$features/ui';
+  import { RefreshPageData } from '$features/ui';
   import LessonVersionHistory from '$features/course/components/lesson/lesson-version-history.svelte';
   import { courseApi, lessonApi } from '$features/course/api';
+  import { pathworksApi } from '$features/pathworks/api.svelte';
+  import { ContentWarningInterstitial, ModuleOverview, ResumeLessonPrompt } from '$features/pathworks/components';
   import { isHtmlValueEmpty } from '$lib/utils/functions/toHtml';
   import { lessonVideoUpload, lessonDocUpload } from '$features/course/components/lesson/store';
   import { t } from '$lib/utils/functions/translations';
@@ -51,6 +53,7 @@
   import { orderedTabs, tabs as materialTabs } from '$features/course/components/lesson/constants';
   import { getViewModeComponents } from '$features/course/components/lesson/utils';
   import { loadDraft, clearDraft } from '$features/course/utils/lesson-draft';
+  import { lessonVideoBus } from '$features/course/components/lesson/video/lesson-video-bus.svelte';
 
   interface Props {
     courseId: string;
@@ -152,6 +155,60 @@
   const viewModeComponents = $derived(getViewModeComponents(tabs));
 
   const isMaterialsEmpty = $derived(tabs.every((tab) => tab.badgeValue === 0));
+  const courseContentItems = $derived.by(() => {
+    const content = courseApi.course?.content;
+    if (!content) return [];
+
+    if (content.grouped) {
+      return content.sections.flatMap((section) => section.items);
+    }
+
+    return content.items ?? [];
+  });
+  const lessonItems = $derived(courseContentItems.filter((item) => item.type === ContentType.Lesson));
+  const lessonIndex = $derived(
+    Math.max(
+      0,
+      lessonItems.findIndex((item) => item.id === lessonId)
+    )
+  );
+  const lessonCount = $derived(Math.max(lessonItems.length, 1));
+  const lessonProgressPercent = $derived(Math.round(((lessonIndex + 1) / lessonCount) * 100));
+  const estimatedTime = $derived(lessonApi.lesson?.videos?.[0]?.metadata?.duration ? 'About 10 minutes' : 'Self-paced');
+  const whatYouWillLearn = $derived([
+    `Review ${lessonTitle}`,
+    'Move through the material without autoplay',
+    'Pause, leave, and come back without losing your place'
+  ]);
+  const contentWarning = $derived(
+    (lessonApi.lesson as { contentWarning?: string | null } | null)?.contentWarning ?? ''
+  );
+  const participantProfile = $derived(pathworksApi.participantProfile);
+  const savedLastPosition = $derived(Number(pathworksApi.participantProgress?.lastPosition ?? 0));
+  const hasLessonVideo = $derived(Boolean(lessonApi.lesson?.videos?.length));
+  const shouldShowModuleOverview = $derived(lessonIndex === 0 && !overviewAccepted);
+  const shouldShowContentWarning = $derived(
+    Boolean(contentWarning) && participantProfile?.prefContentWarnings !== false && !warningDismissed && !contentSkipped
+  );
+  const shouldShowResumePrompt = $derived(
+    mode === MODES.view &&
+      $isOrgStudent &&
+      lessonApi.lesson &&
+      savedLastPosition > 0 &&
+      !resumePromptHandled &&
+      !contentSkipped
+  );
+  const resumePositionLabel = $derived(
+    hasLessonVideo
+      ? `${Math.floor(savedLastPosition / 60)}:${String(savedLastPosition % 60).padStart(2, '0')}`
+      : `${Math.min(100, Math.round(savedLastPosition / 100))}% down the page`
+  );
+
+  let overviewAccepted = $state(false);
+  let warningDismissed = $state(false);
+  let contentSkipped = $state(false);
+  let resumePromptHandled = $state(false);
+  let loadedProgressKey = $state('');
 
   let timeoutId: NodeJS.Timeout | undefined;
 
@@ -290,16 +347,109 @@
       return;
     }
 
-    const shouldRestore = window.confirm(t.get('course.navItem.lessons.draft_recovery'));
-    if (shouldRestore) {
-      if (!lessonApi.translations[lessonId]) {
-        lessonApi.translations[lessonId] = {} as Record<TLocale, string>;
-      }
-      lessonApi.translations[lessonId][lessonApi.currentLocale] = draft.content;
-      lessonApi.isDirty = true;
-    } else {
-      clearDraft(lessonId, lessonApi.currentLocale);
+    if (!lessonApi.translations[lessonId]) {
+      lessonApi.translations[lessonId] = {} as Record<TLocale, string>;
     }
+    lessonApi.translations[lessonId][lessonApi.currentLocale] = draft.content;
+    lessonApi.isDirty = true;
+  });
+
+  $effect(() => {
+    if (!lessonId) return;
+    overviewAccepted = false;
+    warningDismissed = false;
+    contentSkipped = false;
+    resumePromptHandled = false;
+    loadedProgressKey = '';
+    lessonVideoBus.setResumeSeconds(0);
+  });
+
+  $effect(() => {
+    if (!$isOrgStudent || !courseId || !lessonId) return;
+    const progressKey = `${courseId}:${lessonId}`;
+    if (loadedProgressKey === progressKey) return;
+
+    loadedProgressKey = progressKey;
+    void pathworksApi.getParticipantProfile();
+    void pathworksApi.getParticipantProgress(courseId, lessonId);
+  });
+
+  function getCurrentLessonPosition() {
+    if (!browser) return 0;
+
+    if (hasLessonVideo && lessonVideoBus.currentTimeSeconds > 0) {
+      return Math.round(lessonVideoBus.currentTimeSeconds);
+    }
+
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    if (maxScroll <= 0) return 0;
+
+    return Math.max(0, Math.min(10000, Math.round((window.scrollY / maxScroll) * 10000)));
+  }
+
+  function saveParticipantProgress(status: 'in_progress' | 'completed', lastPosition = getCurrentLessonPosition()) {
+    if (!$isOrgStudent || !courseId || !lessonId) return;
+
+    pathworksApi.saveParticipantProgress({
+      courseId,
+      lessonId,
+      status,
+      lastPosition
+    });
+  }
+
+  function resumeLesson() {
+    resumePromptHandled = true;
+
+    if (hasLessonVideo) {
+      lessonVideoBus.setResumeSeconds(savedLastPosition);
+      lessonVideoBus.seek(savedLastPosition);
+    } else if (browser) {
+      window.requestAnimationFrame(() => {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: Math.max(0, (savedLastPosition / 10000) * maxScroll), behavior: 'smooth' });
+      });
+    }
+
+    saveParticipantProgress('in_progress', savedLastPosition);
+  }
+
+  function startLessonOver() {
+    resumePromptHandled = true;
+    lessonVideoBus.setResumeSeconds(0);
+
+    if (browser) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    saveParticipantProgress('in_progress', 0);
+  }
+
+  function skipLesson() {
+    contentSkipped = true;
+    saveParticipantProgress('completed');
+  }
+
+  onMount(() => {
+    if (!browser) return;
+
+    let scrollSaveTimer: ReturnType<typeof setTimeout> | undefined;
+    const handleBlur = () => saveParticipantProgress('in_progress');
+    const handleScroll = () => {
+      if (mode !== MODES.view || !$isOrgStudent || hasLessonVideo) return;
+      if (scrollSaveTimer) clearTimeout(scrollSaveTimer);
+      scrollSaveTimer = setTimeout(() => saveParticipantProgress('in_progress'), 800);
+    };
+
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      if (scrollSaveTimer) clearTimeout(scrollSaveTimer);
+      handleBlur();
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('scroll', handleScroll);
+    };
   });
 
   // Only autosave after real edits, not on every reactive update.
@@ -417,6 +567,25 @@
 <Page.Body>
   {#snippet child()}
     <div class={`overflow-x-hidden py-6 ${mode === MODES.edit ? 'lg:w-full xl:w-11/12' : 'mx-auto w-full max-w-3xl'}`}>
+      {#if mode === MODES.view && $isOrgStudent}
+        <div
+          class="sticky top-0 z-10 mb-6 rounded-lg border border-slate-200 bg-white/95 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-950/95"
+        >
+          <div
+            class="mb-2 flex items-center justify-between gap-3 text-sm font-medium text-slate-800 dark:text-slate-100"
+          >
+            <span>Lesson {lessonIndex + 1} of {lessonCount}</span>
+            <span>{lessonProgressPercent}%</span>
+          </div>
+          <div class="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800" aria-hidden="true">
+            <div
+              class="h-full bg-[linear-gradient(135deg,#1A5AD7_0%,#00F5A0_100%)]"
+              style={`width: ${lessonProgressPercent}%;`}
+            ></div>
+          </div>
+        </div>
+      {/if}
+
       {#if $isOrgStudent && lessonApi.lesson && !isLessonUnlocked}
         <Empty
           title={$t('course.navItem.lessons.content_locked_title')}
@@ -425,6 +594,34 @@
           variant="page"
           class="text-center"
         />
+      {:else if mode === MODES.view && $isOrgStudent && lessonApi.lesson && shouldShowModuleOverview}
+        <ModuleOverview
+          title={lessonTitle}
+          description={courseApi.course?.description ??
+            'Take this lesson at your own pace. You can pause and return anytime.'}
+          {estimatedTime}
+          {lessonCount}
+          {whatYouWillLearn}
+          onStart={() => {
+            overviewAccepted = true;
+            saveParticipantProgress('in_progress');
+          }}
+        />
+      {:else if shouldShowContentWarning}
+        <ContentWarningInterstitial
+          warning={contentWarning}
+          onContinue={() => (warningDismissed = true)}
+          onSkip={skipLesson}
+        />
+      {:else if shouldShowResumePrompt}
+        <ResumeLessonPrompt label={resumePositionLabel} onResume={resumeLesson} onStartOver={startLessonOver} />
+      {:else if contentSkipped}
+        <section
+          class="rounded-lg border border-slate-200 bg-white p-6 text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+        >
+          <h2 class="text-xl font-semibold tracking-normal">Lesson skipped</h2>
+          <p class="mt-2">This lesson was marked complete. You can return to it later if you want.</p>
+        </section>
       {:else if mode === MODES.edit}
         <UnderlineTabs.Root
           bind:value={currentTabValue}
@@ -509,8 +706,6 @@
     </div>
   {/snippet}
 </Page.Body>
-
-<UnsavedChanges bind:hasUnsavedChanges />
 
 {#if isVersionDrawerOpen && window.innerWidth >= 1024}
   <LessonVersionHistory

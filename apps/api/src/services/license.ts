@@ -25,7 +25,7 @@ function isSelfHosted(): boolean {
  * Expected response: { valid: boolean, features?: string[], expiresAt?: string }
  */
 async function fetchLicenseFromApi(): Promise<LicenseStatus> {
-  const url = 'https://enterprise-api.classroomio.dev';
+  const url = 'https://enterprise-api.pathworks.dev';
   const key = env.LICENSE_KEY?.trim();
 
   try {

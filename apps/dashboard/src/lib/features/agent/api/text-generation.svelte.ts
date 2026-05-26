@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import { snackbar } from '$features/ui/snackbar/store';
 import type { GenerateTextRequest } from '../utils/types';
 
@@ -14,7 +14,7 @@ export class TextGenerationApi extends BaseApiWithErrors {
 
     await this.execute<GenerateTextRequest>({
       requestFn: () =>
-        classroomio.agent['generate-text'].$post({
+        pathworks.agent['generate-text'].$post({
           json: { prompt, tone: tone as 'professional' | 'casual' | 'expert' | 'friendly', format, context, courseId }
         }),
       logContext: 'generating text',

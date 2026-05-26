@@ -2,8 +2,8 @@ const { TRUSTED_ORIGINS: TRUSTED_ORIGINS_STRING, PUBLIC_SERVER_URL } = process.e
 
 const DEFAULT_TRUSTED_ORIGINS = [
   'http://localhost:5173',
-  'https://*.classroomio.com',
-  'https://*.myclassroomio.com',
+  'https://*.pathworks.com',
+  'https://*.mypathworks.com',
   // Common OIDC IdP discovery origins (SSO registration fetches .well-known/openid-configuration)
   'https://accounts.google.com',
   'https://account.google.com', // common typo for Google

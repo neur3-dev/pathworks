@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 
 import { snackbar } from '$features/ui/snackbar/store';
 
@@ -13,11 +13,11 @@ export interface Quiz {
   updatedAt: string;
 }
 
-export type QuizListRequest = (typeof classroomio.organization)[':orgId']['quiz']['$get'];
-export type QuizGetRequest = (typeof classroomio.organization)[':orgId']['quiz'][':quizId']['$get'];
-export type QuizCreateRequest = (typeof classroomio.organization)[':orgId']['quiz']['$post'];
-export type QuizUpdateRequest = (typeof classroomio.organization)[':orgId']['quiz'][':quizId']['$put'];
-export type QuizDeleteRequest = (typeof classroomio.organization)[':orgId']['quiz'][':quizId']['$delete'];
+export type QuizListRequest = (typeof pathworks.organization)[':orgId']['quiz']['$get'];
+export type QuizGetRequest = (typeof pathworks.organization)[':orgId']['quiz'][':quizId']['$get'];
+export type QuizCreateRequest = (typeof pathworks.organization)[':orgId']['quiz']['$post'];
+export type QuizUpdateRequest = (typeof pathworks.organization)[':orgId']['quiz'][':quizId']['$put'];
+export type QuizDeleteRequest = (typeof pathworks.organization)[':orgId']['quiz'][':quizId']['$delete'];
 
 /**
  * API class for quiz operations
@@ -32,7 +32,7 @@ export class QuizApi extends BaseApiWithErrors {
   async list(orgId: string) {
     await this.execute<QuizListRequest>({
       requestFn: () =>
-        classroomio.organization[':orgId'].quiz.$get({
+        pathworks.organization[':orgId'].quiz.$get({
           param: { orgId }
         }),
       logContext: 'listing quizzes',
@@ -55,7 +55,7 @@ export class QuizApi extends BaseApiWithErrors {
   async get(orgId: string, quizId: string) {
     await this.execute<QuizGetRequest>({
       requestFn: () =>
-        classroomio.organization[':orgId'].quiz[':quizId'].$get({
+        pathworks.organization[':orgId'].quiz[':quizId'].$get({
           param: { orgId, quizId }
         }),
       logContext: 'fetching quiz',
@@ -78,7 +78,7 @@ export class QuizApi extends BaseApiWithErrors {
   async create(orgId: string, data: { title: string; questions?: any[]; timelimit?: string; theme?: string }) {
     await this.execute<QuizCreateRequest>({
       requestFn: () =>
-        classroomio.organization[':orgId'].quiz.$post({
+        pathworks.organization[':orgId'].quiz.$post({
           param: { orgId },
           json: data
         }),
@@ -108,7 +108,7 @@ export class QuizApi extends BaseApiWithErrors {
   ) {
     await this.execute<QuizUpdateRequest>({
       requestFn: () =>
-        classroomio.organization[':orgId'].quiz[':quizId'].$put({
+        pathworks.organization[':orgId'].quiz[':quizId'].$put({
           param: { orgId, quizId },
           json: data
         }),
@@ -135,7 +135,7 @@ export class QuizApi extends BaseApiWithErrors {
   async delete(orgId: string, quizId: string) {
     await this.execute<QuizDeleteRequest>({
       requestFn: () =>
-        classroomio.organization[':orgId'].quiz[':quizId'].$delete({
+        pathworks.organization[':orgId'].quiz[':quizId'].$delete({
           param: { orgId, quizId }
         }),
       logContext: 'deleting quiz',

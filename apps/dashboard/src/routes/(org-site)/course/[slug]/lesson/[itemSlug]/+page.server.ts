@@ -1,18 +1,17 @@
 import type { MetaTagsProps } from 'svelte-meta-tags';
 
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 import { getApiKeyHeaders, safeServerApi } from '$lib/utils/services/api/server';
 import { error } from '@sveltejs/kit';
 
-type GetPublicCourseItemRequest =
-  (typeof classroomio)['org-site']['course'][':courseSlug']['item'][':itemSlug']['$get'];
+type GetPublicCourseItemRequest = (typeof pathworks)['org-site']['course'][':courseSlug']['item'][':itemSlug']['$get'];
 type GetPublicCourseItemSuccess = Extract<InferResponseType<GetPublicCourseItemRequest>, { success: true }>;
 
 export const load = async ({ params = { slug: '', itemSlug: '' }, url, parent }) => {
   const { tree } = await parent();
 
   const itemResult = await safeServerApi<GetPublicCourseItemSuccess>(() =>
-    classroomio['org-site'].course[':courseSlug'].item[':itemSlug'].$get(
+    pathworks['org-site'].course[':courseSlug'].item[':itemSlug'].$get(
       { param: { courseSlug: params.slug, itemSlug: params.itemSlug } },
       getApiKeyHeaders()
     )
@@ -58,8 +57,8 @@ export const load = async ({ params = { slug: '', itemSlug: '' }, url, parent })
         : []
     },
     twitter: {
-      handle: '@classroomio',
-      site: '@classroomio',
+      handle: '@pathworks',
+      site: '@pathworks',
       cardType: 'summary_large_image' as const,
       title: fullTitle,
       description,

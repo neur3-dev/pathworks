@@ -44,16 +44,17 @@
   });
 </script>
 
-<section class="bg-[#f5f4f0] px-6 py-12 lg:px-12 lg:py-16">
+<section id="learning-design" class="bg-[#f7fafc] px-6 py-12 lg:px-12 lg:py-16">
   <div class="mx-auto max-w-[1100px]">
     <BlurFade once>
       <h2
         class="max-w-[820px] text-[clamp(1.75rem,2.8vw,2.4rem)] leading-[1.1] font-medium tracking-tight text-gray-950"
       >
-        Make it yours,<br />down to the favicon.
+        Built around access,<br />not pressure.
       </h2>
       <p class="mt-3 max-w-[620px] text-sm leading-relaxed text-gray-500">
-        Your brand, your domain, your content. ClassroomIO bends to fit the academy you want to ship.
+        PathWorks keeps the learning experience predictable, flexible, and safe for participants with different support
+        needs.
       </p>
     </BlurFade>
 
@@ -65,9 +66,9 @@
             (t) => t.id === selectedTheme
           )?.bgClass}"
         >
-          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Theme everything</h3>
+          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Path-first learning</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            Pick a theme color or drop in your own hex. Every page picks it up.
+            Courses are grouped into clear work readiness paths so participants always know where they are headed.
           </p>
 
           <!-- Visual: actual theme swatches from the app -->
@@ -100,9 +101,9 @@
       <!-- Custom domain -->
       <BlurFade delay={0.1} once>
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
-          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Your domain</h3>
+          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">No autoplay</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            Map a CNAME, click verify. SSL is handled. No ClassroomIO branding on the page.
+            Media waits for the learner to press play. Content warnings appear before sensitive topics.
           </p>
 
           <!-- Visual: browser bar mock -->
@@ -116,7 +117,7 @@
                   class="ml-2 flex flex-1 items-center gap-1.5 rounded-md bg-gray-50 px-2.5 py-1 text-[11px] text-gray-600"
                 >
                   <Lock size={10} class="text-green-600" />
-                  <span class="font-mono">learn.acme.com</span>
+                  <span class="font-mono">learning.pathworks.local</span>
                 </div>
               </div>
               <div class="grid grid-cols-3 gap-1.5 p-3">
@@ -132,9 +133,9 @@
       <!-- Embed -->
       <BlurFade delay={0.15} once>
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
-          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Embed anywhere</h3>
+          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Resume anytime</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            One script tag. Drop courses into your help center, in-product, or marketing site.
+            Participants can pause, leave, and come back without losing progress or being asked to confirm an exit.
           </p>
 
           <!-- Visual: code snippet -->
@@ -142,17 +143,12 @@
             <div
               class="overflow-hidden rounded-xl border border-gray-800/90 bg-gray-950 p-4 font-mono text-[11px] leading-relaxed text-gray-300 shadow-sm"
             >
-              <p class="text-gray-500">&lt;!-- in your help center --&gt;</p>
+              <p class="text-gray-500">&lt;!-- learning state --&gt;</p>
               <p class="mt-1.5">
-                <span class="text-pink-400">&lt;script</span>
-                <span class="text-sky-300"> src</span>=<span class="text-emerald-300">"cdn.cio/widget.js"</span><span
-                  class="text-pink-400">&gt;&lt;/script&gt;</span
-                >
+                <span class="text-sky-300">last_position</span>=<span class="text-emerald-300">"00:06:42"</span>
               </p>
               <p class="mt-1.5">
-                <span class="text-pink-400">&lt;div</span>
-                <span class="text-sky-300"> data-cio-widget</span>=<span class="text-emerald-300">"onboarding"</span
-                ><span class="text-pink-400">&gt;&lt;/div&gt;</span>
+                <span class="text-sky-300">status</span>=<span class="text-emerald-300">"in_progress"</span>
               </p>
             </div>
           </div>
@@ -162,9 +158,9 @@
       <!-- Open source / deep customization -->
       <BlurFade delay={0.2} once>
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
-          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Fork the codebase</h3>
+          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Self-host ready</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            Modern stack, readable codebase, AGPL on GitHub. Change whatever you need.
+            PathWorks is open source and self-hostable for programs that need control over deployment and data.
           </p>
 
           <!-- Visual: stylised file tree / stack -->

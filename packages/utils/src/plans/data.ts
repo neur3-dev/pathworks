@@ -16,7 +16,7 @@ export default {
       'Advanced Course Builder (no video upload)',
       '500K AI credits / month',
       'MCP access with 20 automation credits / month',
-      'ClassroomIO branding'
+      'PathWorks branding'
     ],
     CTA: {
       LABEL: 'Signup Now',
@@ -77,9 +77,9 @@ export default {
     ],
     CTA: {
       LABEL: 'Contact Us',
-      LINK: 'https://cal.com/classroomio/enterprise',
+      LINK: 'https://cal.com/pathworks/enterprise',
       DASHBOARD_LABEL: 'Contact Us',
-      DASHBOARD_LINK: 'https://cal.com/classroomio/enterprise',
+      DASHBOARD_LINK: 'https://cal.com/pathworks/enterprise',
       IS_DISABLED: false
     }
   }

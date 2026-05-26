@@ -5,7 +5,7 @@
   import { Skeleton } from '@cio/ui/base/skeleton';
   import { currentOrg } from '$lib/utils/store/org';
   import { AppHeader } from '$features/ui';
-  import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+  import { env } from '$env/dynamic/public';
 
   import { VerifyEmailModal } from '$features/onboarding/components';
 
@@ -26,7 +26,7 @@
   });
 </script>
 
-{#if PUBLIC_IS_SELFHOSTED !== 'true'}
+{#if env.PUBLIC_IS_SELFHOSTED !== 'true'}
   <AddOrgModal />
 {/if}
 

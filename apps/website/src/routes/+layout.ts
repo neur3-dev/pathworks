@@ -30,7 +30,7 @@ async function getStars() {
   let stars = 0;
 
   try {
-    const response = await fetch('https://api.github.com/repos/classroomio/classroomio');
+    const response = await fetch('https://api.github.com/repos/neur3-dev/pathworks');
     const data = await response.json();
     stars = data?.stargazers_count || 0;
   } catch (error) {
@@ -44,38 +44,38 @@ async function getStars() {
 
 function getBaseMetaTags(url: URL) {
   const metatags = Object.freeze({
-    title: 'ClassroomIO | The Open Source Learning Management System for Companies',
+    title: 'PathWorks | Work Readiness Learning for VR Participants',
     description:
-      'A flexible, user-friendly platform for creating, managing, and delivering courses for companies and training organisations',
+      'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
     canonical: new URL(url.pathname, url.origin).href,
     openGraph: {
       type: 'website',
       url: new URL(url.pathname, url.origin).href,
       locale: 'en_IE',
-      title: 'ClassroomIO | The Open Source Learning Management System for Companies',
+      title: 'PathWorks | Work Readiness Learning for VR Participants',
       description:
-        'A flexible, user-friendly platform for creating, managing, and delivering courses for companies and training organisations',
-      siteName: 'ClassroomIO',
+        'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
+      siteName: 'PathWorks',
       images: [
         {
-          url: 'https://brand.cdn.clsrio.com/og/classroomio-og.png',
-          alt: 'ClassroomIO OG Image',
+          url: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
+          alt: 'PathWorks preview image',
           width: 1920,
           height: 1080,
-          secureUrl: 'https://brand.cdn.clsrio.com/og/classroomio-og.png',
+          secureUrl: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
           type: 'image/jpeg'
         }
       ]
     },
     twitter: {
-      handle: '@classroomio',
-      site: '@classroomio',
+      handle: '@neur3dev',
+      site: '@neur3dev',
       cardType: 'summary_large_image' as const,
-      title: 'ClassroomIO | The Open Source Learning Management System for Companies',
+      title: 'PathWorks | Work Readiness Learning for VR Participants',
       description:
-        'A flexible, user-friendly platform for creating, managing, and delivering courses for companies and training organisations',
-      image: 'https://brand.cdn.clsrio.com/og/classroomio-og.png',
-      imageAlt: 'ClassroomIO OG Image'
+        'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
+      image: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
+      imageAlt: 'PathWorks preview image'
     }
   }) satisfies MetaTagsProps;
 

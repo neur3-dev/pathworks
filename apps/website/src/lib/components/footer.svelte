@@ -56,13 +56,13 @@
   <div class="relative z-10 flex flex-col gap-10 lg:flex-row lg:justify-between">
     <!-- Brand -->
     <div class="flex flex-col gap-4 lg:max-w-[220px]">
-      <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="ClassroomIO logo" />
+      <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="PathWorks logo" />
       <p class="ui:text-muted-foreground text-sm leading-6">
-        The Open Source LMS for compliance training and certification programs.
+        Work readiness learning for vocational rehabilitation participants.
       </p>
       <div class="flex items-center gap-2">
         <a
-          href="https://www.facebook.com/classroomiohq"
+          href="https://github.com/neur3-dev/pathworks"
           target="_blank"
           aria-label="Facebook"
           class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
@@ -70,7 +70,7 @@
           <Facebook size={18} />
         </a>
         <a
-          href="https://twitter.com/classroomio"
+          href="https://github.com/neur3-dev/pathworks"
           target="_blank"
           aria-label="Twitter"
           class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
@@ -78,7 +78,7 @@
           <Twitter size={18} />
         </a>
         <a
-          href="https://www.youtube.com/@ClassroomIO"
+          href="https://github.com/neur3-dev/pathworks"
           target="_blank"
           aria-label="YouTube"
           class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
@@ -152,14 +152,14 @@
           </li>
           <li>
             <a
-              href="https://classroomio.com/docs/"
+              href="/docs"
               target="_blank"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Help Center</a
             >
           </li>
           <li>
             <a
-              href="https://classroomio.com/docs/quickstart/signup"
+              href="/signup"
               target="_blank"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Getting Started</a
             >
@@ -182,7 +182,7 @@
           </li>
           <li>
             <a
-              href="mailto:help@classroomio.com"
+              href="mailto:hello@neur3.dev"
               target="_blank"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Support</a
             >
@@ -205,6 +205,6 @@
   <div
     class="ui:border-border ui:text-muted-foreground relative z-10 mt-10 border-t pt-6 text-center text-xs lg:text-left"
   >
-    All rights reserved — ClassroomIO © {new Date().getFullYear()}
+    All rights reserved - PathWorks © {new Date().getFullYear()}
   </div>
 </footer>

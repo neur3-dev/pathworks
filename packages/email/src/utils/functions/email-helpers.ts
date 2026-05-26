@@ -1,7 +1,7 @@
 import { FromData } from '../types';
 import { EMAIL_FROM } from '../constants';
 
-// format: "ClassroomIO Developers (via ClassroomIO.com)" <notify@mail.classroomio.com>
+// format: "PathWorks Developers (via PathWorks.com)" <notify@mail.pathworks.com>
 export function extractNameAndEmail(str: string): FromData | undefined {
   // Use regular expressions to match the name and email
   const regex = /"(.*?)"\s+<\s*(.*?)@(.*?)\s*>/;

@@ -1,8 +1,8 @@
 {
-  "background_color": "#ffffff",
-  "theme_color": "#333333",
-  "name": "ClassroomIO",
-  "short_name": "ClassroomIO",
+  "background_color": "#F7FAFC",
+  "theme_color": "#1A5AD7",
+  "name": "PathWorks",
+  "short_name": "PathWorks",
   "display": "minimal-ui",
   "start_url": "/",
   "icons": [

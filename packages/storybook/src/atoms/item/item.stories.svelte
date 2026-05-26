@@ -6,12 +6,12 @@
   import * as Avatar from '@cio/ui/base/avatar';
   import * as DropdownMenu from '@cio/ui/base/dropdown-menu';
 
-  import BadgeCheckIcon from '@lucide/svelte/icons/badge-check';
-  import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
+  import { BadgeCheck as BadgeCheckIcon } from '@lucide/svelte';
+  import { ChevronRight as ChevronRightIcon } from '@lucide/svelte';
   import { ExternalLinkIcon, HoverableItem } from '@cio/ui/custom/moving-icons';
-  import ShieldAlertIcon from '@lucide/svelte/icons/shield-alert';
-  import PlusIcon from '@lucide/svelte/icons/plus';
-  import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+  import { ShieldAlert as ShieldAlertIcon } from '@lucide/svelte';
+  import { Plus as PlusIcon } from '@lucide/svelte';
+  import { ChevronDown as ChevronDownIcon } from '@lucide/svelte';
 
   const { Story } = defineMeta({
     title: 'Atom/Item',

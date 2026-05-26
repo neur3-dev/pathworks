@@ -1,24 +1,24 @@
 import type { Cookies } from '@sveltejs/kit';
 
 /**
- * Returns the classroomio cookie string for API/auth requests.
- * Filters cookies whose names include "classroomio" and joins them as `name=value; ...`.
+ * Returns the pathworks cookie string for API/auth requests.
+ * Filters cookies whose names include "pathworks" and joins them as `name=value; ...`.
  */
 export function getCioCookieString(cookies: Cookies): string {
   return cookies
     .getAll()
-    .filter((c) => c.name.includes('classroomio'))
+    .filter((c) => c.name.includes('pathworks'))
     .map((c) => `${c.name}=${c.value}`)
     .join('; ');
 }
 
 export function getHasCioCookies(cookies: Cookies): boolean {
-  const cioCookies = cookies.getAll().filter((c) => c.name.includes('classroomio'));
+  const cioCookies = cookies.getAll().filter((c) => c.name.includes('pathworks'));
 
   if (cioCookies.length === 0) return false;
 
-  // check if the cookies doesn't includ ONLY classroomio_locale
-  const onlyLocaleCookie = cioCookies.every((c) => c.name === 'classroomio_locale');
+  // check if the cookies doesn't includ ONLY pathworks_locale
+  const onlyLocaleCookie = cioCookies.every((c) => c.name === 'pathworks_locale');
 
   return !onlyLocaleCookie;
 }

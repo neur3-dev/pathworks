@@ -16,10 +16,10 @@
   import { t } from '$lib/utils/functions/translations';
 
   import ComingSoon from '$features/ui/coming-soon.svelte';
-  import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+  import { env } from '$env/dynamic/public';
 
   const sidebar = useSidebar();
-  const isSelfHosted = PUBLIC_IS_SELFHOSTED === 'true';
+  const isSelfHosted = env.PUBLIC_IS_SELFHOSTED === 'true';
 
   interface Props {
     variant?: 'sidebar' | 'breadcrumb';
@@ -39,7 +39,7 @@
   function onClick(org: AccountOrg) {
     if (org.id === $currentOrg.id) return;
 
-    localStorage.setItem('classroomio_org_sitename', org.siteName!);
+    localStorage.setItem('pathworks_org_sitename', org.siteName!);
     currentOrg.set(mergeAccountOrgFromServer(org));
 
     setTheme(org.theme!);

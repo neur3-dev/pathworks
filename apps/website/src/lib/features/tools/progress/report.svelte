@@ -130,8 +130,8 @@
       style="display: flex;"
       class="bottom-5 mx-auto mt-20 flex w-[50%] items-center justify-center gap-1 rounded-md border bg-white px-2 py-1"
     >
-      <img src="/logo-192.png" alt="classroomio logo" class="w-4" />
-      <p class="text-[10px] font-bold">ClassroomIO.com</p>
+      <img src="/logo-192.png" alt="pathworks logo" class="w-4" />
+      <p class="text-[10px] font-bold">PathWorks.com</p>
     </div>
     <!--  -->
   </div>

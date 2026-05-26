@@ -28,17 +28,17 @@
             },
             {
               "title": "Blog",
-              "link": "https://classroomio.com/blog",
+              "link": "https://pathworks.com/blog",
               "redirect": true
             },
             {
               "title": "API",
-              "link": "https://classroomio.com/docs",
+              "link": "https://pathworks.com/docs",
               "redirect": true
             },
             {
               "title": "Docs",
-              "link": "https://classroomio.com/docs",
+              "link": "https://pathworks.com/docs",
               "redirect": true
             }
           ]

@@ -1,23 +1,23 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
 
-  import BookIcon from '@lucide/svelte/icons/book';
-  import GraduationCapIcon from '@lucide/svelte/icons/graduation-cap';
-  import UsersIcon from '@lucide/svelte/icons/users';
-  import SearchIcon from '@lucide/svelte/icons/search';
-  import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
-  import PlusIcon from '@lucide/svelte/icons/plus';
-  import FilterIcon from '@lucide/svelte/icons/filter';
-  import DownloadIcon from '@lucide/svelte/icons/download';
-  import MoreHorizontalIcon from '@lucide/svelte/icons/more-horizontal';
-  import FolderCodeIcon from '@lucide/svelte/icons/folder-code';
-  import UserPlusIcon from '@lucide/svelte/icons/user-plus';
-  import FileTextIcon from '@lucide/svelte/icons/file-text';
-  import SettingsIcon from '@lucide/svelte/icons/settings';
-  import TrashIcon from '@lucide/svelte/icons/trash';
-  import ShareIcon from '@lucide/svelte/icons/share';
-  import ArchiveIcon from '@lucide/svelte/icons/archive';
-  import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right';
+  import { Book as BookIcon } from '@lucide/svelte';
+  import { GraduationCap as GraduationCapIcon } from '@lucide/svelte';
+  import { Users as UsersIcon } from '@lucide/svelte';
+  import { Search as SearchIcon } from '@lucide/svelte';
+  import { ChevronDown as ChevronDownIcon } from '@lucide/svelte';
+  import { Plus as PlusIcon } from '@lucide/svelte';
+  import { Filter as FilterIcon } from '@lucide/svelte';
+  import { Download as DownloadIcon } from '@lucide/svelte';
+  import { MoreHorizontal as MoreHorizontalIcon } from '@lucide/svelte';
+  import { FolderCode as FolderCodeIcon } from '@lucide/svelte';
+  import { UserPlus as UserPlusIcon } from '@lucide/svelte';
+  import { FileText as FileTextIcon } from '@lucide/svelte';
+  import { Settings as SettingsIcon } from '@lucide/svelte';
+  import { Trash as TrashIcon } from '@lucide/svelte';
+  import { Share as ShareIcon } from '@lucide/svelte';
+  import { Archive as ArchiveIcon } from '@lucide/svelte';
+  import { ArrowUpRight as ArrowUpRightIcon } from '@lucide/svelte';
 
   import * as Page from '@cio/ui/base/page';
   import * as ButtonGroup from '@cio/ui/base/button-group';

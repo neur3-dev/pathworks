@@ -1,6 +1,6 @@
 import type { AccountOrg } from '$features/app/types';
 import type { MetaTagsProps } from 'svelte-meta-tags';
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
+import { env } from '$env/dynamic/private';
 import { getBaseMetaTags } from '$lib/utils/functions/metaTags';
 import { getOrgSiteInfo } from '$features/app/layout-setup';
 
@@ -32,18 +32,18 @@ export const load = async ({ url, cookies, request, locals }): Promise<LoadOutpu
     org: orgSiteInfo.org,
     baseMetaTags: getBaseMetaTags(url, orgSiteInfo),
     serverLang: request.headers?.get('accept-language') || '',
-    localeCookie: cookies.get('classroomio_locale') || '',
+    localeCookie: cookies.get('pathworks_locale') || '',
     locals
   };
 
   const loadMs = Math.round((performance.now() - loadStart) * 100) / 100;
   console.log(
-    `[+layout.server] load: ${loadMs}ms (getOrgSiteInfo: ${orgSiteInfoMs}ms) | PUBLIC_IS_SELFHOSTED=${PUBLIC_IS_SELFHOSTED}`
+    `[+layout.server] load: ${loadMs}ms (getOrgSiteInfo: ${orgSiteInfoMs}ms) | PUBLIC_IS_SELFHOSTED=${env.PUBLIC_IS_SELFHOSTED ?? ''}`
   );
 
   // If it isn't a registered dashboard domain and also not a valid sub domain.
   // if (!APP_SUBDOMAINS.includes(orgSiteInfo.subdomain) && !dev && !orgSiteInfo.isOrgSite) {
-  //   redirect(307, 'https://app.classroomio.com');
+  //   redirect(307, 'https://pathworks.neur3.dev');
   // }
 
   return response;

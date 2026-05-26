@@ -55,7 +55,7 @@
     };
   });
 
-  const orgName = $derived(data.org?.name ?? data.course?.org?.name ?? 'ClassroomIO');
+  const orgName = $derived(data.org?.name ?? data.course?.org?.name ?? 'PathWorks');
   const logoUrl = $derived(data.org?.avatarUrl ?? undefined);
 
   const courseJsonLd = $derived.by(() => {

@@ -1,6 +1,6 @@
 ## 1. Introduction
 
-At ClassroomIO ("us", "we", "our" or the "Company") we value your privacy and the importance of safeguarding your data. This Privacy Policy (the "Policy") describes our privacy practices for the activities set out below. As per your rights, we inform you how we collect, store, access, and otherwise process information relating to individuals. In this Policy, personal data ("Personal Data") refers to any information that on its own, or in combination with other available information, can identify an individual.
+At PathWorks ("us", "we", "our" or the "Company") we value your privacy and the importance of safeguarding your data. This Privacy Policy (the "Policy") describes our privacy practices for the activities set out below. As per your rights, we inform you how we collect, store, access, and otherwise process information relating to individuals. In this Policy, personal data ("Personal Data") refers to any information that on its own, or in combination with other available information, can identify an individual.
 
 We are committed to protecting your privacy in accordance with the highest level of privacy regulation. As such, we follow the obligations under the below regulations:
 
@@ -33,9 +33,9 @@ We are committed to protecting your privacy in accordance with the highest level
 
 ### Scope
 
-This policy applies to the ClassroomIO websites, domains, applications, services, and products.
+This policy applies to the PathWorks websites, domains, applications, services, and products.
 
-This Policy does not apply to third-party applications, websites, products, services or platforms that may be accessed through (non-ClassroomIO) links that we may provide to you. These sites are owned and operated independently from us, and they have their own separate privacy and data collection practices. Any Personal Data that you provide to these websites will be governed by the third-party's own privacy policy. We cannot accept liability for the actions or policies of these independent sites, and we are not responsible for the content or privacy practices of such sites.
+This Policy does not apply to third-party applications, websites, products, services or platforms that may be accessed through (non-PathWorks) links that we may provide to you. These sites are owned and operated independently from us, and they have their own separate privacy and data collection practices. Any Personal Data that you provide to these websites will be governed by the third-party's own privacy policy. We cannot accept liability for the actions or policies of these independent sites, and we are not responsible for the content or privacy practices of such sites.
 
 ### Processing Activities
 
@@ -91,7 +91,7 @@ If you provide us, or our service providers, with any Personal Data relating to 
 
 ### Device and Usage Data
 
-When you visit a ClassroomIO website, we automatically collect and store information about your visit using browser cookies (files which are sent by us to your computer), or similar technology. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. The Help Feature on most browsers will provide information on how to accept cookies, disable cookies or to notify you when receiving a new cookie. If you do not accept cookies, you may not be able to use some features of our Service and we recommend that you leave them turned on.
+When you visit a PathWorks website, we automatically collect and store information about your visit using browser cookies (files which are sent by us to your computer), or similar technology. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. The Help Feature on most browsers will provide information on how to accept cookies, disable cookies or to notify you when receiving a new cookie. If you do not accept cookies, you may not be able to use some features of our Service and we recommend that you leave them turned on.
 
 We also process information when you use our services and products. This information may include:
 
@@ -105,7 +105,7 @@ We also process information when you use our services and products. This informa
 
 ### Data we collect from third parties
 
-We may receive your Personal Data from third parties such as companies subscribing to ClassroomIO services, partners and other sources. This Personal Data is not collected by us but by a third party and is subject to the relevant third party's own separate privacy and data collection policies. We do not have any control or input on how your Personal Data is handled by third parties. As always, you have the right to review and rectify this information. If you have any questions you should first contact the relevant third party for further information about your Personal Data. Where that third party is unresponsive to your rights, you may contact the Data Protection Officer at ClassroomIO (contact details below).
+We may receive your Personal Data from third parties such as companies subscribing to PathWorks services, partners and other sources. This Personal Data is not collected by us but by a third party and is subject to the relevant third party's own separate privacy and data collection policies. We do not have any control or input on how your Personal Data is handled by third parties. As always, you have the right to review and rectify this information. If you have any questions you should first contact the relevant third party for further information about your Personal Data. Where that third party is unresponsive to your rights, you may contact the Data Protection Officer at PathWorks (contact details below).
 
 Our websites and services may contain links to other websites, applications and services maintained by third parties. The information practices of such other services, or of social media networks that host our branded social media pages, are governed by third parties' privacy statements, which you should review to better understand those third parties' privacy practices.
 
@@ -122,7 +122,7 @@ These purposes include:
 - Investigate and prevent security incidents such as breaches, attacks and hacks
 - Providing, Developing, and Improving our Products and Services
 - Deliver, maintain, debug and improve our products and services.
-- Enable you to access ClassroomIO services and set up accounts.
+- Enable you to access PathWorks services and set up accounts.
 - Provide you with technical and customer support
 
 Where we process your Personal Data to provide a product or service, we do so because it is necessary to perform contractual obligations. All of the above processing is necessary in our legitimate interests to provide products and services and to maintain our relationship with you and to protect our business for example against fraud. Consent will be required to initiate services with you. New consent will be required if any changes are made to the type of data collected. Within our contract, if you fail to provide consent, some services may not be available to you.
@@ -239,11 +239,11 @@ We may modify this Policy at any time. If we make changes to this Policy then we
 
 To request a copy of your information, unsubscribe from our email list, request for your data to be deleted, or ask a question about your data privacy:
 
-Email [help@classroomio.com](mailto:help@classroomio.com)
+Email [hello@neur3.dev](mailto:hello@neur3.dev)
 
 Write to us at:
 
-Data Privacy Officer of ClassroomIO  
+Data Privacy Officer of PathWorks
 128 City Road, London, United Kingdom, EC1V 2NX
 
 **Last updated:** April 12, 2026

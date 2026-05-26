@@ -1,10 +1,10 @@
 import type { CourseBySlugWithOrg, GetCourseBySlugRequest } from '$features/course/utils/types';
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 import { getApiKeyHeaders, safeServerApi } from '$lib/utils/services/api/server';
 import { calcCourseDiscount } from '$lib/utils/functions/course';
 import { error } from '@sveltejs/kit';
 
-type GetStudentInvitePreviewRequest = (typeof classroomio.invite.student)[':token']['$get'];
+type GetStudentInvitePreviewRequest = (typeof pathworks.invite.student)[':token']['$get'];
 type GetStudentInvitePreviewSuccess = Extract<InferResponseType<GetStudentInvitePreviewRequest>, { success: true }>;
 type GetCourseBySlugSuccess = Extract<InferResponseType<GetCourseBySlugRequest>, { success: true }>;
 
@@ -18,7 +18,7 @@ export const load = async ({ params, url }) => {
 
   if (inviteToken) {
     const inviteResult = await safeServerApi<GetStudentInvitePreviewSuccess>(() =>
-      classroomio.invite.student[':token'].$get({ param: { token: inviteToken } }, getApiKeyHeaders())
+      pathworks.invite.student[':token'].$get({ param: { token: inviteToken } }, getApiKeyHeaders())
     );
 
     if (!inviteResult.ok || !inviteResult.body.data) {
@@ -56,7 +56,7 @@ export const load = async ({ params, url }) => {
   }
 
   const courseResult = await safeServerApi<GetCourseBySlugSuccess>(() =>
-    classroomio.course.slug[':slug'].$get({
+    pathworks.course.slug[':slug'].$get({
       param: { slug }
     })
   );
