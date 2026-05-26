@@ -1,0 +1,10 @@
+{
+  "tool": "@axe-core/cli / axe-core via Playwright",
+  "url": "http://127.0.0.1:4173/counselor",
+  "date": "2026-05-26",
+  "status": "blocked",
+  "blockingError": "Chromium could not launch on this server because libasound.so.2 is missing and sudo apt install requires an interactive password. @axe-core/cli also failed before audit because no Chrome binary was installed.",
+  "violations": null,
+  "incomplete": null,
+  "passes": null
+}
