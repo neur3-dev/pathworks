@@ -2,6 +2,9 @@ import { Hono } from '@api/utils/hono';
 import { authMiddleware } from '@api/middlewares/auth';
 import { db, sql } from '@cio/db/drizzle';
 import { handleError } from '@api/utils/errors';
+import { env } from '@api/config/env';
+import { enqueueRawEmail } from '@api/services/jobs';
+import { createHmac, timingSafeEqual } from 'node:crypto';
 import { resolveParticipantOrgId, seedStarterLearningPathsForOrg } from '@api/services/pathworks';
 import { z } from 'zod';
 import { zValidator } from '@hono/zod-validator';
@@ -48,7 +51,145 @@ const ZParticipantProgressQuery = z.object({
   lessonId: z.string().uuid().optional()
 });
 
+const ZCounselorLogin = z.object({
+  email: z.string().email().max(255)
+});
+
+const ZCounselorToken = z.object({
+  token: z.string().min(10).max(2048)
+});
+
+function getCounselorSecret(): Uint8Array {
+  const secret = process.env.BETTER_AUTH_SECRET?.trim() || env.PRIVATE_SERVER_KEY?.trim();
+
+  if (!secret) {
+    throw new Error('BETTER_AUTH_SECRET or PRIVATE_SERVER_KEY is required for counselor links');
+  }
+
+  return new TextEncoder().encode(secret);
+}
+
+function getDashboardOrigin(): string {
+  return (
+    env.DASHBOARD_ORIGIN?.trim() || env.PUBLIC_SERVER_URL?.trim()?.replace(/api./, 'app.') || 'http://localhost:3000'
+  );
+}
+
+function encodeTokenPart(value: unknown): string {
+  return Buffer.from(JSON.stringify(value)).toString('base64url');
+}
+
+function signTokenPart(value: string): string {
+  return createHmac('sha256', getCounselorSecret()).update(value).digest('base64url');
+}
+
+async function signCounselorToken(email: string): Promise<string> {
+  const payload = encodeTokenPart({
+    email,
+    type: 'pathworks-counselor',
+    exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
+  });
+  return `${payload}.${signTokenPart(payload)}`;
+}
+
+async function verifyCounselorToken(token: string): Promise<string | null> {
+  try {
+    const [payloadPart, signature] = token.split('.');
+    if (!payloadPart || !signature) return null;
+
+    const expected = signTokenPart(payloadPart);
+    if (!timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null;
+
+    const payload = JSON.parse(Buffer.from(payloadPart, 'base64url').toString('utf8')) as {
+      email?: unknown;
+      type?: unknown;
+      exp?: unknown;
+    };
+
+    if (payload.type !== 'pathworks-counselor' || typeof payload.email !== 'string') return null;
+    if (typeof payload.exp !== 'number' || payload.exp < Math.floor(Date.now() / 1000)) return null;
+
+    return payload.email.toLowerCase().trim();
+  } catch {
+    return null;
+  }
+}
+
 export const pathworksRouter = new Hono()
+  .post('/counselor-login', zValidator('json', ZCounselorLogin), async (c) => {
+    try {
+      const { email } = c.req.valid('json');
+      const normalizedEmail = email.toLowerCase().trim();
+
+      const participants = (await db.execute(sql`
+        SELECT COUNT(*)::int AS count
+        FROM vr_participants
+        WHERE lower(counselor_email) = ${normalizedEmail}
+      `)) as unknown as Array<{ count: number }>;
+
+      const token = await signCounselorToken(normalizedEmail);
+      const url = new URL('/counselor', getDashboardOrigin());
+      url.searchParams.set('token', token);
+
+      if ((participants[0]?.count ?? 0) > 0) {
+        await enqueueRawEmail({
+          to: normalizedEmail,
+          subject: 'Your PathWorks counselor link',
+          content: `Open your read-only PathWorks counselor dashboard: ${url.toString()}`,
+          idempotencyKey: `pathworks-counselor-login:${normalizedEmail}:${Date.now()}`
+        });
+      }
+
+      return c.json({ success: true, data: { sent: true, link: url.toString() } }, 200);
+    } catch (error) {
+      return handleError(c, error, 'Failed to send counselor login link');
+    }
+  })
+  .get('/counselor-progress', zValidator('query', ZCounselorToken), async (c) => {
+    try {
+      const { token } = c.req.valid('query');
+      const counselorEmail = await verifyCounselorToken(token);
+
+      if (!counselorEmail) {
+        return c.json({ success: false, error: 'Invalid or expired counselor link' }, 401);
+      }
+
+      const rows = (await db.execute(sql`
+        WITH participant_courses AS (
+          SELECT
+            vp.user_id,
+            p.fullname,
+            p.email,
+            c.id AS course_id,
+            c.title AS course_title,
+            COUNT(l.id)::int AS lesson_count,
+            COUNT(pp.id) FILTER (WHERE pp.status = 'completed')::int AS completed_count,
+            MAX(pp.updated_at) AS last_activity
+          FROM vr_participants vp
+          JOIN profile p ON p.id = vp.user_id
+          LEFT JOIN participant_progress pp ON pp.user_id = vp.user_id
+          LEFT JOIN course c ON c.id = pp.course_id
+          LEFT JOIN lesson l ON l.course_id = c.id
+          WHERE lower(vp.counselor_email) = ${counselorEmail}
+          GROUP BY vp.user_id, p.fullname, p.email, c.id, c.title
+        )
+        SELECT
+          user_id AS "participantId",
+          fullname,
+          email,
+          course_id AS "courseId",
+          course_title AS "currentModule",
+          CASE WHEN lesson_count > 0 THEN ROUND((completed_count::numeric / lesson_count::numeric) * 100)::int ELSE 0 END AS "percentComplete",
+          last_activity AS "lastActivity"
+        FROM participant_courses
+        ORDER BY last_activity DESC NULLS LAST, fullname ASC
+      `)) as unknown as Array<Record<string, unknown>>;
+
+      return c.json({ success: true, data: { counselorEmail, participants: rows } }, 200);
+    } catch (error) {
+      return handleError(c, error, 'Failed to load counselor progress');
+    }
+  })
   .get('/participant-profile', authMiddleware, async (c) => {
     try {
       const user = c.get('user')!;

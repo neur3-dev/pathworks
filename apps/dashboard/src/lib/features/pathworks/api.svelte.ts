@@ -6,15 +6,43 @@ type ParticipantProfileRequest = (typeof pathworks.pathworks)['participant-profi
 type ParticipantProfileResponse = Extract<InferResponseType<ParticipantProfileRequest>, { success: true }>;
 type ParticipantProgressRequest = (typeof pathworks.pathworks)['participant-progress']['$get'];
 type ParticipantProgressResponse = Extract<InferResponseType<ParticipantProgressRequest>, { success: true }>;
+type CounselorLoginRequest = (typeof pathworks.pathworks)['counselor-login']['$post'];
+type CounselorProgressRequest = (typeof pathworks.pathworks)['counselor-progress']['$get'];
+type CounselorProgressResponse = Extract<InferResponseType<CounselorProgressRequest>, { success: true }>;
 
 export type LearningPath = LearningPathsResponse['data'][number];
 export type ParticipantProfile = ParticipantProfileResponse['data'];
 export type ParticipantProgress = ParticipantProgressResponse['data'];
+export type CounselorProgress = CounselorProgressResponse['data'];
 
 export class PathWorksApi extends BaseApiWithErrors {
   learningPaths = $state<LearningPath[]>([]);
   participantProfile = $state<ParticipantProfile | null>(null);
   participantProgress = $state<ParticipantProgress | null>(null);
+  counselorProgress = $state<CounselorProgress | null>(null);
+
+  async requestCounselorLogin(email: string) {
+    return this.execute<CounselorLoginRequest>({
+      requestFn: () =>
+        pathworks.pathworks['counselor-login'].$post({
+          json: { email }
+        }),
+      logContext: 'requesting PathWorks counselor login link'
+    });
+  }
+
+  async getCounselorProgress(token: string) {
+    return this.execute<CounselorProgressRequest>({
+      requestFn: () =>
+        pathworks.pathworks['counselor-progress'].$get({
+          query: { token }
+        }),
+      logContext: 'fetching PathWorks counselor progress',
+      onSuccess: (response) => {
+        this.counselorProgress = response.data;
+      }
+    });
+  }
 
   async getLearningPaths(orgId?: string) {
     return this.execute<LearningPathsRequest>({
