@@ -7,7 +7,7 @@
   import * as InputGroup from '@cio/ui/base/input-group';
   import * as Empty from '@cio/ui/base/empty';
   import { Progress } from '@cio/ui/base/progress';
-  import ArrowUpIcon from '@lucide/svelte/icons/arrow-up';
+  import { ArrowUp as ArrowUpIcon } from '@lucide/svelte';
 
   const { Story } = defineMeta({
     title: 'Atom/Spinner',

@@ -91,18 +91,18 @@
 
   <div class="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center text-center">
     <h1 class="max-w-[820px] text-[clamp(2rem,4vw,3.25rem)] leading-[1.1] font-medium tracking-tight text-gray-950">
-      Teach your customers your product
-      <em class="text-blue-700 not-italic">before support has to.</em>
+      Build work skills at your own pace
+      <em class="text-blue-700 not-italic">with PathWorks.</em>
     </h1>
 
     <p class="mt-5 max-w-[580px] text-sm leading-relaxed lg:text-base">
-      Launch a branded customer academy in days. Train customers, certify power users, and drive adoption on your own
-      domain, with an AI tutor in every lesson.
+      A vocational rehabilitation learning platform for participants building job readiness, digital literacy, job
+      search skills, and self-advocacy.
     </p>
 
     <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-      <Button data-cal-config="'layout':'month_view'" data-cal-link="classroomio/demo">Book a Demo</Button>
-      <Button href="/signup" variant="outline">Start free</Button>
+      <Button href="/signup">Start learning</Button>
+      <Button href="/#learning-design" variant="outline">See the approach</Button>
     </div>
   </div>
 
@@ -110,7 +110,7 @@
     <div class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200">
       <img
         src="/hero-academy.jpeg"
-        alt="Branded customer academy on a custom domain — catalog, programs, AI tutor"
+        alt="PathWorks learning dashboard with paths, lessons, and progress"
         width="2560"
         height="1440"
         class="block h-auto w-full"

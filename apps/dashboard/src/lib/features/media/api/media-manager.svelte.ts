@@ -1,5 +1,5 @@
 import { presignApi } from '$features/course/api/presign.svelte';
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import type {
   AssetStorageSummary,
   AssetTranscriptPayload,
@@ -67,7 +67,7 @@ export class MediaApi extends BaseApiWithErrors {
     }
 
     await this.execute<ListAssetsRequest>({
-      requestFn: () => classroomio.organization.assets.$get({ query: parsed.data }),
+      requestFn: () => pathworks.organization.assets.$get({ query: parsed.data }),
       logContext: 'listing organization assets',
       onSuccess: (response) => {
         this.assets = response.data;
@@ -86,8 +86,8 @@ export class MediaApi extends BaseApiWithErrors {
       return;
     }
 
-    await this.execute<typeof classroomio.organization.assets.storage.$get>({
-      requestFn: () => classroomio.organization.assets.storage.$get({ query: parsed.data }),
+    await this.execute<typeof pathworks.organization.assets.storage.$get>({
+      requestFn: () => pathworks.organization.assets.storage.$get({ query: parsed.data }),
       logContext: 'fetching media manager storage summary',
       onSuccess: (response) => {
         this.storageSummary = response.data;
@@ -109,7 +109,7 @@ export class MediaApi extends BaseApiWithErrors {
     let metadata: YouTubeMetadata | null = null;
     await this.execute<GetYouTubeMetadataRequest>({
       requestFn: () =>
-        classroomio.organization.assets['youtube-metadata'].$get({
+        pathworks.organization.assets['youtube-metadata'].$get({
           query: result.data
         }),
       logContext: 'resolving YouTube metadata',
@@ -136,7 +136,7 @@ export class MediaApi extends BaseApiWithErrors {
     let asset: OrganizationAsset | null = null;
     await this.execute<CreateAssetRequest>({
       requestFn: () =>
-        classroomio.organization.assets.$post({
+        pathworks.organization.assets.$post({
           json: result.data
         }),
       logContext: 'creating media asset',
@@ -166,7 +166,7 @@ export class MediaApi extends BaseApiWithErrors {
     let updated: UpdateAssetData | null = null;
     await this.execute<UpdateAssetRequest>({
       requestFn: () =>
-        classroomio.organization.assets[':assetId'].$put({
+        pathworks.organization.assets[':assetId'].$put({
           param: { assetId },
           json: result.data
         }),
@@ -187,7 +187,7 @@ export class MediaApi extends BaseApiWithErrors {
     let usage: AssetUsageGraph | null = null;
     await this.execute<GetAssetUsageRequest>({
       requestFn: () =>
-        classroomio.organization.assets[':assetId'].usage.$get({
+        pathworks.organization.assets[':assetId'].usage.$get({
           param: { assetId }
         }),
       logContext: 'fetching media asset usage',
@@ -212,7 +212,7 @@ export class MediaApi extends BaseApiWithErrors {
     let usage: AssetUsage | null = null;
     await this.execute<AttachAssetRequest>({
       requestFn: () =>
-        classroomio.organization.assets[':assetId'].attach.$post({
+        pathworks.organization.assets[':assetId'].attach.$post({
           param: { assetId },
           json: result.data
         }),
@@ -238,7 +238,7 @@ export class MediaApi extends BaseApiWithErrors {
     let success = false;
     await this.execute<DetachAssetRequest>({
       requestFn: () =>
-        classroomio.organization.assets[':assetId'].detach.$post({
+        pathworks.organization.assets[':assetId'].detach.$post({
           param: { assetId },
           json: result.data
         }),
@@ -391,7 +391,7 @@ export class MediaApi extends BaseApiWithErrors {
     let data: AssetTranscriptPayload | null = null;
 
     await this.execute<GetAssetTranscriptRequest>({
-      requestFn: () => classroomio.organization.assets[':assetId'].transcript.$get({ param: { assetId } }),
+      requestFn: () => pathworks.organization.assets[':assetId'].transcript.$get({ param: { assetId } }),
       logContext: 'fetching asset transcript',
       onSuccess: (response) => {
         data = response.data;
@@ -408,7 +408,7 @@ export class MediaApi extends BaseApiWithErrors {
   async generateTranscript(assetId: string): Promise<boolean> {
     let ok = false;
     await this.execute<StartAssetTranscriptionRequest>({
-      requestFn: () => classroomio.jobs.media.asset[':assetId'].transcribe.$post({ param: { assetId } }),
+      requestFn: () => pathworks.jobs.media.asset[':assetId'].transcribe.$post({ param: { assetId } }),
       logContext: 'starting transcription job',
       onSuccess: () => {
         ok = true;

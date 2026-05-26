@@ -207,6 +207,10 @@
           lessonVideoBus.setSeekFn((seconds) => {
             player.currentTime = seconds;
           });
+
+          if (lessonVideoBus.resumeSeconds > 0) {
+            player.currentTime = lessonVideoBus.resumeSeconds;
+          }
         },
         onFirstPlay: handleFirstPlay,
         transcriptPanelControl

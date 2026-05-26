@@ -42,12 +42,12 @@
   });
 
   function handleSupport() {
-    window.open('mailto:help@classroomio.com?subject=Email Verification Issue&body=Error Type: ' + type, '_blank');
+    window.open('mailto:help@pathworks.neur3.dev?subject=Email Verification Issue&body=Error Type: ' + type, '_blank');
   }
 </script>
 
 <svelte:head>
-  <title>Email Verification Error - ClassroomIO</title>
+  <title>Email Verification Error - PathWorks</title>
   <meta name="description" content="There was an issue verifying your email address." />
 </svelte:head>
 

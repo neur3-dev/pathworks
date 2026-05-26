@@ -23,7 +23,7 @@ function originMatchesStaticEntry(origin: string, entry: string): boolean {
   return regex.test(origin);
 }
 
-function isClassroomioHost(hostname: string): boolean {
+function isPathWorksHost(hostname: string): boolean {
   const host = hostname.toLowerCase();
 
   return FIRST_PARTY_ROOTS.some((root) => host === root || host.endsWith(`.${root}`));
@@ -53,7 +53,7 @@ export async function preloadVerifiedCustomDomainOrigins(): Promise<void> {
 
 /**
  * Resolves whether a browser `Origin` header value is allowed for CORS / Better Auth.
- * `staticTrustedOriginEntries` may include exact origins or `*` patterns (e.g. https://*.classroomio.com).
+ * `staticTrustedOriginEntries` may include exact origins or `*` patterns (e.g. https://*.pathworks.com).
  */
 export function resolveTrustedBrowserOrigin(
   origin: string | undefined | null,
@@ -83,7 +83,7 @@ export function resolveTrustedBrowserOrigin(
 
   const hostname = parsed.hostname;
 
-  if (isClassroomioHost(hostname)) {
+  if (isPathWorksHost(hostname)) {
     return origin;
   }
 

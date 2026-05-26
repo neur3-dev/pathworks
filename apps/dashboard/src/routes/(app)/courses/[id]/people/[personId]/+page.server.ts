@@ -1,4 +1,4 @@
-import { classroomio, getApiHeaders } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
 import type { GetUserCourseAnalyticsSuccess, UserCourseAnalytics } from '$features/course/utils/types';
@@ -17,7 +17,7 @@ export const load = async ({ params, cookies }) => {
 
   try {
     const result = await safeServerApi<GetUserCourseAnalyticsSuccess>(() =>
-      classroomio.course[':courseId']['members'][':userId']['analytics'].$get(
+      pathworks.course[':courseId']['members'][':userId']['analytics'].$get(
         {
           param: { courseId, userId }
         },

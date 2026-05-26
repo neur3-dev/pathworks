@@ -158,7 +158,7 @@
 </script>
 
 <svelte:head>
-  <title>Docs vs Company Academy | ClassroomIO</title>
+  <title>Docs vs Company Academy | PathWorks</title>
   <meta
     name="description"
     content="A practical guide to when your company needs documentation, when it needs a company academy, and how both work together for onboarding, enablement, and certification."
@@ -184,7 +184,7 @@
       </p>
 
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Button data-cal-config="'layout':'month_view'" data-cal-link="classroomio/demo">Book a Demo</Button>
+        <Button data-cal-config="'layout':'month_view'" data-cal-link="pathworks/demo">Book a Demo</Button>
         <Button href="/customer-education" variant="outline">Explore academies</Button>
       </div>
     </div>
@@ -376,7 +376,7 @@
   </section>
 
   <PageSignupCTA
-    header="ClassroomIO can host your company academy."
+    header="PathWorks can host your company academy."
     subText="Turn your docs, videos, policies, and product knowledge into a branded academy with courses, assessments, certificates, analytics, and a custom domain."
     btnLabel="Book a Demo"
   />

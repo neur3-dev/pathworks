@@ -1,4 +1,4 @@
-import { BaseApi, classroomio } from '$lib/utils/services/api';
+import { BaseApi, pathworks } from '$lib/utils/services/api';
 
 import type { ComplianceOverviewData, ComplianceOverviewRequest } from '../utils/types';
 
@@ -13,7 +13,7 @@ class ComplianceApi extends BaseApi {
     this.loading = true;
     this.lastFetchedOrgId = orgId;
     await this.execute<ComplianceOverviewRequest>({
-      requestFn: () => classroomio.dash['compliance-overview'].$get({ query: { orgId } }),
+      requestFn: () => pathworks.dash['compliance-overview'].$get({ query: { orgId } }),
       logContext: 'fetching org compliance overview',
       onSuccess: (response) => {
         this.overview = response.data;

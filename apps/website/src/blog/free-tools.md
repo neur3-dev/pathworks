@@ -10,8 +10,8 @@ tags: ['Launch Week', 'Free tools']
 published: true
 ---
 
-![classroomio-free-tools](https://assets.cdn.clsrio.com/blog/free-tools.png)
-_ClassroomIO Free Tools_
+![pathworks-free-tools](https://assets.cdn.clsrio.com/blog/free-tools.png)
+_PathWorks Free Tools_
 
 For a while now, we've been looking to build tools that will help educators and students be more productive. The only rule of thumb for every tool is that it must be FREE to use. I spent time conducting research, examining existing options, and talking to students. As a result, I came up with several tools that can help educators and students enhance their productivity.
 
@@ -66,6 +66,6 @@ This is my favorite because you can play with someone else. With our simple onli
 
 ## What's Next?
 
-Please try them out and give us feedback. We'd love to hear from you. If you experience any issues, please create a ticket on our [GitHub repository](https://github.com/classroomio/classroomio/issues).
+Please try them out and give us feedback. We'd love to hear from you. If you experience any issues, please create a ticket on our [GitHub repository](https://github.com/pathworks/pathworks/issues).
 
-Don't forget to give us a star on [GitHub](https://github.com/classroomio/classroomio).
+Don't forget to give us a star on [GitHub](https://github.com/pathworks/pathworks).

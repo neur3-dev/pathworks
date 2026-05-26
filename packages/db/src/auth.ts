@@ -22,7 +22,7 @@ import { trackLoginHook } from './auth/hooks/track-login';
 /**
  * Cloud (multi-tenant) only. Routes OAuth/SSO callbacks to the canonical
  * production URL while completing the flow on whichever tenant host the
- * user signed in from (<org>.myclassroomio.com or a BYOD domain).
+ * user signed in from (<org>.mypathworks.com or a BYOD domain).
  *
  * Self-hosted instances run with one apex (api.<domain> + app.<domain>)
  * and use AUTH_COOKIE_DOMAIN for cross-subdomain cookies, so the proxy
@@ -73,7 +73,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     return origins;
   },
   advanced: {
-    cookiePrefix: 'classroomio',
+    cookiePrefix: 'pathworks',
     // Cloud (multi-tenant): host-only cookies on each tenant/BYOD domain.
     // Self-hosted: cross-subdomain cookies under AUTH_COOKIE_DOMAIN so the
     // session set on `api.<apex>` is also sent to `app.<apex>`.

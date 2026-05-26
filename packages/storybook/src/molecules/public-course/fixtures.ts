@@ -16,8 +16,8 @@ export const CALLOUT_FIXTURE: PublicCourseCalloutData = {
 
 export const ORG_FIXTURE: PublicCourseOrgData = {
   id: 'org-1',
-  name: 'ClassroomIO',
-  siteName: 'classroomio',
+  name: 'PathWorks',
+  siteName: 'pathworks',
   avatarUrl: 'https://avatars.githubusercontent.com/u/119528464?s=200&v=4'
 };
 

@@ -1,6 +1,6 @@
 ---
 title: 'Introducing Student Analytics'
-description: 'As we end 2024, we are releasing students analytics to all organisation on ClassroomIO. You can now view analytics on your students, including their last login date, course completion status, and much more.'
+description: 'As we end 2024, we are releasing students analytics to all organisation on PathWorks. You can now view analytics on your students, including their last login date, course completion status, and much more.'
 imageUrl: 'https://assets.cdn.clsrio.com/blog/students-analytics.png'
 date: '2024-12-31'
 author: Rotimi Best
@@ -10,8 +10,8 @@ tags: ['Analytics', 'Company Update']
 published: true
 ---
 
-![classroomio-student-analytics](https://assets.cdn.clsrio.com/blog/students-analytics.png)
-_ClassroomIO Students Analytics_
+![pathworks-student-analytics](https://assets.cdn.clsrio.com/blog/students-analytics.png)
+_PathWorks Students Analytics_
 
 As we end the year, we are excited to announce that we have added student analytics to our platform. This is a feature that we have been working on for a while and we are happy to finally launch it. With this new feature, you can better understand the progress of specific students in your course or your organisation.
 
@@ -40,4 +40,4 @@ Further more, when you go into any course and go to the people tab, you can view
 
 We are working on adding more analytics to the platform to help you better understand what's going on in your organisation. You will know the coutries of your students, their overall performance and more.
 
-Give us feedback on what you think about this feature and what you would like to see next on [Discord](https://classroomio.com/discord).
+Give us feedback on what you think about this feature and what you would like to see next on [Discord](https://pathworks.neur3.dev/discord).

@@ -1095,7 +1095,7 @@
           "audit_actor": "Actor",
           "audit_ip": "IP",
           "scan_qr": "Escanear QR",
-          "classroomio_brand": "ClassroomIO.com",
+          "pathworks_brand": "PathWorks.com",
           "snackbar_invite_link_copied": "Enlace de invitación copiado",
           "snackbar_invite_link_regenerated": "Se ha generado un nuevo enlace de invitación.",
           "snackbar_failed_generate_link": "No se pudo generar el enlace de invitación",
@@ -2131,7 +2131,7 @@
     },
     "creator": {
       "heading": "¿Qué curso quieres crear?",
-      "placeholder": "Pídele a ClassroomIO que cree un curso para ti...",
+      "placeholder": "Pídele a PathWorks que cree un curso para ti...",
       "type": {
         "self_paced": "a tu propio ritmo",
         "live_class": "Clase en vivo"
@@ -2394,7 +2394,7 @@
         "save": "Guardar",
         "your_domain": "Tu dominio",
         "custom_domain_error": "No puede agregar un dominio de nivel superior como dominio personalizado. En su lugar, utilice un subdominio como 'cursos.[susitio web].com' o 'www.[susitio web].com'.",
-        "custom_domain_not_classroomio": "El dominio no puede contener 'classroomio'",
+        "custom_domain_not_pathworks": "El dominio no puede contener 'pathworks'",
         "custom_domain_success": "Dominio personalizado agregado exitosamente",
         "dns_description": "Establezca el siguiente registro en su proveedor de DNS para continuar:",
         "dns_type": "Tipo",
@@ -2465,12 +2465,12 @@
     "goto": "Ir a",
     "courses": "Cursos",
     "home": "Inicio",
-    "classroomio_home": "AulaIO Inicio",
+    "pathworks_home": "AulaIO Inicio",
     "dashboard": "Panel de control",
     "discussion": "Discusión",
     "people": "gente",
     "goto_lms": "Ir a LMS",
-    "goto_home": "Ir a la página de inicio de ClassroomIO",
+    "goto_home": "Ir a la página de inicio de PathWorks",
     "login": "Iniciar sesión",
     "signup": "Regístrate",
     "redirecting": "Redireccionando",
@@ -2571,7 +2571,7 @@
     "compliance": "Cumplimiento"
   },
   "media_manager": {
-    "page_title": "Administrador de medios - ClassroomIO",
+    "page_title": "Administrador de medios - PathWorks",
     "heading": "Gerente de Medios",
     "empty": "No se encontraron activos",
     "usage": {
@@ -2689,7 +2689,7 @@
       "provider": "Usamos Polar para ayudarte a gestionar tu facturación",
       "open_billing": "Facturación abierta",
       "error": "Se produjo un error al abrir la facturación.",
-      "page_subtitle": "Your plan, billing portal, and how you pay for ClassroomIO.",
+      "page_subtitle": "Your plan, billing portal, and how you pay for PathWorks.",
       "ai_credits": "Uso del asistente de IA",
       "ai_tokens_used": "tokens usados este mes",
       "ai_bonus_credits": "créditos de bonificación disponibles"
@@ -2697,7 +2697,7 @@
     "integrations": {
       "heading": "Telegrama",
       "sub_heading": "Conecte su cuenta a Telegram para recibir notificaciones de cualquier cambio dentro de la aplicación.",
-      "step_authenticate": "Paso 1: autentica tu cuenta a través del bot ClassroomIO.",
+      "step_authenticate": "Paso 1: autentica tu cuenta a través del bot PathWorks.",
       "open_bot_button": "Abrir robot",
       "step_chatId": "Paso 2: Ingrese el ID de chat que le proporcionó el bot.",
       "connect_button": "Conectar",
@@ -3009,7 +3009,7 @@
       "gallery": {
         "heading": "Temas populares",
         "description": "Creado con funciones principales que puedes personalizar fácilmente, sin necesidad de codificación.",
-        "by_classroomio": "por ClassroomIO",
+        "by_pathworks": "por PathWorks",
         "add": "Añadir",
         "upgrade": "Actualizar"
       },
@@ -3079,7 +3079,7 @@
         "accepted": "Aceptado:",
         "validation_error": "El tamaño del archivo excede el límite máximo:"
       },
-      "page_subtitle": "Your name, email, and how you appear wherever you work in ClassroomIO."
+      "page_subtitle": "Your name, email, and how you appear wherever you work in PathWorks."
     },
     "tabs": {
       "profile_tab": "Perfil",
@@ -3437,7 +3437,7 @@
     "snackbar_error": "error al enviar código"
   },
   "public_courses": {
-    "page_title": "Cursos - ClassroomIO",
+    "page_title": "Cursos - PathWorks",
     "heading": "Cursos",
     "subtitle": "Explorar todos los cursos publicados",
     "clear_filters": "Borrar filtros",
@@ -3504,7 +3504,7 @@
   },
   "invite": {
     "organization": {
-      "page_title": "Únase a {orgName} en ClassroomIO",
+      "page_title": "Únase a {orgName} en PathWorks",
       "invitation_student": "Has sido invitado a {orgName} como estudiante.",
       "invitation_teacher": "Has sido invitado a {orgName} como profesor.",
       "invitation_admin": "Has sido invitado a {orgName} como administrador.",
@@ -3531,21 +3531,21 @@
       "setup": {
         "title": "Configuración del cliente",
         "description": "Utilice una clave con ámbito de organización por integración. Si se rota o revoca una clave, el cliente deja de funcionar hasta que se configura el nuevo secreto.",
-        "claude_code_description": "Registra `@classroomio/mcp` con Claude Code utilizando la clave de alcance organizacional generada.",
-        "codex_description": "Agrega el servidor ClassroomIO MCP al Codex con la misma clave de ámbito de organización.",
+        "claude_code_description": "Registra `@pathworks/mcp` con Claude Code utilizando la clave de alcance organizacional generada.",
+        "codex_description": "Agrega el servidor PathWorks MCP al Codex con la misma clave de ámbito de organización.",
         "cursor_description": "Pegue esto en `~/.cursor/mcp.json` o en la configuración MCP de su espacio de trabajo.",
         "opencode_description": "Agregue esto a `opencode.json` en la raíz del proyecto o a `~/.config/opencode/opencode.json`."
       },
       "keys": {
         "title": "Claves MCP",
-        "description": "Estas claves autentican la organización actual cuando un cliente MCP llama a ClassroomIO a través de `@classroomio/mcp`.",
+        "description": "Estas claves autentican la organización actual cuando un cliente MCP llama a PathWorks a través de `@pathworks/mcp`.",
         "generate": "Generar clave MCP",
         "secret_once": "Este secreto se muestra una vez. Cópielo en su cliente MCP ahora.",
         "modal": {
           "title": "Create MCP key",
           "description": "Choose a name for this MCP key before it is generated.",
           "name_label": "Key name",
-          "name_placeholder": "ClassroomIO OpenCode",
+          "name_placeholder": "PathWorks OpenCode",
           "cancel": "Cancel",
           "save": "Create key"
         }
@@ -3561,17 +3561,17 @@
         "rate_limits_description": "Solicitudes de lectura/escritura/publicación permitidas por minuto.",
         "used_label": "Usado:"
       },
-      "page_subtitle": "Connect AI tools to ClassroomIO with org-scoped keys you can rotate anytime."
+      "page_subtitle": "Connect AI tools to PathWorks with org-scoped keys you can rotate anytime."
     },
     "api": {
-      "subtitle": "Manage API keys to integrate with the ClassroomIO public API.",
+      "subtitle": "Manage API keys to integrate with the PathWorks public API.",
       "keys": {
         "title": "API keys",
-        "description": "These keys authenticate the current organization when calling the ClassroomIO public API.",
+        "description": "These keys authenticate the current organization when calling the PathWorks public API.",
         "generate": "Generate API key",
         "secret_once": "This secret is shown once. Copy it and store it securely.",
         "empty_title": "No API keys yet",
-        "empty_description": "Create the first org-scoped API key to use the ClassroomIO public API.",
+        "empty_description": "Create the first org-scoped API key to use the PathWorks public API.",
         "modal": {
           "title": "Create API key",
           "description": "Choose a name for this API key before it is generated.",
@@ -3617,7 +3617,7 @@
       "disabled_description": "Solo los administradores de la organización pueden crear, rotar o revocar claves de automatización. Los profesores pueden revisar las instrucciones de configuración aquí."
     },
     "zapier": {
-      "page_subtitle": "Automate ClassroomIO with thousands of apps through Zapier. Coming soon."
+      "page_subtitle": "Automate PathWorks with thousands of apps through Zapier. Coming soon."
     }
   },
   "programs": {
@@ -3997,7 +3997,7 @@
       "border_radius": "Radio del borde",
       "font_family": "Familia de fuentes",
       "font_scale": "Escala de tamaño de fuente",
-      "show_powered_by": "Mostrar la marca Classroomio",
+      "show_powered_by": "Mostrar la marca PathWorks",
       "custom_css": "CSS personalizado",
       "custom_css_locked": "Actualice para habilitar CSS personalizado.",
       "embed_code": "código para insertar",

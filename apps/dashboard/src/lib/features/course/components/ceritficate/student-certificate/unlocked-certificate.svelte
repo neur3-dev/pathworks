@@ -9,7 +9,7 @@
   import { t } from '$lib/utils/functions/translations';
   import { courseApi } from '$features/course/api';
   import { snackbar } from '$features/ui/snackbar/store';
-  import { classroomio } from '$lib/utils/services/api';
+  import { pathworks } from '$lib/utils/services/api';
   import type { CertificationEvaluationData } from '$features/course/utils/types';
   import { openCourseCompletionModal } from '$features/course/store/course-completion-modal';
 
@@ -79,7 +79,7 @@
 
     isLoading = true;
     try {
-      const response = await classroomio.course[':courseId']['download']['certificate']['$post']({
+      const response = await pathworks.course[':courseId']['download']['certificate']['$post']({
         param: { courseId },
         json: buildBody()
       });
@@ -101,7 +101,7 @@
 
     isPngLoading = true;
     try {
-      const response = await classroomio.course[':courseId']['download']['certificate']['png']['$post']({
+      const response = await pathworks.course[':courseId']['download']['certificate']['png']['$post']({
         param: { courseId },
         json: buildBody()
       });

@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import type {
   GetOrgCoursesRequest,
   GetOrgCoursesRequestQuery,
@@ -88,7 +88,7 @@ export class CoursesApi extends BaseApiWithErrors {
 
     const response = await this.execute<GetOrgCoursesRequest>({
       requestFn: () =>
-        classroomio.organization.courses.$get(
+        pathworks.organization.courses.$get(
           {
             query: requestQuery
           },
@@ -121,7 +121,7 @@ export class CoursesApi extends BaseApiWithErrors {
    */
   async getEnrolledCourses() {
     return this.execute<GetUserEnrolledCoursesRequest>({
-      requestFn: () => classroomio.organization.courses.enrolled.$get({}),
+      requestFn: () => pathworks.organization.courses.enrolled.$get({}),
       logContext: 'fetching enrolled courses',
       onSuccess: (response) => {
         if (response.data) {
@@ -137,7 +137,7 @@ export class CoursesApi extends BaseApiWithErrors {
    */
   async getRecommendedCourses() {
     await this.execute<GetRecommendedCoursesRequest>({
-      requestFn: () => classroomio.organization.courses.recommended.$get({}),
+      requestFn: () => pathworks.organization.courses.recommended.$get({}),
       logContext: 'fetching recommended courses',
       onSuccess: (response) => {
         if (response.data) {

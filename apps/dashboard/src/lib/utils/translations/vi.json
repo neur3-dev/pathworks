@@ -1095,7 +1095,7 @@
           "audit_actor": "diễn viên",
           "audit_ip": "IP",
           "scan_qr": "Quét QR",
-          "classroomio_brand": "Lớp họcIO.com",
+          "pathworks_brand": "Lớp họcIO.com",
           "snackbar_invite_link_copied": "Đã sao chép liên kết mời",
           "snackbar_invite_link_regenerated": "Một liên kết mời mới đã được tạo",
           "snackbar_failed_generate_link": "Không tạo được liên kết mời",
@@ -2131,7 +2131,7 @@
     },
     "creator": {
       "heading": "Bạn muốn tạo khóa học nào?",
-      "placeholder": "Hãy yêu cầu ClassroomIO tạo một khóa học cho bạn...",
+      "placeholder": "Hãy yêu cầu PathWorks tạo một khóa học cho bạn...",
       "type": {
         "self_paced": "tự nhịp độ",
         "live_class": "Lớp học trực tiếp"
@@ -2394,7 +2394,7 @@
         "save": "Lưu",
         "your_domain": "Tên miền của bạn",
         "custom_domain_error": "Bạn không thể thêm miền cấp cao nhất làm miền tùy chỉnh. Thay vào đó, hãy sử dụng tên miền phụ như 'courses.[yourwebsite].com' hoặc 'www.[yourwebsite].com'.",
-        "custom_domain_not_classroomio": "Tên miền không thể chứa 'classroomio'",
+        "custom_domain_not_pathworks": "Tên miền không thể chứa 'pathworks'",
         "custom_domain_success": "Đã thêm miền tùy chỉnh thành công",
         "dns_description": "Đặt bản ghi sau trên nhà cung cấp DNS của bạn để tiếp tục:",
         "dns_type": "loại",
@@ -2465,7 +2465,7 @@
     "goto": "đi đến",
     "courses": "Khóa học",
     "home": "Trang chủ",
-    "classroomio_home": "Lớp họcIO Trang chủ",
+    "pathworks_home": "Lớp họcIO Trang chủ",
     "dashboard": "Trang tổng quan",
     "discussion": "Thảo luận",
     "people": "mọi người",
@@ -2571,7 +2571,7 @@
     "compliance": "Tuân thủ"
   },
   "media_manager": {
-    "page_title": "Quản lý truyền thông - ClassroomIO",
+    "page_title": "Quản lý truyền thông - PathWorks",
     "heading": "Trình quản lý phương tiện",
     "empty": "Không tìm thấy nội dung nào",
     "usage": {
@@ -2689,7 +2689,7 @@
       "provider": "Chúng tôi sử dụng Polar để giúp quản lý việc thanh toán của bạn",
       "open_billing": "Thanh toán mở",
       "error": "Đã xảy ra lỗi khi mở thanh toán",
-      "page_subtitle": "Your plan, billing portal, and how you pay for ClassroomIO.",
+      "page_subtitle": "Your plan, billing portal, and how you pay for PathWorks.",
       "ai_credits": "Cách sử dụng trợ lý AI",
       "ai_tokens_used": "mã thông báo được sử dụng trong tháng này",
       "ai_bonus_credits": "tín dụng thưởng có sẵn"
@@ -2697,7 +2697,7 @@
     "integrations": {
       "heading": "điện tín",
       "sub_heading": "Kết nối tài khoản của bạn với điện tín để nhận thông báo về bất kỳ thay đổi nào trong ứng dụng.",
-      "step_authenticate": "Bước 1: Xác thực tài khoản của bạn thông qua bot ClassroomIO.",
+      "step_authenticate": "Bước 1: Xác thực tài khoản của bạn thông qua bot PathWorks.",
       "open_bot_button": "Mở Bot",
       "step_chatId": "Bước 2: Nhập ID trò chuyện được bot cung cấp cho bạn.",
       "connect_button": "Kết nối",
@@ -3009,7 +3009,7 @@
       "gallery": {
         "heading": "Chủ đề phổ biến",
         "description": "Được tạo bằng các tính năng cốt lõi, bạn có thể dễ dàng tùy chỉnh — không cần mã hóa.",
-        "by_classroomio": "bởi ClassroomIO",
+        "by_pathworks": "bởi PathWorks",
         "add": "Thêm",
         "upgrade": "Nâng cấp"
       },
@@ -3079,7 +3079,7 @@
         "accepted": "Đã chấp nhận:",
         "validation_error": "Kích thước tệp vượt quá giới hạn tối đa:"
       },
-      "page_subtitle": "Your name, email, and how you appear wherever you work in ClassroomIO."
+      "page_subtitle": "Your name, email, and how you appear wherever you work in PathWorks."
     },
     "tabs": {
       "profile_tab": "Hồ sơ",
@@ -3437,7 +3437,7 @@
     "snackbar_error": "lỗi khi gửi mã"
   },
   "public_courses": {
-    "page_title": "Khóa học - ClassroomIO",
+    "page_title": "Khóa học - PathWorks",
     "heading": "Khóa học",
     "subtitle": "Duyệt tất cả các khóa học được xuất bản",
     "clear_filters": "Xóa bộ lọc",
@@ -3504,7 +3504,7 @@
   },
   "invite": {
     "organization": {
-      "page_title": "Tham gia cùng {orgName} trên ClassroomIO",
+      "page_title": "Tham gia cùng {orgName} trên PathWorks",
       "invitation_student": "Bạn được mời vào {orgName} với vai trò học viên.",
       "invitation_teacher": "Bạn được mời vào {orgName} với vai trò giáo viên.",
       "invitation_admin": "Bạn được mời vào {orgName} với vai trò quản trị viên.",
@@ -3531,21 +3531,21 @@
       "setup": {
         "title": "Thiết lập máy khách",
         "description": "Sử dụng một khóa trong phạm vi tổ chức cho mỗi lần tích hợp. Nếu một khóa bị xoay hoặc bị thu hồi, máy khách sẽ ngừng hoạt động cho đến khi bí mật mới được định cấu hình.",
-        "claude_code_description": "Đăng ký `@classroomio/mcp` với Mã Claude bằng cách sử dụng khóa trong phạm vi tổ chức được tạo.",
-        "codex_description": "Thêm máy chủ ClassroomIO MCP vào Codex bằng cùng một khóa trong phạm vi tổ chức.",
+        "claude_code_description": "Đăng ký `@pathworks/mcp` với Mã Claude bằng cách sử dụng khóa trong phạm vi tổ chức được tạo.",
+        "codex_description": "Thêm máy chủ PathWorks MCP vào Codex bằng cùng một khóa trong phạm vi tổ chức.",
         "cursor_description": "Dán cái này vào `~/.cursor/mcp.json` hoặc cấu hình MCP không gian làm việc của bạn.",
         "opencode_description": "Thêm nội dung này vào `opencode.json` ở thư mục gốc dự án hoặc `~/.config/opencode/opencode.json`."
       },
       "keys": {
         "title": "Khóa MCP",
-        "description": "Các khóa này xác thực tổ chức hiện tại khi máy khách MCP gọi ClassroomIO thông qua `@classroomio/mcp`.",
+        "description": "Các khóa này xác thực tổ chức hiện tại khi máy khách MCP gọi PathWorks thông qua `@pathworks/mcp`.",
         "generate": "Tạo khóa MCP",
         "secret_once": "Bí mật này được hiển thị một lần. Sao chép nó vào ứng dụng khách MCP của bạn ngay bây giờ.",
         "modal": {
           "title": "Create MCP key",
           "description": "Choose a name for this MCP key before it is generated.",
           "name_label": "Key name",
-          "name_placeholder": "ClassroomIO OpenCode",
+          "name_placeholder": "PathWorks OpenCode",
           "cancel": "Cancel",
           "save": "Create key"
         }
@@ -3561,17 +3561,17 @@
         "rate_limits_description": "Yêu cầu đọc/ghi/xuất bản được phép mỗi phút.",
         "used_label": "Đã sử dụng:"
       },
-      "page_subtitle": "Connect AI tools to ClassroomIO with org-scoped keys you can rotate anytime."
+      "page_subtitle": "Connect AI tools to PathWorks with org-scoped keys you can rotate anytime."
     },
     "api": {
-      "subtitle": "Manage API keys to integrate with the ClassroomIO public API.",
+      "subtitle": "Manage API keys to integrate with the PathWorks public API.",
       "keys": {
         "title": "API keys",
-        "description": "These keys authenticate the current organization when calling the ClassroomIO public API.",
+        "description": "These keys authenticate the current organization when calling the PathWorks public API.",
         "generate": "Generate API key",
         "secret_once": "This secret is shown once. Copy it and store it securely.",
         "empty_title": "No API keys yet",
-        "empty_description": "Create the first org-scoped API key to use the ClassroomIO public API.",
+        "empty_description": "Create the first org-scoped API key to use the PathWorks public API.",
         "modal": {
           "title": "Create API key",
           "description": "Choose a name for this API key before it is generated.",
@@ -3617,7 +3617,7 @@
       "disabled_description": "Chỉ quản trị viên tổ chức mới có thể tạo, xoay hoặc thu hồi khóa tự động hóa. Thầy cô có thể xem lại hướng dẫn thiết lập tại đây."
     },
     "zapier": {
-      "page_subtitle": "Automate ClassroomIO with thousands of apps through Zapier. Coming soon."
+      "page_subtitle": "Automate PathWorks with thousands of apps through Zapier. Coming soon."
     }
   },
   "programs": {
@@ -3997,7 +3997,7 @@
       "border_radius": "Bán kính viền",
       "font_family": "Họ phông chữ",
       "font_scale": "Tỷ lệ cỡ chữ",
-      "show_powered_by": "Hiển thị nhãn hiệu Classroomio",
+      "show_powered_by": "Hiển thị nhãn hiệu PathWorks",
       "custom_css": "CSS tùy chỉnh",
       "custom_css_locked": "Nâng cấp để kích hoạt CSS tùy chỉnh.",
       "embed_code": "Nhúng mã",

@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import { ZCreateSsoConnection, ZUpdateSsoConnection, ZUpdateSsoPolicy } from '@cio/utils/validation/organization/sso';
 import type {
   TCreateSsoConnection,
@@ -35,7 +35,7 @@ class SsoApi extends BaseApiWithErrors {
    */
   async getSsoConfig() {
     return this.execute<GetSsoConfigRequest>({
-      requestFn: () => classroomio.organization.sso.$get(),
+      requestFn: () => pathworks.organization.sso.$get(),
       logContext: 'fetching SSO configuration',
       onSuccess: (response) => {
         if (response.data != null && typeof response.data === 'object') {
@@ -59,7 +59,7 @@ class SsoApi extends BaseApiWithErrors {
 
     return this.execute<CreateSsoConnectionRequest>({
       requestFn: () =>
-        classroomio.organization.sso.$post({
+        pathworks.organization.sso.$post({
           json: result.data
         }),
       logContext: 'creating SSO connection',
@@ -92,7 +92,7 @@ class SsoApi extends BaseApiWithErrors {
 
     return this.execute<UpdateSsoConnectionRequest>({
       requestFn: () =>
-        classroomio.organization.sso.$put({
+        pathworks.organization.sso.$put({
           json: result.data
         }),
       logContext: 'updating SSO connection',
@@ -110,7 +110,7 @@ class SsoApi extends BaseApiWithErrors {
    */
   async deleteConnection() {
     return this.execute<DeleteSsoConnectionRequest>({
-      requestFn: () => classroomio.organization.sso.$delete(),
+      requestFn: () => pathworks.organization.sso.$delete(),
       logContext: 'deleting SSO connection',
       onSuccess: () => {
         snackbar.success(t.get('snackbar.success_update'));
@@ -124,7 +124,7 @@ class SsoApi extends BaseApiWithErrors {
    */
   async activateConnection() {
     return this.execute<ActivateSsoConnectionRequest>({
-      requestFn: () => classroomio.organization.sso.activate.$post(),
+      requestFn: () => pathworks.organization.sso.activate.$post(),
       logContext: 'activating SSO connection',
       onSuccess: (response) => {
         snackbar.success('SSO connection activated');
@@ -147,7 +147,7 @@ class SsoApi extends BaseApiWithErrors {
 
     return this.execute<UpdateSsoPolicyRequest>({
       requestFn: () =>
-        classroomio.organization.sso.policy.$put({
+        pathworks.organization.sso.policy.$put({
           json: result.data
         }),
       logContext: 'updating SSO policy',
@@ -166,7 +166,7 @@ class SsoApi extends BaseApiWithErrors {
   async discoverSso(email: string): Promise<SsoDiscoveryResult | null> {
     const result = await this.execute<SsoDiscoveryRequest>({
       requestFn: () =>
-        classroomio.sso.discover.$get({
+        pathworks.sso.discover.$get({
           query: { email }
         }),
       logContext: 'discovering SSO'
@@ -181,7 +181,7 @@ class SsoApi extends BaseApiWithErrors {
   async getOrgSsoInfo(orgId: string): Promise<OrgSsoInfo | null> {
     const result = await this.execute<GetOrgSsoInfoRequest>({
       requestFn: () =>
-        classroomio.sso.org[':orgId'].$get({
+        pathworks.sso.org[':orgId'].$get({
           param: { orgId }
         }),
       logContext: 'fetching org SSO info'

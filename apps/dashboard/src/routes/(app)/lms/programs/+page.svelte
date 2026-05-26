@@ -28,7 +28,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('lms_navigation.programs') || 'Programs'} - ClassroomIO</title>
+  <title>{$t('lms_navigation.programs') || 'Programs'} - PathWorks</title>
 </svelte:head>
 
 <Page.Root class="w-full">

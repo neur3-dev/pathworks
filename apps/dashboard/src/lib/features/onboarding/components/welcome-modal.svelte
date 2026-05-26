@@ -5,7 +5,7 @@
   import { currentOrgPath } from '$lib/utils/store/org';
   import { profile } from '$lib/utils/store/user';
   import { t } from '$lib/utils/functions/translations';
-  import { classroomio } from '$lib/utils/services/api';
+  import { pathworks } from '$lib/utils/services/api';
 
   let query = new URLSearchParams(page.url.search);
   let welcomePopup = query.get('welcomePopup');
@@ -18,7 +18,7 @@
 
     try {
       isLoading = true;
-      await classroomio.onboarding.complete.$post({});
+      await pathworks.onboarding.complete.$post({});
 
       goto($currentOrgPath + '/courses?create=true');
     } catch (error) {
@@ -39,7 +39,7 @@
     </Dialog.Header>
     <p class="text-md text-black dark:text-white">
       {$t('welcome_modal.we_at')}
-      <a href="https://app.classroomio.com/" class="ui:text-primary no-underline hover:no-underline">ClassroomIO</a>
+      <a href="https://pathworks.neur3.dev/" class="ui:text-primary no-underline hover:no-underline">PathWorks</a>
       {$t('welcome_modal.small_team')}
       <span class="ui:text-primary">{$t('welcome_modal.thank_you')};</span>
       {$t('welcome_modal.deeply_appreciate')}

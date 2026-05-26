@@ -138,8 +138,8 @@ export const getDefaultTemplate = (content: string): string =>
       color: #1e293b;
     ">
   <div class="gutter">
-    <a href="https://classroomio.com" target="_blank">
-      <img src="https://brand.cdn.clsrio.com/cio-bg-transparent.png" alt="ClassroomIO Logo" /></a>
+    <a href="https://pathworks.com" target="_blank">
+      <img src="https://brand.cdn.clsrio.com/cio-bg-transparent.png" alt="PathWorks Logo" /></a>
   </div>
   <div class="wrap" style="
         background-color: #fff;
@@ -162,26 +162,26 @@ export const getDefaultTemplate = (content: string): string =>
     <table class="socialicons">
       <tr>
         <td>
-          <a target="_blank" href="https://twitter.com/classroomio"><img title="X"
+          <a target="_blank" href="https://twitter.com/pathworks"><img title="X"
               src="https://brand.cdn.clsrio.com/socials/twitter.png" alt="X" width="19" /></a>
         </td>
         <td>
-          <a target="_blank" href="https://www.youtube.com/@ClassroomIO"><img title="Youtube"
+          <a target="_blank" href="https://www.youtube.com/@PathWorks"><img title="Youtube"
               src="https://brand.cdn.clsrio.com/socials/youtube.png" alt="Youtube" width="24" /></a>
         </td>
         <td>
-          <a target="_blank" href="https://www.facebook.com/classroomiohq"><img title="Facebook"
+          <a target="_blank" href="https://www.facebook.com/pathworkshq"><img title="Facebook"
               src="https://brand.cdn.clsrio.com/socials/facebook.png" alt="Facebook" width="24" /></a>
         </td>
       </tr>
     </table>
     <p style="padding-top: 8px; line-height: initial">
-      ClassroomIO ${new Date().getFullYear()}. All rights reserved.<br />
-      <a style="text-decoration: none" href="https://classroomio.com/tos"
+      PathWorks ${new Date().getFullYear()}. All rights reserved.<br />
+      <a style="text-decoration: none" href="https://pathworks.com/tos"
         target="_blank">Terms</a>
       |
       <a style="text-decoration: none"
-        href="https://classroomio.com/privacy" target="_blank">Privacy
+        href="https://pathworks.com/privacy" target="_blank">Privacy
         Policy</a>
     </p>
   </div>

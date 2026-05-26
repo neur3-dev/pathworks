@@ -1,5 +1,5 @@
 {
-  "name": "@classroomio/mcp",
+  "name": "@pathworks/mcp",
   "version": "0.0.9",
   "private": false,
   "type": "module",
@@ -11,7 +11,7 @@
     "dist"
   ],
   "bin": {
-    "classroomio-mcp": "./dist/index.js"
+    "pathworks-mcp": "./dist/index.js"
   },
   "scripts": {
     "build": "rm -rf dist tsconfig.tsbuildinfo && node ./scripts/build.mjs",
@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/classroomio/classroomio.git"
+    "url": "git+https://github.com/pathworks/pathworks.git"
   },
   "bugs": {
-    "url": "https://github.com/classroomio/classroomio/issues"
+    "url": "https://github.com/pathworks/pathworks/issues"
   },
-  "homepage": "https://github.com/classroomio/classroomio/blob/main/packages/mcp#readme",
-  "author": "ClassroomIO <help@classroomio.com>",
+  "homepage": "https://github.com/pathworks/pathworks/blob/main/packages/mcp#readme",
+  "author": "PathWorks <help@pathworks.com>",
   "license": "MIT",
   "publishConfig": {
     "access": "public",

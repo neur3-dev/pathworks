@@ -13,6 +13,7 @@ export const ZLessonCreate = z.object({
   teacherId: z.string().optional(),
   isUnlocked: z.boolean().optional(),
   public: z.boolean().optional(),
+  contentWarning: z.string().optional(),
   slug: ZSlug.optional()
 });
 export type TLessonCreate = z.infer<typeof ZLessonCreate>;
@@ -23,10 +24,12 @@ export const ZLessonUpdate = z.object({
   sectionId: z.string().optional(),
   order: z.number().int().min(0).optional(),
   callUrl: z.string().optional(),
+  contentWarning: z.string().optional(),
   lessonAt: z.string().optional(),
   teacherId: z.string().optional(),
   isUnlocked: z.boolean().optional(),
   public: z.boolean().optional(),
+  contentWarning: z.string().optional(),
   slug: ZSlug.optional(),
   isComplete: z.boolean().optional(),
   videoUrl: z.url().optional(),

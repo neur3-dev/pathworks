@@ -90,7 +90,7 @@
   }
 
   function onLearnMore() {
-    window.open('https://classroomio.com/blog/early-adopter', '_blank');
+    window.open('https://pathworks.neur3.dev/blog/early-adopter', '_blank');
   }
 
   function handleUpgradeSuccess(upgradeSuccessful: boolean) {

@@ -216,14 +216,6 @@ export const baseNavConfig: NavItemConfig[] = [
         path: '/settings/billing'
       },
       {
-        titleKey: 'settings.tabs.ai_credits_tab',
-        path: '/settings/ai-credits'
-      },
-      {
-        titleKey: 'settings.tabs.ai_tutor_tab',
-        path: '/settings/ai-tutor'
-      },
-      {
         titleKey: 'settings.tabs.auth_tab',
         matchPattern: '^/org/[^/]+/settings/auth(/.*)?$',
         path: '/settings/auth',
@@ -234,14 +226,6 @@ export const baseNavConfig: NavItemConfig[] = [
       {
         path: 'billing',
         titleKey: 'settings.tabs.billing_tab'
-      },
-      {
-        path: 'ai-credits',
-        titleKey: 'settings.tabs.ai_credits_tab'
-      },
-      {
-        path: 'ai-tutor',
-        titleKey: 'settings.tabs.ai_tutor_tab'
       },
       {
         path: 'customize-lms',

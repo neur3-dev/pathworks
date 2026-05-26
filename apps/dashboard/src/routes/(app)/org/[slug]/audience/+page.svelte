@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-  <title>Audience - ClassroomIO</title>
+  <title>Audience - PathWorks</title>
 </svelte:head>
 
 <Page.Root class="mx-auto w-full max-w-6xl">

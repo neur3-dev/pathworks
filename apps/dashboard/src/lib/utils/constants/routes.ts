@@ -33,6 +33,7 @@ export const PUBLIC_ROUTES = [
   `^${ROUTE.COURSE}/[^/]+/lesson/.*`,
   `^${ROUTE.COURSES}/?$`,
   '/404',
+  '^/counselor(/.*)?$',
   `^${ROUTE.VERIFY_EMAIL_ERROR}$`,
   ROUTE.AUTH_FAILED,
   '^/csp-report$'

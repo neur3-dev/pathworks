@@ -1,5 +1,5 @@
 import type { GetExerciseSuccess, ListExerciseSubmissionsSuccess } from '$features/course/utils/types';
-import { classroomio, getApiHeaders } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
 export const load = async ({ params, cookies }) => {
@@ -14,10 +14,10 @@ export const load = async ({ params, cookies }) => {
 
   const [exerciseResult, overviewResult] = await Promise.all([
     safeServerApi<GetExerciseSuccess>(() =>
-      classroomio.course[':courseId'].exercise[':exerciseId'].$get({ param: { courseId, exerciseId } }, headers)
+      pathworks.course[':courseId'].exercise[':exerciseId'].$get({ param: { courseId, exerciseId } }, headers)
     ),
     safeServerApi<ListExerciseSubmissionsSuccess>(() =>
-      classroomio.course[':courseId'].exercise[':exerciseId']['submissions'].$get(
+      pathworks.course[':courseId'].exercise[':exerciseId']['submissions'].$get(
         { param: { courseId, exerciseId } },
         headers
       )

@@ -1,6 +1,6 @@
-# Publishing ClassroomIO Docker Images to Docker Hub
+# Publishing PathWorks Docker Images to Docker Hub
 
-This guide explains how to publish the ClassroomIO API and Dashboard Docker images to Docker Hub.
+This guide explains how to publish the PathWorks API and Dashboard Docker images to Docker Hub.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ docker login
 Use the provided script to build and push both images:
 
 ```bash
-# Default (uses 'classroomio' as username and 'latest' as version)
+# Default (uses 'pathworks' as username and 'latest' as version)
 ./docker/docker-push.sh
 
 # Custom username
@@ -32,14 +32,14 @@ DOCKERHUB_USERNAME=your-username ./docker/docker-push.sh
 VERSION=v0.1.0 ./docker/docker-push.sh
 
 # Both custom username and version
-DOCKERHUB_USERNAME=classroomio VERSION=v0.1.0 ./docker/docker-push.sh
+DOCKERHUB_USERNAME=pathworks VERSION=v0.1.0 ./docker/docker-push.sh
 ```
 
 ### Step 3: Verify Images
 
 Check your Docker Hub repository at:
-- https://hub.docker.com/r/classroomio/api
-- https://hub.docker.com/r/classroomio/dashboard
+- https://hub.docker.com/r/pathworks/api
+- https://hub.docker.com/r/pathworks/dashboard
 
 ## Method 2: GitHub Actions (Automated)
 
@@ -80,15 +80,15 @@ git push origin v0.1.0
 ### Build API Image
 
 ```bash
-docker build -f docker/Dockerfile.api -t classroomio/api:latest .
-docker push classroomio/api:latest
+docker build -f docker/Dockerfile.api -t pathworks/api:latest .
+docker push pathworks/api:latest
 ```
 
 ### Build Dashboard Image
 
 ```bash
-docker build -f docker/Dockerfile.dashboard -t classroomio/dashboard:latest .
-docker push classroomio/dashboard:latest
+docker build -f docker/Dockerfile.dashboard -t pathworks/dashboard:latest .
+docker push pathworks/dashboard:latest
 ```
 
 ## Using Published Images
@@ -96,8 +96,8 @@ docker push classroomio/dashboard:latest
 ### Pull Images
 
 ```bash
-docker pull classroomio/api:latest
-docker pull classroomio/dashboard:latest
+docker pull pathworks/api:latest
+docker pull pathworks/dashboard:latest
 ```
 
 ### Deploy with Compose
@@ -120,17 +120,17 @@ For self-hosting with Docker Compose, see [SELF_HOST.md](SELF_HOST.md). The setu
 ```bash
 # Build with multiple tags
 docker build -f docker/Dockerfile.api \
-  -t classroomio/api:latest \
-  -t classroomio/api:v1.2.0 \
-  -t classroomio/api:v1.2 \
-  -t classroomio/api:v1 \
+  -t pathworks/api:latest \
+  -t pathworks/api:v1.2.0 \
+  -t pathworks/api:v1.2 \
+  -t pathworks/api:v1 \
   .
 
 # Push all tags
-docker push classroomio/api:latest
-docker push classroomio/api:v1.2.0
-docker push classroomio/api:v1.2
-docker push classroomio/api:v1
+docker push pathworks/api:latest
+docker push pathworks/api:v1.2.0
+docker push pathworks/api:v1.2
+docker push pathworks/api:v1
 ```
 
 ## Image Sizes and Build Times
@@ -177,7 +177,7 @@ docker image prune -a
 3. **Enable 2FA** on your Docker Hub account
 4. **Scan images** for vulnerabilities:
    ```bash
-   docker scan classroomio/api:latest
+   docker scan pathworks/api:latest
    ```
 5. **Use specific version tags** in production, not `latest`
 

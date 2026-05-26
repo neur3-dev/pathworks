@@ -197,8 +197,8 @@ export function assertSupportedCustomDomain(domain: string) {
     );
   }
 
-  if (domain.includes('classroomio.com') || domain.includes('myclassroomio.com')) {
-    throw new AppError("Domain cannot contain 'classroomio'", ErrorCodes.VALIDATION_ERROR, 400, 'domain');
+  if (domain.includes('pathworks.com') || domain.includes('mypathworks.com')) {
+    throw new AppError("Domain cannot contain 'pathworks'", ErrorCodes.VALIDATION_ERROR, 400, 'domain');
   }
 }
 

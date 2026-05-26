@@ -40,7 +40,7 @@
     imageAlt = '',
     vimeoVideoId,
     videoAspect = '54.68%',
-    videoTitle = 'AI Teaching Assistant on ClassroomIO.',
+    videoTitle = 'AI Teaching Assistant on PathWorks.',
     bgClass = 'bg-white'
   } = $props();
 

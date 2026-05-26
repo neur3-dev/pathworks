@@ -1,46 +1,31 @@
-## What does this PR do?
+## Summary
 
-<!-- Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->
+Describe the PathWorks change and the user or operator workflow it affects.
 
-Fixes # (place issue number here without bracket)
+## Status
 
-<!-- Please provide a screenshots or upload a video for visual changes to speed up reviews -->
+- [ ] DONE - proof linked below
+- [ ] PARTIAL - missing work explained below
+- [ ] NOT STARTED - reason explained below
 
-## Type of change
+## Verification
 
-<!-- Please mark the relevant points by using [x] -->
+List the exact commands, workflow runs, screenshots, or audit reports used to verify this PR.
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] Chore (refactoring code, technical debt, workflow improvements)
-- [ ] Enhancement (small improvements)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change adds a new database migration
-- [ ] This change requires a documentation update
+-
 
-## How should this be tested?
+## Accessibility
 
-<!-- Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration -->
+- [ ] Not user-facing
+- [ ] User-facing and manually checked with keyboard/focus states
+- [ ] Axe report attached or linked
 
-- Test A
-- Test B
+## Database / Config
 
-## Checklist
+- [ ] No migration
+- [ ] Migration included and checked with `pnpm drizzle-kit check --config drizzle.config.ts`
+- [ ] New or changed secrets/config documented
 
-<!-- We're starting to get more and more contributions. Please help us making this efficient for all of us and go through this checklist. Please tick off what you did  -->
+## Notes for Reviewers
 
-### Required
-
-- [ ] Filled out the "How to test" section in this PR
-- [ ] Self-reviewed my own code
-- [ ] Commented on my code in hard-to-understand bits
-- [ ] Ran `pnpm build`
-- [ ] Checked for warnings, there are none
-- [ ] Removed all `console.logs`
-- [ ] Merged the latest changes from main onto my branch with `git pull origin main`
-- [ ] My changes don't cause any responsiveness issues
-
-### Appreciated
-
-- [ ] If a UI change was made: Added a screen recording or screenshots to this PR
-- [ ] Updated the ClassroomIO Docs if changes were necessary
+Call out risks, follow-ups, or known caveats honestly.

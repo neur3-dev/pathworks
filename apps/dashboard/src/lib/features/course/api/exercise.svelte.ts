@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import type {
   CreateExerciseFromTemplateRequest,
   CreateExerciseRequest,
@@ -41,7 +41,7 @@ export class ExerciseApi extends BaseApiWithErrors {
   async get(courseId: string, exerciseId: string) {
     await this.execute<GetExerciseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].$get({
+        pathworks.course[':courseId'].exercise[':exerciseId'].$get({
           param: { courseId, exerciseId }
         }),
       logContext: 'fetching exercise',
@@ -72,7 +72,7 @@ export class ExerciseApi extends BaseApiWithErrors {
 
     await this.execute<CreateExerciseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise.$post({
+        pathworks.course[':courseId'].exercise.$post({
           param: { courseId },
           json: result.data
         }),
@@ -114,7 +114,7 @@ export class ExerciseApi extends BaseApiWithErrors {
     this.errors = {};
     await this.execute<UpdateExerciseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].$put({
+        pathworks.course[':courseId'].exercise[':exerciseId'].$put({
           param: { courseId, exerciseId },
           json: result.data
         }),
@@ -149,7 +149,7 @@ export class ExerciseApi extends BaseApiWithErrors {
   async delete(courseId: string, exerciseId: string) {
     await this.execute<DeleteExerciseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].$delete({
+        pathworks.course[':courseId'].exercise[':exerciseId'].$delete({
           param: { courseId, exerciseId }
         }),
       logContext: 'deleting exercise',
@@ -180,7 +180,7 @@ export class ExerciseApi extends BaseApiWithErrors {
 
     return await this.execute<SubmitExerciseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].submission.$post({
+        pathworks.course[':courseId'].exercise[':exerciseId'].submission.$post({
           param: { courseId, exerciseId },
           json: result.data
         }),
@@ -222,7 +222,7 @@ export class ExerciseApi extends BaseApiWithErrors {
 
     return await this.execute<VideoRecordingUploadInitRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].question[':questionId'][
+        pathworks.course[':courseId'].exercise[':exerciseId'].question[':questionId'][
           'video-recording'
         ].upload.init.$post({
           param: { courseId, exerciseId, questionId: String(questionId) },
@@ -246,7 +246,7 @@ export class ExerciseApi extends BaseApiWithErrors {
 
     return await this.execute<VideoRecordingUploadCompleteRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].question[':questionId'][
+        pathworks.course[':courseId'].exercise[':exerciseId'].question[':questionId'][
           'video-recording'
         ].upload.complete.$post({
           param: { courseId, exerciseId, questionId: String(questionId) },
@@ -264,7 +264,7 @@ export class ExerciseApi extends BaseApiWithErrors {
   ) {
     return await this.execute<VideoRecordingPlaybackRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].exercise[':exerciseId'].submission[':submissionId'].question[':questionId'][
+        pathworks.course[':courseId'].exercise[':exerciseId'].submission[':submissionId'].question[':questionId'][
           'video-recording'
         ].playback.$get({
           param: { courseId, exerciseId, submissionId, questionId: String(questionId) }
@@ -288,7 +288,7 @@ export class ExerciseApi extends BaseApiWithErrors {
     const templateIdValue = Number(templateId);
     await this.execute<CreateExerciseFromTemplateRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['exercise']['from-template'].$post({
+        pathworks.course[':courseId']['exercise']['from-template'].$post({
           param: { courseId },
           json: {
             lessonId: options.lessonId,

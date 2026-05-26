@@ -6,8 +6,8 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <div className="flex items-center gap-2">
-          <img src="/docs/logo-192.png" className="size-8" alt="ClassroomIO logo" />
-          <span className="font-medium">ClassroomIO</span>
+          <img src="/docs/logo-192.png" className="size-8" alt="PathWorks logo" />
+          <span className="font-medium">PathWorks</span>
         </div>
       )
     },
@@ -18,7 +18,7 @@ export function baseOptions(): BaseLayoutProps {
             Contact <SquareArrowOutUpRight />
           </div>
         ),
-        url: 'https://twitter.com/classroomio',
+        url: 'https://twitter.com/pathworks',
         external: true
       },
       {
@@ -36,7 +36,7 @@ export function baseOptions(): BaseLayoutProps {
             Dashboard <SquareArrowOutUpRight />
           </div>
         ),
-        url: 'https://app.classroomio.com/',
+        url: 'https://app.pathworks.com/',
         external: true
       },
       {
@@ -54,6 +54,6 @@ export function baseOptions(): BaseLayoutProps {
         external: true
       }
     ],
-    githubUrl: 'https://github.com/classroomio/classroomio'
+    githubUrl: 'https://github.com/pathworks/pathworks'
   };
 }

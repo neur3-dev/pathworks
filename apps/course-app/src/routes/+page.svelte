@@ -20,43 +20,43 @@
       name: 'Bootcamps',
       image: 'https://cdn.courseapp.oncws.com/templates/bootcamp-template.png',
       url: 'https://bootcamp.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'Cal',
       image: 'https://cdn.courseapp.oncws.com/templates/cal-template.png',
       url: 'https://cal.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'Classic',
       image: 'https://cdn.courseapp.oncws.com/templates/classic-template.png',
       url: 'https://classic.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'Examprep',
       image: 'https://cdn.courseapp.oncws.com/templates/examprep-template.png',
       url: 'https://examprep.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'Minimal',
       image: 'https://cdn.courseapp.oncws.com/templates/minimal-template.png',
       url: 'https://minimal.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'PostHog',
       image: 'https://cdn.courseapp.oncws.com/templates/posthog-template.png',
       url: 'https://posthog.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     },
     {
       name: 'Webflow',
       image: 'https://cdn.courseapp.oncws.com/templates/webflow-template.png',
       url: 'https://webflow.courseapp.oncws.com',
-      github: 'https://github.com/classroomio/classroomio'
+      github: 'https://github.com/pathworks/pathworks'
     }
   ];
 
@@ -148,7 +148,7 @@
             animationStyle="from-right"
             videoSrc="https://www.youtube.com/embed/P2I2HoyrjVo"
             thumbnailSrc="https://cdn.courseapp.oncws.com/courseapp-og.png"
-            thumbnailAlt="Courseapp by ClassroomIO – Create your SAAS Academy in Minutes"
+            thumbnailAlt="Courseapp by PathWorks – Create your SAAS Academy in Minutes"
           />
         </div>
       </section>
@@ -269,7 +269,7 @@
   <div class="">
     <p class="text-center text-sm text-neutral-500">
       Made with ❤️ by <a href="https://git.new/class" target="_blank" rel="noopener noreferrer">
-        classroomio
+        pathworks
       </a>
     </p>
   </div>

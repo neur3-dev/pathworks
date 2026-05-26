@@ -21,7 +21,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => [
   {
-    title: 'ClassroomIO | The Open Source Learning Management System for Companies'
+    title: 'PathWorks | The Open Source Learning Management System for Companies'
   },
   {
     name: 'description',
@@ -30,7 +30,7 @@ export const meta: MetaFunction = () => [
   },
   {
     property: 'og:url',
-    content: 'https://classroomio.com/docs'
+    content: 'https://pathworks.com/docs'
   },
   {
     property: 'og:type',
@@ -38,7 +38,7 @@ export const meta: MetaFunction = () => [
   },
   {
     property: 'og:title',
-    content: 'ClassroomIO | The Open Source Learning Management System for Companies'
+    content: 'PathWorks | The Open Source Learning Management System for Companies'
   },
   {
     property: 'og:description',
@@ -59,7 +59,7 @@ export const meta: MetaFunction = () => [
   },
   {
     property: 'og:image:secure_url',
-    content: 'https://brand.cdn.clsrio.com/og/classroomio-og.png'
+    content: 'https://brand.cdn.clsrio.com/og/pathworks-og.png'
   },
   {
     name: 'twitter:card',
@@ -67,15 +67,15 @@ export const meta: MetaFunction = () => [
   },
   {
     property: 'twitter:domain',
-    content: 'classroomio.com'
+    content: 'pathworks.com'
   },
   {
     property: 'twitter:url',
-    content: 'https://classroomio.com/docs'
+    content: 'https://pathworks.com/docs'
   },
   {
     name: 'twitter:title',
-    content: 'ClassroomIO | The Open Source Learning Management System for Companies'
+    content: 'PathWorks | The Open Source Learning Management System for Companies'
   },
   {
     name: 'twitter:description',
@@ -84,11 +84,11 @@ export const meta: MetaFunction = () => [
   },
   {
     name: 'twitter:creator',
-    content: '@classroomio'
+    content: '@pathworks'
   },
   {
     name: 'twitter:image',
-    content: 'https://brand.cdn.clsrio.com/og/classroomio-og.png'
+    content: 'https://brand.cdn.clsrio.com/og/pathworks-og.png'
   }
 ];
 

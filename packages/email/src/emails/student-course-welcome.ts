@@ -15,7 +15,7 @@ export const studentCourseWelcomeEmail = defineEmail({
     const content = `
       <p>Hi there,</p>
       <p>You now have access to <strong>${fields.courseName}</strong> in <strong>${fields.orgName}</strong>.</p>
-      <p><a href="${fields.loginUrl}">Sign in to ClassroomIO</a> to open the course and get started.</p>
+      <p><a href="${fields.loginUrl}">Sign in to PathWorks</a> to open the course and get started.</p>
       <p>If you run into any issues, reach out to your instructor(s).</p>
       <p>Cheers,</p>
       <p>${fields.orgName}</p>

@@ -1,7 +1,7 @@
-import { classroomio, getApiHeaders, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders, type InferResponseType } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
-type GetOrganizationSetupRequest = typeof classroomio.organization.setup.$get;
+type GetOrganizationSetupRequest = typeof pathworks.organization.setup.$get;
 type GetOrganizationSetupSuccess = Extract<InferResponseType<GetOrganizationSetupRequest>, { success: true }>;
 
 export const load = async ({ params, parent, cookies }) => {
@@ -9,7 +9,7 @@ export const load = async ({ params, parent, cookies }) => {
   const siteName = params.slug || '';
 
   const result = await safeServerApi<GetOrganizationSetupSuccess>(() =>
-    classroomio.organization.setup.$get({ query: { siteName } }, getApiHeaders(cookies, orgId))
+    pathworks.organization.setup.$get({ query: { siteName } }, getApiHeaders(cookies, orgId))
   );
   const setupProgress = result.ok ? result.body.data : null;
 

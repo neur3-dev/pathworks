@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import type { TCreateProgramGoal, TUpdateProgramGoal } from '@cio/utils/validation/program';
 import type { GoalsOverviewRow, MyGoalAssignment, ProgramGoal } from '../utils/types';
 import { snackbar } from '$features/ui/snackbar/store';
@@ -19,8 +19,8 @@ class ProgramGoalApi extends BaseApiWithErrors {
   async listGoals(programId: string, force = false) {
     if (!force && this.goalsByProgramId[programId] && this.loadedProgramId === programId) return;
 
-    await this.execute<(typeof classroomio.program)[':programId']['goals']['$get']>({
-      requestFn: () => classroomio.program[':programId'].goals.$get({ param: { programId } }),
+    await this.execute<(typeof pathworks.program)[':programId']['goals']['$get']>({
+      requestFn: () => pathworks.program[':programId'].goals.$get({ param: { programId } }),
       onSuccess: (res) => {
         this.goalsByProgramId = { ...this.goalsByProgramId, [programId]: res.data };
         this.loadedProgramId = programId;
@@ -32,8 +32,8 @@ class ProgramGoalApi extends BaseApiWithErrors {
   async createGoal(programId: string, data: TCreateProgramGoal): Promise<boolean> {
     let ok = false;
 
-    await this.execute<(typeof classroomio.program)[':programId']['goals']['$post']>({
-      requestFn: () => classroomio.program[':programId'].goals.$post({ param: { programId }, json: data }),
+    await this.execute<(typeof pathworks.program)[':programId']['goals']['$post']>({
+      requestFn: () => pathworks.program[':programId'].goals.$post({ param: { programId }, json: data }),
       onSuccess: async () => {
         await this.listGoals(programId, true);
         snackbar.success(t.get('programs.goals.created') || 'Goal created');
@@ -48,9 +48,9 @@ class ProgramGoalApi extends BaseApiWithErrors {
   async updateGoal(programId: string, goalId: string, data: TUpdateProgramGoal): Promise<boolean> {
     let ok = false;
 
-    await this.execute<(typeof classroomio.program)[':programId']['goals'][':goalId']['$put']>({
+    await this.execute<(typeof pathworks.program)[':programId']['goals'][':goalId']['$put']>({
       requestFn: () =>
-        classroomio.program[':programId'].goals[':goalId'].$put({
+        pathworks.program[':programId'].goals[':goalId'].$put({
           param: { programId, goalId },
           json: data
         }),
@@ -68,9 +68,9 @@ class ProgramGoalApi extends BaseApiWithErrors {
   async deleteGoal(programId: string, goalId: string): Promise<boolean> {
     let ok = false;
 
-    await this.execute<(typeof classroomio.program)[':programId']['goals'][':goalId']['$delete']>({
+    await this.execute<(typeof pathworks.program)[':programId']['goals'][':goalId']['$delete']>({
       requestFn: () =>
-        classroomio.program[':programId'].goals[':goalId'].$delete({
+        pathworks.program[':programId'].goals[':goalId'].$delete({
           param: { programId, goalId }
         }),
       onSuccess: async () => {
@@ -87,9 +87,9 @@ class ProgramGoalApi extends BaseApiWithErrors {
   async evaluateGoal(programId: string, goalId: string): Promise<boolean> {
     let ok = false;
 
-    await this.execute<(typeof classroomio.program)[':programId']['goals'][':goalId']['evaluate']['$post']>({
+    await this.execute<(typeof pathworks.program)[':programId']['goals'][':goalId']['evaluate']['$post']>({
       requestFn: () =>
-        classroomio.program[':programId'].goals[':goalId'].evaluate.$post({
+        pathworks.program[':programId'].goals[':goalId'].evaluate.$post({
           param: { programId, goalId }
         }),
       onSuccess: async () => {
@@ -103,8 +103,8 @@ class ProgramGoalApi extends BaseApiWithErrors {
   }
 
   async listMyGoals() {
-    await this.execute<typeof classroomio.program.my.goals.$get>({
-      requestFn: () => classroomio.program.my.goals.$get({}),
+    await this.execute<typeof pathworks.program.my.goals.$get>({
+      requestFn: () => pathworks.program.my.goals.$get({}),
       onSuccess: (res) => {
         this.myGoals = res.data;
       },
@@ -116,8 +116,8 @@ class ProgramGoalApi extends BaseApiWithErrors {
     const org = get(currentOrg);
     if (!org.id) return;
 
-    await this.execute<typeof classroomio.program.goals.overview.$get>({
-      requestFn: () => classroomio.program.goals.overview.$get({ query: { organizationId: org.id } }),
+    await this.execute<typeof pathworks.program.goals.overview.$get>({
+      requestFn: () => pathworks.program.goals.overview.$get({ query: { organizationId: org.id } }),
       onSuccess: (res) => {
         this.overviewRows = res.data.goals;
       },

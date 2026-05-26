@@ -210,7 +210,7 @@ async function enrollAudienceStudentProfilesInCourses(
               courseName: courseTitleByGroupId.get(p.groupId) || 'Course',
               loginUrl
             },
-            from: buildEmailFromName(`${organization.name} (via ClassroomIO.com)`),
+            from: buildEmailFromName(`${organization.name} (via PathWorks.com)`),
             idempotencyKey: `audience-course-welcome:${p.groupId}:${p.profileId}`
           });
           emailsSent++;
@@ -292,7 +292,7 @@ async function enrollAudienceStudentProfilesInPrograms(
                 programName: programNameById.get(pair.programId) || 'Program',
                 loginUrl
               },
-              from: buildEmailFromName(`${organization.name} (via ClassroomIO.com)`),
+              from: buildEmailFromName(`${organization.name} (via PathWorks.com)`),
               idempotencyKey: `audience-program-welcome:${pair.programId}:${pair.profileId}`
             });
             emailsSent++;
@@ -397,7 +397,7 @@ async function createStudentOrgInvitesAndSendEmails(input: {
             expiresAt: getExpiryLabel(expiresAt),
             courseNames: accessNamesLabel
           },
-          from: buildEmailFromName(`${organization.name} (via ClassroomIO.com)`),
+          from: buildEmailFromName(`${organization.name} (via PathWorks.com)`),
           idempotencyKey: `student-org-invite:${invite.id}`
         });
 
@@ -687,7 +687,7 @@ export async function resendAudienceInvite(orgId: string, data: TAudienceInviteB
         expiresAt: getExpiryLabel(expiresAt),
         courseNames: accessNamesLabel
       },
-      from: buildEmailFromName(`${organization.name} (via ClassroomIO.com)`),
+      from: buildEmailFromName(`${organization.name} (via PathWorks.com)`),
       idempotencyKey: `student-org-invite:${invite.id}`
     });
 

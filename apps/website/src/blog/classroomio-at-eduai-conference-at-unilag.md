@@ -1,7 +1,7 @@
 ---
-title: 'Sharing ClassroomIO with Educators at the University of Lagos'
-description: 'EduAI Hub invited us to talk about ClassroomIO to Edtech AI reserchers and educators at the University of Lagos, Nigeria'
-imageUrl: 'https://assets.cdn.clsrio.com/blog/classroomio-at-unilag-eduai-research.png'
+title: 'Sharing PathWorks with Educators at the University of Lagos'
+description: 'EduAI Hub invited us to talk about PathWorks to Edtech AI reserchers and educators at the University of Lagos, Nigeria'
+imageUrl: 'https://assets.cdn.clsrio.com/blog/pathworks-at-unilag-eduai-research.png'
 date: '2024-09-25'
 author: Rotimi Best
 avatar: /blog/best.jpg
@@ -10,7 +10,7 @@ tags: ['Educators', 'University', 'AI']
 published: true
 ---
 
-![classroomio-at-unilag-eduai-event](https://assets.cdn.clsrio.com/blog/classroomio-at-unilag-eduai-research.png)
+![pathworks-at-unilag-eduai-event](https://assets.cdn.clsrio.com/blog/pathworks-at-unilag-eduai-research.png)
 _Rotimi Best at the 2 day EduAI Hub Summit held at the University of Lagos_
 
 I was invited by [EduAI Hub](https://eduaihub.org/) to their 2 day summit at the University of Lagos to talk about the progress we've made as a company and how we are using AI in education.
@@ -31,7 +31,7 @@ I could see how the eyes of some of the educators lite up when I said we can all
 
 You can find my slides [here](https://docs.google.com/presentation/d/1yU9EFmYA5OJ9PmM4vQp39100vryRBdz3fCAVLktrUEI/edit?usp=sharing)
 
-This was my first actual event speaking about ClassroomIO and I was amazed by the amount of people that wanted to chat about how they could use the product for their online courses.
+This was my first actual event speaking about PathWorks and I was amazed by the amount of people that wanted to chat about how they could use the product for their online courses.
 
 Apart from the talk, I met amazing people working on other edtech related products and how they also use AI to empower their users.
 
@@ -47,7 +47,7 @@ Thanks to this summit and actually talking to real users, I know exactly some of
   <div class="flex space-x-4 gap-2">
     <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/speaking.JPG" alt="Speaking at EduAI Summit">
     <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/speaking-2.JPG" alt="Speaking at EduAI Summit">
-    <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/market-size.JPG" alt="ClassroomIO market size at EduAI Summit">
+    <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/market-size.JPG" alt="PathWorks market size at EduAI Summit">
     <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/chatting.JPG" alt="Chatting at EduAI Summit">
     <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/gmind-ai.jpg" alt="Gmind AI at EduAI Summit">
     <img src="https://assets.cdn.clsrio.com/blog/eduaihub-summit/chioma-cio.jpg" alt="Chioma, CIO at EduAI Summit">

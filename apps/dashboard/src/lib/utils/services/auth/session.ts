@@ -1,6 +1,6 @@
 import type { Cookies } from '@sveltejs/kit';
 import { authServerClient } from './server';
-import { classroomio } from '$lib/utils/services/api';
+import { pathworks } from '$lib/utils/services/api';
 import { getCioCookieString } from '$lib/utils/functions/cookies';
 import { getRequestBaseUrl } from '$lib/utils/services/api';
 
@@ -14,7 +14,7 @@ export const getSessionData = async (cookies: Cookies): Promise<App.Locals | nul
     console.log('has locals', !!locals);
     if (!locals) return null;
 
-    // This will always be true because if we don't have classroomio cookies, we won't be able to this line of code.
+    // This will always be true because if we don't have pathworks cookies, we won't be able to this line of code.
     locals.fromSessions = true;
 
     return locals;
@@ -25,7 +25,7 @@ export const getSessionData = async (cookies: Cookies): Promise<App.Locals | nul
 };
 
 export async function getThroughTrpc(allCookies: string) {
-  const session = await classroomio.session.$get(undefined, {
+  const session = await pathworks.session.$get(undefined, {
     headers: {
       cookie: allCookies
     }
