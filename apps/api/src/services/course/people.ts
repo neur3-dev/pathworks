@@ -67,7 +67,7 @@ export async function addMember(
 
         if (courseOrgData) {
           const courseName = courseOrgData.courseTitle || '';
-          const orgName = courseOrgData.orgName || 'ClassroomIO';
+          const orgName = courseOrgData.orgName || 'PathWorks';
           const loginUrl = getDashboardBaseUrl(courseOrgData.orgSiteName ?? undefined);
 
           // Get student profile data
@@ -95,7 +95,7 @@ export async function addMember(
                   courseName,
                   loginUrl
                 },
-                from: buildEmailFromName(`${orgName} (via ClassroomIO.com)`),
+                from: buildEmailFromName(`${orgName} (via PathWorks.com)`),
                 idempotencyKey: `course-people-student-welcome:${courseId}:${studentEmail}`
               });
             } catch (emailError) {
@@ -117,7 +117,7 @@ export async function addMember(
                     studentName,
                     studentEmail
                   },
-                  from: buildEmailFromName('ClassroomIO'),
+                  from: buildEmailFromName('PathWorks'),
                   idempotencyKey: `course-people-teacher-joined:${courseId}:${studentEmail}`
                 });
               } catch (emailError) {
@@ -176,7 +176,7 @@ export async function addMembers(courseId: string, members: TAddCourseMembers) {
     }
 
     const courseName = courseOrgData.courseTitle || '';
-    const orgName = courseOrgData.orgName || 'ClassroomIO';
+    const orgName = courseOrgData.orgName || 'PathWorks';
     const orgSiteName = courseOrgData.orgSiteName || '';
 
     // Add all members
@@ -211,7 +211,7 @@ export async function addMembers(courseId: string, members: TAddCourseMembers) {
               courseName,
               inviteLink
             },
-            from: buildEmailFromName(`${orgName} (via ClassroomIO.com)`),
+            from: buildEmailFromName(`${orgName} (via PathWorks.com)`),
             idempotencyKey: `teacher-course-welcome:${courseId}:${email}`
           }).catch((emailError) => {
             console.error(`Failed to enqueue welcome email to ${email}:`, emailError);

@@ -6,7 +6,7 @@
   import { t } from '$lib/utils/functions/translations';
   import { profile } from '$lib/utils/store/user';
   import { currentOrg } from '$lib/utils/store/org';
-  import { classroomio } from '$lib/utils/services/api';
+  import { pathworks } from '$lib/utils/services/api';
   import * as Page from '@cio/ui/base/page';
   import { coursesApi } from '$features/course/api';
   import type { PendingOrgInvite } from '$features/lms/utils/types';
@@ -46,7 +46,7 @@
     if (!$profile.id || !$currentOrg.id) return;
 
     try {
-      const response = await classroomio.invite.organization.pending.$get();
+      const response = await pathworks.invite.organization.pending.$get();
       const result = await response.json();
 
       if (result.success && result.data) {

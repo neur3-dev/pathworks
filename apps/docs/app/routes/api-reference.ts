@@ -6,7 +6,7 @@ export function loader() {
   return new Response(
     getHtmlDocument({
       url: publicApiSpecUrl,
-      pageTitle: 'ClassroomIO Public API Reference',
+      pageTitle: 'PathWorks Public API Reference',
       theme: 'none'
     }),
     {

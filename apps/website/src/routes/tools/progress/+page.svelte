@@ -43,7 +43,7 @@
 
   function shareOnTwitter() {
     const text = shareTemplate();
-    const hashtags = encodeURIComponent('classroomIO,progressReport');
+    const hashtags = encodeURIComponent('pathworks,progressReport');
     const url = `https://x.com/intent/post?text=${text}&hashtags=${hashtags}`;
     window.open(url);
   }

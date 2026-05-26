@@ -25,7 +25,7 @@ It was a no-brainer for him, and long story short, Pranav is a happy customer wi
 
 Here is what he has to say:
 
-![pranav-experience-using-classroomio](https://assets.cdn.clsrio.com/blog/review-by-pranav.jpeg)
+![pranav-experience-using-pathworks](https://assets.cdn.clsrio.com/blog/review-by-pranav.jpeg)
 _Pranav's experience using PathWorks_
 
 > PathWorks really helped me [bootstrap my program](https://dblocked.io/).

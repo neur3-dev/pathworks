@@ -7,7 +7,7 @@ const isSelfHosted = env.PUBLIC_IS_SELFHOSTED === 'true';
 const DEFAULT_TITLE = 'PathWorks | The Open Source Learning Management System for Companies';
 const DEFAULT_DESCRIPTION =
   'A flexible, user-friendly platform for creating, managing, and delivering courses for companies and training organisations';
-const CLOUD_OG_IMAGE = 'https://brand.cdn.clsrio.com/og/classroomio-og.png';
+const CLOUD_OG_IMAGE = 'https://brand.cdn.clsrio.com/og/pathworks-og.png';
 
 function resolveOgImageUrl(url: URL, orgSiteInfo: OrgSiteInfo): string {
   const envUrl = env.PUBLIC_OG_IMAGE_URL?.trim();
@@ -72,8 +72,8 @@ export function getBaseMetaTags(url: URL, orgSiteInfo: OrgSiteInfo): MetaTagsPro
       ]
     },
     twitter: {
-      handle: '@classroomio',
-      site: '@classroomio',
+      handle: '@pathworks',
+      site: '@pathworks',
       cardType: 'summary_large_image' as const,
       title,
       description,

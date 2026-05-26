@@ -1,4 +1,4 @@
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 
 export type GetCommunityQuestionsRequest = typeof pathworks.neur3.devmunity.$get;
 export type CommunityQuestionsResponse = InferResponseType<GetCommunityQuestionsRequest> | null;

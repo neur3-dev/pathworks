@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import { copyCourseModal, copyCourseModalInitialState } from '../utils/store';
 
 import type { CloneCourseRequest } from '../utils/types';
@@ -45,7 +45,7 @@ export class CourseCloneApi extends BaseApiWithErrors {
 
     await this.execute<CloneCourseRequest>({
       requestFn: () =>
-        classroomio.course[':courseId'].clone.$post({
+        pathworks.course[':courseId'].clone.$post({
           param: { courseId },
           json: result.data
         }),

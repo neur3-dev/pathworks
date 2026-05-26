@@ -1,13 +1,13 @@
 import type { TCancelOrgPlan, TCreateOrgPlan, TUpdateOrgPlan } from '@cio/utils/validation/organization';
 
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 import { getApiKeyHeaders, safeServerApi } from '$lib/utils/services/api/server';
 
-type CreateOrgPlanRequest = typeof classroomio.organization.plan.$post;
+type CreateOrgPlanRequest = typeof pathworks.organization.plan.$post;
 type CreateOrgPlanSuccess = Extract<InferResponseType<CreateOrgPlanRequest>, { success: true }>;
-type UpdateOrgPlanRequest = typeof classroomio.organization.plan.$put;
+type UpdateOrgPlanRequest = typeof pathworks.organization.plan.$put;
 type UpdateOrgPlanSuccess = Extract<InferResponseType<UpdateOrgPlanRequest>, { success: true }>;
-type CancelOrgPlanRequest = typeof classroomio.organization.plan.cancel.$post;
+type CancelOrgPlanRequest = typeof pathworks.organization.plan.cancel.$post;
 type CancelOrgPlanSuccess = Extract<InferResponseType<CancelOrgPlanRequest>, { success: true }>;
 
 /**
@@ -23,7 +23,7 @@ export class OrgPlanApiServer {
    */
   static async createOrgPlan(params: TCreateOrgPlan) {
     const result = await safeServerApi<CreateOrgPlanSuccess>(() =>
-      classroomio.organization.plan.$post(
+      pathworks.organization.plan.$post(
         {
           json: params
         },
@@ -46,7 +46,7 @@ export class OrgPlanApiServer {
    */
   static async updateOrgPlan(params: TUpdateOrgPlan) {
     const result = await safeServerApi<UpdateOrgPlanSuccess>(() =>
-      classroomio.organization.plan.$put(
+      pathworks.organization.plan.$put(
         {
           json: params
         },
@@ -69,7 +69,7 @@ export class OrgPlanApiServer {
    */
   static async cancelOrgPlan(params: TCancelOrgPlan) {
     const result = await safeServerApi<CancelOrgPlanSuccess>(() =>
-      classroomio.organization.plan.cancel.$post(
+      pathworks.organization.plan.cancel.$post(
         {
           json: params
         },

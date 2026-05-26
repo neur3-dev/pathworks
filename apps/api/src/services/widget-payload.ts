@@ -18,8 +18,8 @@ import { env } from '@api/config/env';
 const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const DEFAULT_EMBED_CDN_BASE_URL = 'https://assets.cdn.clsrio.com';
 const DEFAULT_LOCAL_EMBED_BASE_URL = 'http://localhost:5180';
-const DEFAULT_WIDGET_API_BASE_URL = 'https://api.classroomio.com';
-const DEFAULT_WIDGET_APP_BASE_URL = 'https://classroomio.com';
+const DEFAULT_WIDGET_API_BASE_URL = 'https://api.pathworks.com';
+const DEFAULT_WIDGET_APP_BASE_URL = 'https://pathworks.com';
 
 const ALLOWED_CUSTOM_CSS_PROPERTIES = new Set([
   'align-items',
@@ -279,7 +279,7 @@ export async function listWidgetAvailableEditorData(orgId: string) {
         groupId: group.id
       }))
     ),
-    planGatedFields: resolveWidgetPlanGatedFields(activePlan?.planName, 'classroomio'),
+    planGatedFields: resolveWidgetPlanGatedFields(activePlan?.planName, 'pathworks'),
     planName: activePlan?.planName ?? null
   };
 }

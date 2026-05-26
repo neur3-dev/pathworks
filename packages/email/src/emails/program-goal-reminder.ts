@@ -30,7 +30,7 @@ export const programGoalReminderEmail = defineEmail({
       <p>This is a reminder that the goal <strong>${fields.goalTitle}</strong> in your program <strong>${fields.programName}</strong> at ${fields.orgName} needs your attention.</p>
       ${dueLine}
       <p>Your progress so far: <strong>${progress}</strong>.</p>
-      <p><a href="${fields.loginUrl}">Open ClassroomIO</a> to keep going.</p>
+      <p><a href="${fields.loginUrl}">Open PathWorks</a> to keep going.</p>
       <p>Cheers,</p>
       <p>${fields.orgName}</p>
     `;

@@ -10,7 +10,7 @@ tags: ['Launch Week', 'Company Update']
 published: true
 ---
 
-![classroomio-launch-week-001](https://assets.cdn.clsrio.com/blog/launch-week-001.png)
+![pathworks-launch-week-001](https://assets.cdn.clsrio.com/blog/launch-week-001.png)
 _PathWorks Launch Week 001_
 
 Welcome to our first launch week for PathWorks.com.

@@ -1,9 +1,9 @@
 import type { TAgentCreditPurchase } from '@cio/utils/validation/agent';
 
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 import { getApiKeyHeaders, safeServerApi } from '$lib/utils/services/api/server';
 
-type RecordPurchaseRequest = typeof classroomio.agent.credits.purchase.$post;
+type RecordPurchaseRequest = typeof pathworks.agent.credits.purchase.$post;
 type RecordPurchaseSuccess = Extract<InferResponseType<RecordPurchaseRequest>, { success: true }>;
 
 export class CreditPurchaseApiServer {
@@ -12,7 +12,7 @@ export class CreditPurchaseApiServer {
    */
   static async recordPurchase(params: TAgentCreditPurchase) {
     const result = await safeServerApi<RecordPurchaseSuccess>(() =>
-      classroomio.agent.credits.purchase.$post({ json: params }, getApiKeyHeaders())
+      pathworks.agent.credits.purchase.$post({ json: params }, getApiKeyHeaders())
     );
 
     if (!result.ok) {

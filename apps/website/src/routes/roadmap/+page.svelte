@@ -43,7 +43,7 @@
     },
     {
       title: 'API',
-      desc: 'We are working on our public API which allows you to perform CRUD operations against your classroomio organization.'
+      desc: 'We are working on our public API which allows you to perform CRUD operations against your pathworks organization.'
     },
     {
       title: 'Embedable Course',
@@ -69,7 +69,7 @@
   <p class="mt-10 w-[80%] text-start text-slate-700 md:w-[40%] md:text-center">
     This is a live document, and will be updated regularly. To submit an idea, or to view a list of feature requests and
     ideas that we're considering, check out our <a
-      href="https://github.com/classroomio/classroomio/discussion"
+      href="https://github.com/pathworks/pathworks/discussion"
       class="underline">GitHub Discussions</a
     >
   </p>

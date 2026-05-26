@@ -93,7 +93,7 @@ export const app = new Hono()
   // Routes
   .get('/', (c) =>
     c.json({
-      message: `"Welcome to Classroomio.com API - docs are at ${API_SERVER_URL}/docs"`
+      message: `"Welcome to PathWorks.com API - docs are at ${API_SERVER_URL}/docs"`
     })
   )
   .use('/api/auth/sign-up/*', signupGuard)

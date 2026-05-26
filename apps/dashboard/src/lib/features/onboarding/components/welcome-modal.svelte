@@ -5,7 +5,7 @@
   import { currentOrgPath } from '$lib/utils/store/org';
   import { profile } from '$lib/utils/store/user';
   import { t } from '$lib/utils/functions/translations';
-  import { classroomio } from '$lib/utils/services/api';
+  import { pathworks } from '$lib/utils/services/api';
 
   let query = new URLSearchParams(page.url.search);
   let welcomePopup = query.get('welcomePopup');
@@ -18,7 +18,7 @@
 
     try {
       isLoading = true;
-      await classroomio.onboarding.complete.$post({});
+      await pathworks.onboarding.complete.$post({});
 
       goto($currentOrgPath + '/courses?create=true');
     } catch (error) {

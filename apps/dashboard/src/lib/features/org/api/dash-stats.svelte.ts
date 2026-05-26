@@ -1,4 +1,4 @@
-import { BaseApi, classroomio } from '$lib/utils/services/api';
+import { BaseApi, pathworks } from '$lib/utils/services/api';
 
 import type { DashStatsSuccess } from '$features/org/utils/types';
 
@@ -21,8 +21,8 @@ class DashStatApi extends BaseApi {
    * @returns Organization analytics data (certifications, courses, students, top courses)
    */
   async fetchOrgStats({ orgId, siteName }: { orgId?: string; siteName?: string }) {
-    await this.execute<typeof classroomio.dash.stats.$get>({
-      requestFn: () => classroomio.dash.stats.$get({ query: { orgId, siteName } }),
+    await this.execute<typeof pathworks.dash.stats.$get>({
+      requestFn: () => pathworks.dash.stats.$get({ query: { orgId, siteName } }),
       logContext: 'fetching organization stats',
       onSuccess: (response) => {
         this.stats = response.data;

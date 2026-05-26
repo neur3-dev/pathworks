@@ -3,7 +3,7 @@
   import type { TWidgetPayload } from '@cio/utils/validation/widget';
   import { CourseWidget } from '@cio/ui/custom/widget-layouts';
 
-  const DEFAULT_API_BASE_URL = 'https://api.classroomio.com';
+  const DEFAULT_API_BASE_URL = 'https://api.pathworks.com';
 
   let { publicKey, apiBaseUrl = DEFAULT_API_BASE_URL }: { publicKey: string; apiBaseUrl?: string } = $props();
 

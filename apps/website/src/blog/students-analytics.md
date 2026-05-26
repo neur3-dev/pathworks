@@ -10,7 +10,7 @@ tags: ['Analytics', 'Company Update']
 published: true
 ---
 
-![classroomio-student-analytics](https://assets.cdn.clsrio.com/blog/students-analytics.png)
+![pathworks-student-analytics](https://assets.cdn.clsrio.com/blog/students-analytics.png)
 _PathWorks Students Analytics_
 
 As we end the year, we are excited to announce that we have added student analytics to our platform. This is a feature that we have been working on for a while and we are happy to finally launch it. With this new feature, you can better understand the progress of specific students in your course or your organisation.

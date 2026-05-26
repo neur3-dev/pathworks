@@ -1,7 +1,7 @@
-import { classroomio, getApiHeaders, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders, type InferResponseType } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
-type GetProgramsRequest = typeof classroomio.program.$get;
+type GetProgramsRequest = typeof pathworks.program.$get;
 type GetProgramsSuccess = Extract<InferResponseType<GetProgramsRequest>, { success: true }>;
 
 export const load = async ({ parent, locals, cookies }) => {
@@ -12,7 +12,7 @@ export const load = async ({ parent, locals, cookies }) => {
   }
 
   const result = await safeServerApi<GetProgramsSuccess>(() =>
-    classroomio.program.$get({ query: { organizationId: orgId } }, getApiHeaders(cookies, orgId))
+    pathworks.program.$get({ query: { organizationId: orgId } }, getApiHeaders(cookies, orgId))
   );
 
   return {

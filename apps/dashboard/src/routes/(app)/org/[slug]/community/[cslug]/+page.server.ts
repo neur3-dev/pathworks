@@ -1,5 +1,5 @@
 import type { CommunityQuestionSuccess } from '$features/community/utils/types';
-import { classroomio, getApiHeaders } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
 export const load = async ({ params, parent, cookies }) => {

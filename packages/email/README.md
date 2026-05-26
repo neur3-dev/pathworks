@@ -26,7 +26,7 @@ await send('forgotPassword', {
   fields: {
     name: 'John Doe',
     email: 'user@example.com',
-    link: 'https://app.classroomio.com/reset?token=abc123'
+    link: 'https://app.pathworks.com/reset?token=abc123'
   }
 });
 ```
@@ -39,10 +39,10 @@ await send('forgotPassword', {
   fields: {
     name: 'John Doe',
     email: 'user@example.com',
-    link: 'https://app.classroomio.com/reset?token=abc123'
+    link: 'https://app.pathworks.com/reset?token=abc123'
   },
-  from: '"Support Team" <support@classroomio.com>',
-  replyTo: 'help@classroomio.com'
+  from: '"Support Team" <support@pathworks.com>',
+  replyTo: 'help@pathworks.com'
 });
 ```
 
@@ -58,7 +58,7 @@ import { getDefaultTemplate } from '../templates';
 
 export const forgotPasswordEmail = defineEmail({
   id: 'forgotPassword',
-  subject: 'Password reset notification - ClassroomIO',
+  subject: 'Password reset notification - PathWorks',
   schema: z.object({
     name: z.string().min(1),
     email: z.string().email(),

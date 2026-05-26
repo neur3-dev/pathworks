@@ -14,7 +14,7 @@ on:
         default: "latest"
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME || 'classroomio' }}
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME || 'pathworks' }}
 
 jobs:
   build-and-push:

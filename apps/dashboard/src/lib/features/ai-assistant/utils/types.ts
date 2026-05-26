@@ -1,5 +1,5 @@
 import type { UIMessage } from 'ai';
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 import type { CourseTemplateId } from '@cio/ai-assistant';
 
 export interface UploadedDocument {
@@ -44,42 +44,42 @@ export interface AiAssistantMessageMetadata {
 
 export type AiAssistantMessage = UIMessage<AiAssistantMessageMetadata>;
 
-export type AgentStatusRequest = typeof classroomio.agent.status.$get;
+export type AgentStatusRequest = typeof pathworks.agent.status.$get;
 export type AgentStatusSuccess = Extract<InferResponseType<AgentStatusRequest>, { success: true }>;
 export type AgentStatusData = AgentStatusSuccess['data'];
 
-export type AgentUsageRequest = typeof classroomio.agent.usage.$get;
+export type AgentUsageRequest = typeof pathworks.agent.usage.$get;
 export type AgentUsageSuccess = Extract<InferResponseType<AgentUsageRequest>, { success: true }>;
 export type AgentUsageData = AgentUsageSuccess['data'];
 
-export type AgentHistoryGetRequest = typeof classroomio.agent.history.$get;
+export type AgentHistoryGetRequest = typeof pathworks.agent.history.$get;
 export type AgentHistoryGetSuccess = Extract<InferResponseType<AgentHistoryGetRequest>, { success: true }>;
 export type AgentHistoryData = AgentHistoryGetSuccess['data'];
 
 export type AgentConversationSummary = AgentHistoryData[number];
 
-export type AgentConversationRequest = (typeof classroomio.agent.history)[':conversationId']['$get'];
+export type AgentConversationRequest = (typeof pathworks.agent.history)[':conversationId']['$get'];
 export type AgentConversationSuccess = Extract<InferResponseType<AgentConversationRequest>, { success: true }>;
 export type AgentConversation = Omit<AgentConversationSuccess['data'], 'messages'> & {
   messages: AiAssistantMessage[];
 };
 
-export type AgentConversationCreateRequest = typeof classroomio.agent.history.$post;
+export type AgentConversationCreateRequest = typeof pathworks.agent.history.$post;
 export type AgentConversationCreateSuccess = Extract<
   InferResponseType<AgentConversationCreateRequest>,
   { success: true }
 >;
 export type AgentConversationCreateData = AgentConversationCreateSuccess['data'];
 
-export type AgentHistorySaveRequest = (typeof classroomio.agent.history)[':conversationId']['$put'];
+export type AgentHistorySaveRequest = (typeof pathworks.agent.history)[':conversationId']['$put'];
 
-export type AgentHistoryRenameRequest = (typeof classroomio.agent.history)[':conversationId']['$patch'];
+export type AgentHistoryRenameRequest = (typeof pathworks.agent.history)[':conversationId']['$patch'];
 
-export type AgentHistoryDeleteRequest = (typeof classroomio.agent.history)[':conversationId']['$delete'];
+export type AgentHistoryDeleteRequest = (typeof pathworks.agent.history)[':conversationId']['$delete'];
 
-export type CompactConversationRequest = (typeof classroomio.agent.history)[':conversationId']['compact']['$post'];
+export type CompactConversationRequest = (typeof pathworks.agent.history)[':conversationId']['compact']['$post'];
 export type CompactConversationSuccess = Extract<InferResponseType<CompactConversationRequest>, { success: true }>;
 
-export type GenerateCourseTitleRequest = (typeof classroomio.agent)['generate-course-title']['$post'];
+export type GenerateCourseTitleRequest = (typeof pathworks.agent)['generate-course-title']['$post'];
 export type GenerateCourseTitleSuccess = Extract<InferResponseType<GenerateCourseTitleRequest>, { success: true }>;
 export type GenerateCourseTitleData = GenerateCourseTitleSuccess['data'];

@@ -1,4 +1,4 @@
-import { BaseApi, classroomio } from '$lib/utils/services/api';
+import { BaseApi, pathworks } from '$lib/utils/services/api';
 import { currentOrg, mergeAccountOrgFromServer, orgs } from '$lib/utils/store/org';
 import { defaultProfileState, defaultUserState, profile, user } from '$lib/utils/store/user';
 
@@ -60,8 +60,8 @@ class AppInitApi extends BaseApi {
       await this.autoEnrollOnTenantSite(params.orgId);
     }
 
-    await this.execute<typeof classroomio.account.$get>({
-      requestFn: () => classroomio.account.$get(),
+    await this.execute<typeof pathworks.account.$get>({
+      requestFn: () => pathworks.account.$get(),
       logContext: 'fetching account',
       onSuccess: (data) => {
         this.data = data;
@@ -81,7 +81,7 @@ class AppInitApi extends BaseApi {
 
   private async autoEnrollOnTenantSite(orgId: string): Promise<void> {
     try {
-      const response = await classroomio.organization['auto-enroll-student'].$post(
+      const response = await pathworks.organization['auto-enroll-student'].$post(
         {},
         { headers: { 'cio-org-id': orgId } }
       );
@@ -146,7 +146,7 @@ class AppInitApi extends BaseApi {
     }
 
     if (!nextOrg) {
-      const lastOrgSiteName = localStorage.getItem('classroomio_org_sitename');
+      const lastOrgSiteName = localStorage.getItem('pathworks_org_sitename');
       nextOrg = this.data.organizations.find((org) => org.siteName === lastOrgSiteName) ?? this.data.organizations[0];
     }
 

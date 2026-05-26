@@ -5,7 +5,7 @@ import type {
   GetTokenAuthRequest,
   RotateTokenAuthRequest
 } from '$features/org/utils/types';
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 
 import { snackbar } from '$features/ui/snackbar/store';
 
@@ -16,7 +16,7 @@ export interface TokenAuthStatus {
 }
 
 const tokenAuthClient = (
-  classroomio.organization as {
+  pathworks.organization as {
     'token-auth': {
       $get: () => Promise<Response>;
       $post: () => Promise<Response>;

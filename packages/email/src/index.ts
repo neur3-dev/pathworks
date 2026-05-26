@@ -12,7 +12,7 @@
  *   fields: {
  *     name: 'John Doe',
  *     email: 'user@example.com',
- *     link: 'https://app.classroomio.com/reset?token=abc123'
+ *     link: 'https://app.pathworks.com/reset?token=abc123'
  *   }
  * });
  * ```

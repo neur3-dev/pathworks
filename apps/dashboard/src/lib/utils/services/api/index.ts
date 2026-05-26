@@ -255,7 +255,7 @@ class ApiClient {
 export const apiClient = new ApiClient();
 
 // RPC client using the new fetch wrapper
-export const classroomio = hcWithType(getRequestBaseUrl(), {
+export const pathworks = hcWithType(getRequestBaseUrl(), {
   fetch: async (input: RequestInfo | URL, requestInit?: RequestInit) => {
     return apiClient.request(input, requestInit);
   },
@@ -301,7 +301,7 @@ export { BaseApi, BaseApiWithErrors } from './base.svelte';
  * ```typescript
  * export const load = async ({ cookies, parent }) => {
  *   const { org } = await parent();
- *   const response = await classroomio.organization.$get(
+ *   const response = await pathworks.organization.$get(
  *     { query: { siteName } },
  *     getApiHeaders(cookies, org?.id)
  *   );

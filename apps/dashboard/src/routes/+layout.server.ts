@@ -32,7 +32,7 @@ export const load = async ({ url, cookies, request, locals }): Promise<LoadOutpu
     org: orgSiteInfo.org,
     baseMetaTags: getBaseMetaTags(url, orgSiteInfo),
     serverLang: request.headers?.get('accept-language') || '',
-    localeCookie: cookies.get('classroomio_locale') || '',
+    localeCookie: cookies.get('pathworks_locale') || '',
     locals
   };
 

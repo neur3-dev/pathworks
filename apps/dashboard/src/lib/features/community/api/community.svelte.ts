@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 import type {
   CommunityQuestionSuccess,
   CommunityQuestionsSuccess,

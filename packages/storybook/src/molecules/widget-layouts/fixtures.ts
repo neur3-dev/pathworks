@@ -43,7 +43,7 @@ function makeCourse(
     createdAt: partial.createdAt ?? new Date().toISOString(),
     tags: partial.tags ?? [],
     featured: partial.featured ?? false,
-    url: partial.url ?? `https://demo.classroomio.com/course/${partial.id}`
+    url: partial.url ?? `https://demo.pathworks.com/course/${partial.id}`
   };
 }
 
@@ -297,12 +297,12 @@ export function makeFixturePayload(layoutType: TWidgetLayoutType): TWidgetPayloa
       canUseCustomCss: true,
       canToggleBranding: true,
       isBrandingForced: false,
-      availableThemes: ['classroomio', 'graphite', 'linen', 'spruce'],
-      selectedTheme: 'classroomio'
+      availableThemes: ['pathworks', 'graphite', 'linen', 'spruce'],
+      selectedTheme: 'pathworks'
     },
     labels: {
       loadMoreLabel: 'Load more',
-      poweredByLabel: 'Powered by Classroomio'
+      poweredByLabel: 'Powered by PathWorks'
     },
     courses: orderedCourses,
     tagPool: layoutType === 'tag_filter' ? TAGS : [],

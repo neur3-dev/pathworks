@@ -12,7 +12,7 @@
     '      <span class="text-sky-300">"args"</span><span class="text-slate-500">: [</span><span class="text-emerald-300">"-y"</span><span class="text-slate-500">,</span> <span class="text-emerald-300">"@pathworks/mcp"</span><span class="text-slate-500">],</span>',
     '      <span class="text-sky-300">"env"</span><span class="text-slate-500">: {</span>',
     '        <span class="text-sky-300">"PATHWORKS_API_URL"</span><span class="text-slate-500">:</span> <span class="text-emerald-300">"https://pathworks-api.neur3.dev"</span><span class="text-slate-500">,</span>',
-    '        <span class="text-sky-300">"CLASSROOMIO_API_KEY"</span><span class="text-slate-500">:</span> <span class="text-emerald-300">"&lt;your-mcp-key&gt;"</span>',
+    '        <span class="text-sky-300">"PATHWORKS_API_KEY"</span><span class="text-slate-500">:</span> <span class="text-emerald-300">"&lt;your-mcp-key&gt;"</span>',
     '      <span class="text-slate-500">}</span>',
     '    <span class="text-slate-500">}</span>',
     '  <span class="text-slate-500">}</span>',

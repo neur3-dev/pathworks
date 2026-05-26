@@ -10,7 +10,7 @@ tags: ['Launch Week', 'Custom Domains', 'Company Update']
 published: true
 ---
 
-![classroomio-custom-domain](https://assets.cdn.clsrio.com/blog/custom-domain.png)
+![pathworks-custom-domain](https://assets.cdn.clsrio.com/blog/custom-domain.png)
 _PathWorks Custom Domains Banner_
 
 Today I am happy to announce that we've added support for custom domains into our admin dashboard. Companies and Training organisations can now take advantage of this feature to strengthen their brand using our learning management system.

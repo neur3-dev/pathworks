@@ -1,6 +1,6 @@
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 
-export type ComplianceOverviewRequest = (typeof classroomio.dash)['compliance-overview']['$get'];
+export type ComplianceOverviewRequest = (typeof pathworks.dash)['compliance-overview']['$get'];
 
 export type ComplianceOverviewSuccess = Extract<InferResponseType<ComplianceOverviewRequest>, { success: true }>;
 

@@ -943,7 +943,7 @@ async function sendSubmissionUpdateEmail(submissionId: string, newStatusId: numb
   // Get organization name
   const orgResult = await getOrganizationByCourseId(fullSubmission.courseId || '');
 
-  const orgName = orgResult?.orgName || 'ClassroomIO';
+  const orgName = orgResult?.orgName || 'PathWorks';
 
   const statusText = LEGACY_BOARD_STATUS_LABELS[newStatusId] || 'Updated';
   const baseUrl = getDashboardBaseUrl();
@@ -979,7 +979,7 @@ async function sendSubmissionUpdateEmail(submissionId: string, newStatusId: numb
   }
 
   await enqueueRawEmail({
-    from: buildEmailFromName(`${orgName} (via ClassroomIO.com)`),
+    from: buildEmailFromName(`${orgName} (via PathWorks.com)`),
     to: fullSubmission.groupmember.profile.email,
     subject: 'Submission Update',
     content,
@@ -1020,7 +1020,7 @@ async function sendExerciseSubmissionUpdateEmail(courseId: string, exerciseId: s
   // Get organization name
   const orgResult = await getOrganizationByCourseId(courseId);
 
-  const orgName = orgResult?.orgName || 'ClassroomIO';
+  const orgName = orgResult?.orgName || 'PathWorks';
 
   const baseUrl = getDashboardBaseUrl();
   const exerciseLink = `${baseUrl}/courses/${courseId}/exercises/${exerciseId}`;
@@ -1039,7 +1039,7 @@ async function sendExerciseSubmissionUpdateEmail(courseId: string, exerciseId: s
   if (tutorEmails.length === 0) return;
 
   await enqueueRawEmail({
-    from: buildEmailFromName(`${orgName} (via ClassroomIO.com)`),
+    from: buildEmailFromName(`${orgName} (via PathWorks.com)`),
     to: tutorEmails,
     subject: `[Submitted]: ${exercise.title}`,
     content,

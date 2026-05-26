@@ -15,18 +15,18 @@ export interface ExerciseSectionStoryFixture {
   questions: Record<string, unknown>[];
 }
 
-const OPTION_IMAGE_A = 'https://brand.cdn.clsrio.com/classroomio-lms-courses.png';
+const OPTION_IMAGE_A = 'https://brand.cdn.clsrio.com/pathworks-lms-courses.png';
 const OPTION_IMAGE_B = 'https://assets.cdn.clsrio.com/www/futuristic-classroom.jpg';
 
 export const RADIO_FIXTURE: QuestionStoryFixture = {
   question: {
     id: 'q-radio',
     key: 'q-radio',
-    title: 'Which runtime powers most ClassroomIO backend APIs? [RADIO]',
+    title: 'Which runtime powers most PathWorks backend APIs? [RADIO]',
     questionType: 'RADIO',
     settings: {
       description: 'Choose one option.',
-      imageUrls: ['https://brand.cdn.clsrio.com/classroomio-courses.png']
+      imageUrls: ['https://brand.cdn.clsrio.com/pathworks-courses.png']
     },
     options: [
       {
@@ -237,7 +237,7 @@ export const MATCHING_FIXTURE: QuestionStoryFixture = {
   question: {
     id: 'q-matching',
     key: 'q-matching',
-    title: 'Match each layer to the ClassroomIO responsibility. [MATCHING]',
+    title: 'Match each layer to the PathWorks responsibility. [MATCHING]',
     questionType: 'MATCHING',
     settings: {
       pairs: [
@@ -291,7 +291,7 @@ export const LINK_FIXTURE: QuestionStoryFixture = {
       instructions: 'Add one or more relevant links.'
     }
   },
-  answer: ['https://classroomio.com/docs', 'https://www.svelte.dev']
+  answer: ['https://pathworks.com/docs', 'https://www.svelte.dev']
 };
 
 export const SECTIONED_EXERCISE_FIXTURE: ExerciseSectionStoryFixture[] = [

@@ -356,9 +356,9 @@ async function sendNewsfeedPostEmail(feedId: string, authorId: string) {
       return;
     }
 
-    const orgName = feedData.organization?.name || 'ClassroomIO';
+    const orgName = feedData.organization?.name || 'PathWorks';
     const orgSiteName = feedData.organization?.siteName || 'app';
-    const postLink = `https://${orgSiteName}.classroomio.com/courses/${feedData.courseId}?feedId=${feedData.feedId}`;
+    const postLink = `https://${orgSiteName}.pathworks.com/courses/${feedData.courseId}?feedId=${feedData.feedId}`;
 
     const recipients = feedData.courseMembers
       .map((member) => member.email)
@@ -375,8 +375,8 @@ async function sendNewsfeedPostEmail(feedId: string, authorId: string) {
         postLink,
         orgName
       },
-      from: buildEmailFromName(`${orgName} - ClassroomIO`),
-      replyTo: feedData.author?.email || 'noreply@classroomio.com',
+      from: buildEmailFromName(`${orgName} - PathWorks`),
+      replyTo: feedData.author?.email || 'noreply@pathworks.com',
       idempotencyKey: `newsfeed:post:${feedId}`
     });
   } catch (error) {
@@ -400,9 +400,9 @@ async function sendNewsfeedCommentEmail(feedId: string, commentContent: string) 
       return;
     }
 
-    const orgName = feedData.organization?.name || 'ClassroomIO';
+    const orgName = feedData.organization?.name || 'PathWorks';
     const orgSiteName = feedData.organization?.siteName || 'app';
-    const postLink = `https://${orgSiteName}.classroomio.com/courses/${feedData.courseId}?feedId=${feedData.feedId}`;
+    const postLink = `https://${orgSiteName}.pathworks.com/courses/${feedData.courseId}?feedId=${feedData.feedId}`;
 
     await enqueueTransactionalEmail('newsfeedComment', {
       to: feedData.author.email,
@@ -412,8 +412,8 @@ async function sendNewsfeedCommentEmail(feedId: string, commentContent: string) 
         postLink,
         orgName
       },
-      from: buildEmailFromName(`${orgName} - ClassroomIO`),
-      replyTo: 'noreply@classroomio.com'
+      from: buildEmailFromName(`${orgName} - PathWorks`),
+      replyTo: 'noreply@pathworks.com'
     });
   } catch (error) {
     console.error('Error sending newsfeed comment email:', error);

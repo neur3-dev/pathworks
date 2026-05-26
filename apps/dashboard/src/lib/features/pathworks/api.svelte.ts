@@ -1,10 +1,10 @@
-import { BaseApiWithErrors, classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks, type InferResponseType } from '$lib/utils/services/api';
 
-type LearningPathsRequest = (typeof classroomio.pathworks)['learning-paths']['$get'];
+type LearningPathsRequest = (typeof pathworks.pathworks)['learning-paths']['$get'];
 type LearningPathsResponse = Extract<InferResponseType<LearningPathsRequest>, { success: true }>;
-type ParticipantProfileRequest = (typeof classroomio.pathworks)['participant-profile']['$get'];
+type ParticipantProfileRequest = (typeof pathworks.pathworks)['participant-profile']['$get'];
 type ParticipantProfileResponse = Extract<InferResponseType<ParticipantProfileRequest>, { success: true }>;
-type ParticipantProgressRequest = (typeof classroomio.pathworks)['participant-progress']['$get'];
+type ParticipantProgressRequest = (typeof pathworks.pathworks)['participant-progress']['$get'];
 type ParticipantProgressResponse = Extract<InferResponseType<ParticipantProgressRequest>, { success: true }>;
 
 export type LearningPath = LearningPathsResponse['data'][number];
@@ -19,7 +19,7 @@ export class PathWorksApi extends BaseApiWithErrors {
   async getLearningPaths(orgId?: string) {
     return this.execute<LearningPathsRequest>({
       requestFn: () =>
-        classroomio.pathworks['learning-paths'].$get({
+        pathworks.pathworks['learning-paths'].$get({
           query: orgId ? { orgId } : {}
         }),
       logContext: 'fetching PathWorks learning paths',
@@ -31,7 +31,7 @@ export class PathWorksApi extends BaseApiWithErrors {
 
   async getParticipantProfile() {
     return this.execute<ParticipantProfileRequest>({
-      requestFn: () => classroomio.pathworks['participant-profile'].$get(),
+      requestFn: () => pathworks.pathworks['participant-profile'].$get(),
       logContext: 'fetching PathWorks participant profile',
       onSuccess: (response) => {
         this.participantProfile = response.data;
@@ -59,9 +59,9 @@ export class PathWorksApi extends BaseApiWithErrors {
     prefContentWarnings: boolean;
     prefMicrolearning: boolean;
   }) {
-    return this.execute<(typeof classroomio.pathworks)['participant-profile']['$post']>({
+    return this.execute<(typeof pathworks.pathworks)['participant-profile']['$post']>({
       requestFn: () =>
-        classroomio.pathworks['participant-profile'].$post({
+        pathworks.pathworks['participant-profile'].$post({
           json: data
         }),
       logContext: 'saving PathWorks participant profile'
@@ -71,7 +71,7 @@ export class PathWorksApi extends BaseApiWithErrors {
   async getParticipantProgress(courseId: string, lessonId?: string | null) {
     return this.execute<ParticipantProgressRequest>({
       requestFn: () =>
-        classroomio.pathworks['participant-progress'].$get({
+        pathworks.pathworks['participant-progress'].$get({
           query: {
             courseId,
             ...(lessonId ? { lessonId } : {})
@@ -92,9 +92,9 @@ export class PathWorksApi extends BaseApiWithErrors {
     score?: number | null;
     attempts?: number;
   }) {
-    return this.execute<(typeof classroomio.pathworks)['participant-progress']['$post']>({
+    return this.execute<(typeof pathworks.pathworks)['participant-progress']['$post']>({
       requestFn: () =>
-        classroomio.pathworks['participant-progress'].$post({
+        pathworks.pathworks['participant-progress'].$post({
           json: {
             status: 'in_progress',
             lastPosition: 0,
