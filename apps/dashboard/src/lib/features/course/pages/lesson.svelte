@@ -20,13 +20,14 @@
   import { snackbar } from '$features/ui/snackbar/store';
   import { RefreshPageData } from '$features/ui';
   import LessonVersionHistory from '$features/course/components/lesson/lesson-version-history.svelte';
-  import { courseApi, lessonApi } from '$features/course/api';
+  import { courseApi, exerciseApi, lessonApi } from '$features/course/api';
   import { pathworksApi } from '$features/pathworks/api.svelte';
   import { ContentWarningInterstitial, ModuleOverview, ResumeLessonPrompt } from '$features/pathworks/components';
   import { isHtmlValueEmpty } from '$lib/utils/functions/toHtml';
   import { lessonVideoUpload, lessonDocUpload } from '$features/course/components/lesson/store';
   import { t } from '$lib/utils/functions/translations';
   import { ContentType } from '@cio/utils/constants/content';
+  import { QUESTION_TYPE_IDS } from '@cio/question-types';
 
   import { IconButton } from '@cio/ui/custom/icon-button';
   import { Button } from '@cio/ui/base/button';
@@ -83,7 +84,6 @@
 
   const canEditLesson = $derived(!$isOrgStudent);
   const publishStateLabel = $derived(lessonApi.lesson?.public ? 'Published' : 'Draft');
-
   function setModeQueryParam(value: (typeof MODES)[keyof typeof MODES]) {
     const params = new SvelteURLSearchParams($page.url.searchParams);
     params.set('mode', value);
@@ -176,6 +176,22 @@
     }
 
     return content.items ?? [];
+  });
+
+  const lessonExerciseItems = $derived(courseContentItems.filter((item) => item.type === ContentType.Exercise));
+  const lessonExerciseCopy = $derived({
+    heading: $t('course.navItem.lessons.practice_exercises.heading'),
+    multipleChoice: $t('course.navItem.lessons.practice_exercises.multiple_choice'),
+    shortAnswer: $t('course.navItem.lessons.practice_exercises.short_answer'),
+    scenarioPrompt: $t('course.navItem.lessons.practice_exercises.scenario_prompt'),
+    multipleChoiceTitle: $t('course.navItem.lessons.practice_exercises.multiple_choice_title'),
+    multipleChoiceQuestion: $t('course.navItem.lessons.practice_exercises.multiple_choice_question'),
+    correctAnswer: $t('course.navItem.lessons.practice_exercises.correct_answer'),
+    alternateOption: $t('course.navItem.lessons.practice_exercises.alternate_option'),
+    shortAnswerTitle: $t('course.navItem.lessons.practice_exercises.short_answer_title'),
+    shortAnswerQuestion: $t('course.navItem.lessons.practice_exercises.short_answer_question'),
+    scenarioTitle: $t('course.navItem.lessons.practice_exercises.scenario_title'),
+    scenarioQuestion: $t('course.navItem.lessons.practice_exercises.scenario_question')
   });
   const lessonItems = $derived(courseContentItems.filter((item) => item.type === ContentType.Lesson));
   const lessonIndex = $derived(
@@ -303,6 +319,73 @@
 
   function handlePublishChange(checked: boolean) {
     lessonApi.updateLessonState('public', checked);
+  }
+
+  function getNextLessonExerciseOrder() {
+    const orders = lessonExerciseItems.map((item, index) => item.order ?? index + 1);
+    return orders.length ? Math.max(...orders) + 1 : 1;
+  }
+
+  async function createLessonExercise(kind: 'multiple-choice' | 'short-answer' | 'scenario') {
+    if (!courseId || !lessonId || exerciseApi.isLoading) return;
+
+    const templates = {
+      'multiple-choice': {
+        title: lessonExerciseCopy.multipleChoiceTitle,
+        question: lessonExerciseCopy.multipleChoiceQuestion,
+        questionTypeId: QUESTION_TYPE_IDS.RADIO,
+        points: 1,
+        options: [
+          { label: lessonExerciseCopy.correctAnswer, isCorrect: true },
+          { label: lessonExerciseCopy.alternateOption, isCorrect: false }
+        ]
+      },
+      'short-answer': {
+        title: lessonExerciseCopy.shortAnswerTitle,
+        question: lessonExerciseCopy.shortAnswerQuestion,
+        questionTypeId: QUESTION_TYPE_IDS.SHORT_ANSWER,
+        points: 0,
+        settings: { acceptedAnswers: '' }
+      },
+      scenario: {
+        title: lessonExerciseCopy.scenarioTitle,
+        question: lessonExerciseCopy.scenarioQuestion,
+        questionTypeId: QUESTION_TYPE_IDS.TEXTAREA,
+        points: 0,
+        settings: { minCharacters: 20 }
+      }
+    } satisfies Record<
+      string,
+      {
+        title: string;
+        question: string;
+        questionTypeId: number;
+        points: number;
+        settings?: Record<string, unknown>;
+        options?: Array<{ label: string; isCorrect: boolean }>;
+      }
+    >;
+
+    const template = templates[kind];
+    await exerciseApi.create(courseId, {
+      title: template.title,
+      lessonId,
+      order: getNextLessonExerciseOrder(),
+      questions: [
+        {
+          question: template.question,
+          questionTypeId: template.questionTypeId,
+          points: template.points,
+          order: 1,
+          settings: template.settings,
+          options: template.options
+        }
+      ]
+    });
+
+    if (exerciseApi.success && exerciseApi.exercise?.id) {
+      await goto(resolve(`/courses/${courseId}/exercises/${exerciseApi.exercise.id}?mode=edit`, {}));
+    }
   }
 
   function handleToggleLessonLock() {
@@ -657,6 +740,32 @@
         <section
           class="mb-6 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950"
         >
+          <div class="mb-4 border-b border-slate-200 pb-4 dark:border-slate-700">
+            <h2 class="text-sm font-semibold text-slate-900 dark:text-slate-100">{lessonExerciseCopy.heading}</h2>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                onclick={() => createLessonExercise('multiple-choice')}
+                disabled={exerciseApi.isLoading}
+              >
+                {lessonExerciseCopy.multipleChoice}
+              </Button>
+              <Button
+                variant="outline"
+                onclick={() => createLessonExercise('short-answer')}
+                disabled={exerciseApi.isLoading}
+              >
+                {lessonExerciseCopy.shortAnswer}
+              </Button>
+              <Button
+                variant="outline"
+                onclick={() => createLessonExercise('scenario')}
+                disabled={exerciseApi.isLoading}
+              >
+                {lessonExerciseCopy.scenarioPrompt}
+              </Button>
+            </div>
+          </div>
           <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div class="flex-1">
               <Label for="lesson-content-warning">Content warning</Label>

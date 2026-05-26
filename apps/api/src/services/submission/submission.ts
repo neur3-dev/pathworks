@@ -37,6 +37,7 @@ import {
 import { getCourseById, getOrganizationByCourseId } from '@cio/db/queries/course';
 import { getCourseTeachers, getProfileByGroupMemberId } from '@cio/db/queries/course/people';
 import { getExerciseById, getExerciseWithRelationsOptimized } from '@cio/db/queries/exercise';
+import { upsertParticipantProgress } from '@cio/db/queries/pathworks';
 import { getGroupMemberIdByCourseAndProfile, isCourseTeamMemberOrOrgAdmin } from '@cio/db/queries/group';
 
 import { QUESTION_TYPE_ID_TO_KEY } from '@cio/question-types';
@@ -148,6 +149,27 @@ function isFileUpload(data: unknown): data is FileUploadAnswerData {
 
 function isVideoRecording(data: unknown): data is VideoRecordingAnswerData {
   return !!data && typeof data === 'object' && (data as { type: string }).type === 'VIDEO_RECORDING';
+}
+
+async function syncParticipantProgressFromExerciseSubmission(
+  courseId: string,
+  submittedBy: string,
+  lessonId: string | null | undefined,
+  score: number | null | undefined
+) {
+  if (!lessonId) return;
+
+  const profile = await getProfileByGroupMemberId(submittedBy);
+  if (!profile?.id) return;
+
+  await upsertParticipantProgress({
+    profileId: profile.id,
+    courseId,
+    lessonId,
+    status: 'completed',
+    lastPosition: 0,
+    score: score ?? null
+  });
 }
 
 /**
@@ -701,6 +723,12 @@ export async function createSubmissionService(
         });
 
         await syncComplianceProgressFromSubmission(courseId, submittedBy);
+        await syncParticipantProgressFromExerciseSubmission(
+          courseId,
+          submittedBy,
+          exerciseWithRelations.exercise.lessonId,
+          Number(submission.total ?? total ?? 0)
+        );
 
         const enrichedAnswers =
           answersWithPoints.length > 0 ? await enrichFileUploadAnswersArray(answersWithPoints) : answersWithPoints;
@@ -713,6 +741,12 @@ export async function createSubmissionService(
     });
 
     await syncComplianceProgressFromSubmission(courseId, submittedBy);
+    await syncParticipantProgressFromExerciseSubmission(
+      courseId,
+      submittedBy,
+      exerciseWithRelations.exercise.lessonId,
+      submission.total == null ? null : Number(submission.total)
+    );
 
     return submission;
   } catch (error) {

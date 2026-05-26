@@ -2883,6 +2883,20 @@
           "fetch_more_versions": "Fetch more versions",
           "current_version": "Current version",
           "restore_version": "Restore this version"
+        },
+        "practice_exercises": {
+          "heading": "Practice exercises",
+          "multiple_choice": "Multiple choice",
+          "short_answer": "Short answer",
+          "scenario_prompt": "Scenario prompt",
+          "multiple_choice_title": "Multiple choice practice",
+          "multiple_choice_question": "Add your multiple choice question",
+          "correct_answer": "Correct answer",
+          "alternate_option": "Another option",
+          "short_answer_title": "Short answer practice",
+          "short_answer_question": "Add your short answer prompt",
+          "scenario_title": "Scenario discussion",
+          "scenario_question": "Describe the workplace scenario and ask the participant how they would respond"
         }
       },
       "attendance": {
