@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### ⚠ BREAKING CHANGES
+
+* **auth: email verification is now required before sign-in.** Accounts created via `/api/auth/sign-up/email` cannot sign in until they click the verification link. Self-hosted instances without SMTP wired will lock new signups out of login. Three escape paths for operators:
+  * Wire real SMTP (`SMTP_HOST` / `SMTP_USER` / `SMTP_PASSWORD` / `SMTP_PORT` / `SMTP_SENDER` in `.env`).
+  * Use the included mailpit dev catcher: `docker compose --env-file ./.env -p pathworks -f docker/docker-compose.yaml --profile mailpit up -d mailpit api` and read mail at `http://<host>:8025`.
+  * Bypass per-user: `UPDATE "user" SET email_verified = true WHERE email = '...';`
+
+### Features
+
+* **auth: require email verification before sign-in** ([eda50f9a0](https://github.com/neur3-dev/pathworks/commit/eda50f9a0))
+* **dev: mailpit SMTP catcher** under `--profile mailpit` so the verify-email and forgot-password flows are exercisable locally; nodemailer learns a new `SMTP_INSECURE=true` env flag for connecting to plain-SMTP catchers ([1935ac532](https://github.com/neur3-dev/pathworks/commit/1935ac532))
+
+### Bug Fixes
+
+* **dashboard: CSP-block on the `crypto.randomUUID` polyfill.** Added `nonce="%sveltekit.nonce%"` to the inline polyfill in `app.html`, fixing the `crypto.randomUUID is not a function` runtime error on non-secure-context origins (IP-based, HTTP) ([b5b8db67f](https://github.com/neur3-dev/pathworks/commit/b5b8db67f))
+
 ### [0.1.1](https://github.com/rotimi-best/classroomio/compare/v0.1.0...v0.1.1) (2024-01-28)
 
 ## 0.1.0 (2024-01-28)
