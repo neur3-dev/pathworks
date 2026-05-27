@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BlurFade } from '@cio/ui/custom/animation/blurfade';
+  import Check from '@lucide/svelte/icons/check';
   import Lock from '@lucide/svelte/icons/lock';
   import { onDestroy } from 'svelte';
 
@@ -155,44 +156,45 @@
         </div>
       </BlurFade>
 
-      <!-- Open source / deep customization -->
+      <!-- Accessibility -->
       <BlurFade delay={0.2} once>
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
-          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Self-host ready</h3>
+          <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Accessibility first</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            PathWorks is open source and self-hostable for programs that need control over deployment and data.
+            Built for WCAG 2.1 AA and Section 508. Designed with the realities of psychiatric, learning, and physical
+            disability in mind — not retrofitted to them.
           </p>
 
-          <!-- Visual: stylised file tree / stack -->
+          <!-- Visual: accessibility checklist -->
           <div class="mt-8 flex flex-1 flex-col justify-end">
             <div class="space-y-1.5">
               <div
                 class="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2 text-[11px] font-medium text-gray-700 ring-1 ring-gray-200"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                <span class="font-mono">apps/dashboard</span>
-                <span class="ml-auto text-gray-400">Svelte 5</span>
+                <Check size={12} class="text-emerald-600" />
+                <span>Screen reader announcements</span>
+                <span class="ml-auto font-mono text-gray-400">aria-live</span>
               </div>
               <div
                 class="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2 text-[11px] font-medium text-gray-700 ring-1 ring-gray-200"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-                <span class="font-mono">apps/api</span>
-                <span class="ml-auto text-gray-400">Hono · Drizzle</span>
+                <Check size={12} class="text-emerald-600" />
+                <span>Full keyboard navigation</span>
+                <span class="ml-auto font-mono text-gray-400">tab order</span>
               </div>
               <div
                 class="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2 text-[11px] font-medium text-gray-700 ring-1 ring-gray-200"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-fuchsia-500"></span>
-                <span class="font-mono">packages/ai-assistant</span>
-                <span class="ml-auto text-gray-400">Claude</span>
+                <Check size={12} class="text-emerald-600" />
+                <span>Untimed assessments</span>
+                <span class="ml-auto font-mono text-gray-400">no countdowns</span>
               </div>
               <div
                 class="flex items-center gap-2 rounded-md bg-white/70 px-3 py-2 text-[11px] font-medium text-gray-700 ring-1 ring-gray-200"
               >
-                <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
-                <span class="font-mono">packages/mcp</span>
-                <span class="ml-auto text-gray-400">MCP</span>
+                <Check size={12} class="text-emerald-600" />
+                <span>Content warnings</span>
+                <span class="ml-auto font-mono text-gray-400">opt-in only</span>
               </div>
             </div>
           </div>
