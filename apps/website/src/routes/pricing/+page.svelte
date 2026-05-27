@@ -17,12 +17,12 @@
 <section>
   <PageHeader className="flex flex-col items-center justify-center text-center">
     <h1 class="mx-auto flex flex-col items-center text-4xl text-slate-900 md:text-6xl">
-      <span>Certified training for</span>
-      <span class="relative text-blue-700">every team.</span>
+      <span>Pricing built around</span>
+      <span class="relative text-blue-700">the participant.</span>
     </h1>
     <p class="mt-10 w-[90%] text-center text-lg font-normal text-slate-700 md:w-[60%] lg:mt-7">
-      Start with your docs, policies, and videos. Choose the plan that helps you turn them into courses, certificates,
-      and completion evidence.
+      Every plan includes the full PathWorks module library, accessibility built in, and untimed pacing. Choose how many
+      participant seats you need.
     </p>
     <div class="mt-8">
       <PricingToggle
@@ -32,19 +32,6 @@
         saveLabel="Save 2 months"
       />
     </div>
-
-    <script
-      src="https://widget.senja.io/widget/b43ac234-427e-4d6f-8c23-633208154e54/platform.js"
-      type="text/javascript"
-      async
-    ></script>
-    <div
-      class="senja-embed mt-5"
-      data-id="b43ac234-427e-4d6f-8c23-633208154e54"
-      data-mode="shadow"
-      data-lazyload="false"
-      style="display: block;"
-    ></div>
   </PageHeader>
 
   <div class="w-full px-2 py-16">
@@ -71,15 +58,16 @@
       </div>
     </div>
     <p class="mt-6 text-center text-sm text-slate-500">
-      Need more AI credits? Purchase additional token packs at $5 per 2M tokens from your dashboard.
+      Cohort and Agency prices shown are per participant seat. Buyers stay on their own account; participants sign in to
+      their own seat once invited.
     </p>
   </div>
 </section>
 
 <PageSignupCTA
-  header="Choose the plan that fits your training program."
-  subText="Start small, prove completion, and scale certified training across your teams, customers, and partners."
-  btnLabel="Sign up for free"
-  link="/signup"
+  header="Not sure which plan fits?"
+  subText="Try a sample lesson, then schedule a walkthrough with the PathWorks team. We'll help you choose the right tier."
+  btnLabel="Try a sample lesson"
+  link="/demo"
   demo={false}
 />
