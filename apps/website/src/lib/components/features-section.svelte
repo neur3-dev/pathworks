@@ -131,26 +131,43 @@
         </div>
       </BlurFade>
 
-      <!-- Embed -->
+      <!-- Resume anytime -->
       <BlurFade delay={0.15} once>
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
           <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Resume anytime</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            Participants can pause, leave, and come back without losing progress or being asked to confirm an exit.
+            Stop in the middle of a lesson and come back tomorrow. Progress saves automatically — no warnings, no "are
+            you sure," no lost work.
           </p>
 
-          <!-- Visual: code snippet -->
+          <!-- Visual: resumable module card -->
           <div class="mt-8 flex flex-1 flex-col justify-end">
-            <div
-              class="overflow-hidden rounded-xl border border-gray-800/90 bg-gray-950 p-4 font-mono text-[11px] leading-relaxed text-gray-300 shadow-sm"
-            >
-              <p class="text-gray-500">&lt;!-- learning state --&gt;</p>
-              <p class="mt-1.5">
-                <span class="text-sky-300">last_position</span>=<span class="text-emerald-300">"00:06:42"</span>
-              </p>
-              <p class="mt-1.5">
-                <span class="text-sky-300">status</span>=<span class="text-emerald-300">"in_progress"</span>
-              </p>
+            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-[11px] font-medium tracking-wide text-blue-700 uppercase">Module 3</p>
+                  <p class="mt-0.5 text-sm font-medium text-gray-950">Workplace communication</p>
+                </div>
+                <span
+                  class="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-medium tracking-wide text-blue-700 uppercase"
+                  >In progress</span
+                >
+              </div>
+              <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+                <div class="h-full w-[58%] rounded-full bg-blue-600"></div>
+              </div>
+              <div class="mt-2 flex items-center justify-between text-[11px] text-gray-500">
+                <span>8 of 14 minutes</span>
+                <span>Last open Tuesday</span>
+              </div>
+              <button
+                type="button"
+                class="mt-3 w-full rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-medium text-white"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                Resume where you left off
+              </button>
             </div>
           </div>
         </div>

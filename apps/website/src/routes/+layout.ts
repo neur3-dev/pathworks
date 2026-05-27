@@ -25,11 +25,11 @@ function getBaseMetaTags(url: URL) {
       siteName: 'PathWorks',
       images: [
         {
-          url: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
+          url: '/pathworks-og.png',
           alt: 'PathWorks preview image',
           width: 1920,
           height: 1080,
-          secureUrl: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
+          secureUrl: '/pathworks-og.png',
           type: 'image/jpeg'
         }
       ]
@@ -41,7 +41,7 @@ function getBaseMetaTags(url: URL) {
       title: 'PathWorks | Work Readiness Learning for VR Participants',
       description:
         'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
-      image: 'https://brand.cdn.clsrio.com/og/pathworks-og.png',
+      image: '/pathworks-og.png',
       imageAlt: 'PathWorks preview image'
     }
   }) satisfies MetaTagsProps;

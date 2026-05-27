@@ -11,7 +11,7 @@ export const tools: Tool[] = [
   {
     src: '/free-tools/progress-report.svg',
     title: 'Progress Report',
-    subText: 'Monitor your progress with a system to check and share your progress with others',
+    subText: 'Build a personal progress card you can share with a counselor, parent, or yourself.',
     slug: 'progress',
     show: true,
     showFeature: true
@@ -19,8 +19,7 @@ export const tools: Tool[] = [
   {
     src: '/free-tools/pomodoro.svg',
     title: 'Pomodoro Timer',
-    subText:
-      'Make your workday more engaging and effective with the Pomodoro timer, break work into 25-minute focused intervals called "pomodoros".',
+    subText: 'Twenty-five minutes of focus, five minutes of break. ADHD-friendly focus structure.',
     slug: 'pomodoro',
     show: true,
     showFeature: false
@@ -28,7 +27,7 @@ export const tools: Tool[] = [
   {
     src: '/free-tools/name-picker.svg',
     title: 'Random Name Picker',
-    subText: 'Effortlessly choose names for class participation or group activities',
+    subText: 'Pull a name fairly. Useful for group activities or rotating turns.',
     slug: 'name-picker',
     show: true,
     showFeature: false
@@ -36,34 +35,17 @@ export const tools: Tool[] = [
   {
     src: '/free-tools/activity-stopwatch.svg',
     title: 'Activity Stopwatch',
-    subText:
-      'Stay on track and enhance productivity with our customizable stopwatch for timed tasks, quizzes, and study sessions',
+    subText: 'Time a task without a countdown. Stop when you are done, not when a timer says you are.',
     slug: 'stopwatch',
     show: true,
     showFeature: true
   },
   {
     src: '/free-tools/tic-tac.svg',
-    title: 'Tic tac toe game',
-    subText: "More than just a game; it's an educational tool that teaches pattern recognition, and decision-making.",
+    title: 'Tic Tac Toe',
+    subText: 'A small game for a moment of decompression between modules.',
     slug: 'tic-tac-toe',
     show: true,
     showFeature: true
-  },
-  {
-    src: '/free-tools/waec.svg',
-    title: 'WAEC Practice tool',
-    subText: 'Ace your WAEC exams with comprehensive study materials, past questions',
-    slug: 'waec',
-    show: false,
-    showFeature: false
-  },
-  {
-    src: '/free-tools/jamb.svg',
-    title: 'JAMB Practice tool',
-    subText: 'Prepare for JAMB with past questions and instant feedback for effective exam readiness',
-    slug: 'jamb',
-    show: false,
-    showFeature: false
   }
 ];
