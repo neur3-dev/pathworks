@@ -11,6 +11,8 @@
   }
 
   let { header = '', subText = '', btnLabel = '', link = '', demo = true }: Props = $props();
+
+  const isExternal = link.startsWith('http://') || link.startsWith('https://');
 </script>
 
 <div
@@ -54,9 +56,9 @@
     <Button
       href={link}
       variant="link"
-      target="_blank"
+      target={isExternal ? '_blank' : undefined}
       class="ui:bg-secondary ui:text-secondary-foreground relative z-10 mt-8"
-      rel="noopener noreferrer nofollow"
+      rel={isExternal ? 'noopener noreferrer nofollow' : undefined}
     >
       {btnLabel}
     </Button>

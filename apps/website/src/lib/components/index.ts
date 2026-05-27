@@ -2,6 +2,7 @@
 export { default as AiBuildsSection } from './ai-builds-section.svelte';
 export { default as AiSection } from './ai-section.svelte';
 export { default as AiTutorSection } from './ai-tutor-section.svelte';
+export { default as AudienceCards } from './audience-cards.svelte';
 export { default as AutomateSection } from './automate-section.svelte';
 export { default as AutomationBand } from './automation-band.svelte';
 export { default as BlogListItem } from './blog-list-item.svelte';
