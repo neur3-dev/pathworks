@@ -59,18 +59,22 @@ function getExtensions(): Record<string, string[]> {
 }
 
 function extendHeader(header: string, extensions: Record<string, string[]>): string {
-  const stripUpgradeInsecureRequests = shouldStripUpgradeInsecureRequests();
+  const isPlainHttpLocal = shouldStripUpgradeInsecureRequests();
 
   return header
     .split(';')
     .map((d) => d.trim())
     .filter(Boolean)
-    .filter((directive) => !stripUpgradeInsecureRequests || directive !== 'upgrade-insecure-requests')
+    .filter((directive) => !isPlainHttpLocal || directive !== 'upgrade-insecure-requests')
     .map((directive) => {
       const spaceIdx = directive.indexOf(' ');
       const name = spaceIdx === -1 ? directive : directive.substring(0, spaceIdx);
-      const extra = extensions[name];
-      return extra?.length ? `${directive} ${extra.join(' ')}` : directive;
+      const extra = [...(extensions[name] || [])];
+
+      if (isPlainHttpLocal && name === 'script-src') extra.push('unsafe-inline');
+      if (isPlainHttpLocal && name === 'font-src') extra.push('data:');
+
+      return extra.length ? `${directive} ${extra.join(' ')}` : directive;
     })
     .join('; ');
 }
