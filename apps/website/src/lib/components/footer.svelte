@@ -1,9 +1,3 @@
-<script>
-  import Facebook from '@lucide/svelte/icons/facebook';
-  import Youtube from '@lucide/svelte/icons/youtube';
-  import Twitter from '@lucide/svelte/icons/twitter';
-</script>
-
 <footer
   class="ui:border-border relative overflow-hidden border-t bg-[linear-gradient(to_top,#eef3fb_0%,#f8fafc_100%)] px-[5%] py-12 lg:px-[10%]"
 >
@@ -55,52 +49,21 @@
 
   <div class="relative z-10 flex flex-col gap-10 lg:flex-row lg:justify-between">
     <!-- Brand -->
-    <div class="flex flex-col gap-4 lg:max-w-[220px]">
+    <div class="flex flex-col gap-4 lg:max-w-[260px]">
       <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="PathWorks logo" />
       <p class="ui:text-muted-foreground text-sm leading-6">
         Work readiness learning for vocational rehabilitation participants.
       </p>
-      <div class="flex items-center gap-2">
-        <a
-          href="https://github.com/neur3-dev/pathworks"
-          target="_blank"
-          aria-label="Facebook"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Facebook size={18} />
-        </a>
-        <a
-          href="https://github.com/neur3-dev/pathworks"
-          target="_blank"
-          aria-label="Twitter"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Twitter size={18} />
-        </a>
-        <a
-          href="https://github.com/neur3-dev/pathworks"
-          target="_blank"
-          aria-label="YouTube"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Youtube size={18} />
-        </a>
-      </div>
     </div>
 
     <!-- Nav columns -->
-    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-3">
       <div>
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Product</p>
         <ul class="space-y-3">
           <li>
-            <a href="/mcp-recipes" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >MCP Recipes</a
-            >
-          </li>
-          <li>
-            <a href="/automation" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >API & MCP</a
+            <a href="/tools" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Free Tools</a
             >
           </li>
           <li>
@@ -112,81 +75,25 @@
       </div>
 
       <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Solutions</p>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Get Started</p>
         <ul class="space-y-3">
           <li>
-            <a
-              href="/customer-education"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Customer Education</a
-            >
-          </li>
-          <li>
-            <a
-              href="/compliance-training"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Compliance Training</a
-            >
-          </li>
-          <li>
-            <a
-              href="/partner-training"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Partner Training</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Resources</p>
-        <ul class="space-y-3">
-          <li>
-            <a
-              href="/docs-vs-company-academy"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Docs vs Company Academy</a
-            >
-          </li>
-          <li>
-            <a href="/teach" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Teach with us</a
-            >
-          </li>
-          <li>
-            <a
-              href="/docs"
-              target="_blank"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Help Center</a
-            >
-          </li>
-          <li>
-            <a
-              href="/signup"
-              target="_blank"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Getting Started</a
-            >
-          </li>
-          <li>
-            <a href="/oss-friends" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >OSS Friends</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Company</p>
-        <ul class="space-y-3">
-          <li>
-            <a href="/roadmap" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Roadmap</a
+            <a href="/signup" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Sign in</a
             >
           </li>
           <li>
             <a
               href="mailto:hello@neur3.dev"
-              target="_blank"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Support</a
             >
           </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Legal</p>
+        <ul class="space-y-3">
           <li>
             <a href="/privacy" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
               >Privacy Policy</a
