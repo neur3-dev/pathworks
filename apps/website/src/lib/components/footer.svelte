@@ -106,8 +106,14 @@
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Get Started</p>
         <ul class="space-y-3">
           <li>
+            <a
+              href="https://pathworks.neur3.dev/login"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Sign in</a
+            >
+          </li>
+          <li>
             <a href="/signup" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Sign in</a
+              >Sign up</a
             >
           </li>
           <li>

@@ -30,21 +30,21 @@
   const steps = [
     {
       number: '1',
-      title: 'Choose your tier',
+      title: 'Sign up and upload approval docs',
       description:
-        'Cohort starts at five seats for caseload counselors. Agency tier handles state-wide deployments with SSO, BAA/DPA, and dedicated support.'
+        'Create your counselor account. Upload the IPE or other VR approval documentation for each participant you plan to enroll. We verify and provision the seat.'
     },
     {
       number: '2',
-      title: 'Invite each participant',
+      title: 'Add participant contact information',
       description:
-        'Email-invite each participant to their own seat. They sign in with their own credentials — no shared accounts, no credential drift.'
+        "Provide each participant's contact info. We send them an invite to set up their own sign-in. Their progress is their own account — no shared logins."
     },
     {
       number: '3',
-      title: 'Monitor and report',
+      title: 'Pull progress reports for IPE tracking',
       description:
-        'Watch progress in the counselor view. Export completion evidence on demand. Document outcomes for your agency, your supervisor, and the participant.'
+        'See per-participant progress in the counselor view. Export module completion, time on task, and skill demonstrations as IPE-aligned evidence for quarterly reporting.'
     }
   ];
 </script>
@@ -70,7 +70,7 @@
       your agency needs for Pre-ETS reporting.
     </p>
     <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-      <Button href="/pricing">See pricing</Button>
+      <Button href="/signup?role=counselor">Sign up as a counselor</Button>
       <Button href="/demo" variant="outline">Schedule a walkthrough</Button>
     </div>
   </div>

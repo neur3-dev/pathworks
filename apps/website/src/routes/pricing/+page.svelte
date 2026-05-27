@@ -21,8 +21,8 @@
       <span class="relative text-blue-700">the participant.</span>
     </h1>
     <p class="mt-10 w-[90%] text-center text-lg font-normal text-slate-700 md:w-[60%] lg:mt-7">
-      Every plan includes the full PathWorks module library, accessibility built in, and untimed pacing. Choose how many
-      participant seats you need.
+      Three plans. Students need a parent. Adults sign up for themselves. Vocational rehabilitation counselors and
+      agencies enroll on IPE plans.
     </p>
     <div class="mt-8">
       <PricingToggle
@@ -58,8 +58,8 @@
       </div>
     </div>
     <p class="mt-6 text-center text-sm text-slate-500">
-      Cohort and Agency prices shown are per participant seat. Buyers stay on their own account; participants sign in to
-      their own seat once invited.
+      Student and Adult plans are billed per participant. Counselor and agency pricing is per seat with volume tiers —
+      reach out for a quote.
     </p>
   </div>
 </section>
