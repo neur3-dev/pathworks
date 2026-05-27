@@ -1,10 +1,13 @@
 <script lang="ts">
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
+  import ClipboardList from '@lucide/svelte/icons/clipboard-list';
   import Gamepad from '@lucide/svelte/icons/gamepad';
+  import Heart from '@lucide/svelte/icons/heart';
   import Hourglass from '@lucide/svelte/icons/hourglass';
   import LoaderCircle from '@lucide/svelte/icons/loader-circle';
   import Menu from '@lucide/svelte/icons/menu';
   import MousePointerClick from '@lucide/svelte/icons/mouse-pointer-click';
+  import Sparkles from '@lucide/svelte/icons/sparkles';
   import Timer from '@lucide/svelte/icons/timer';
   import X from '@lucide/svelte/icons/x';
   import { page } from '$app/state';
@@ -55,6 +58,27 @@
     expandedMobileGroup = null;
   }
 
+  const audiences: NavCollectionItem[] = [
+    {
+      key: 'for-counselors',
+      title: 'For Counselors',
+      subtitle: 'WIOA-aligned reporting for your caseload.',
+      href: '/for-counselors'
+    },
+    {
+      key: 'for-parents',
+      title: 'For Parents',
+      subtitle: 'Set up your student. Watch them grow.',
+      href: '/for-parents'
+    },
+    {
+      key: 'for-participants',
+      title: 'For Participants',
+      subtitle: 'Work skills, at your own pace.',
+      href: '/for-participants'
+    }
+  ];
+
   const freeTools: NavCollectionItem[] = [
     {
       key: 'progress',
@@ -90,6 +114,12 @@
 
   const navItems: NavItem[] = [
     {
+      key: 'audiences',
+      title: 'Who PathWorks is for',
+      href: '/',
+      items: audiences
+    },
+    {
       key: 'free-tools',
       title: 'Free Tools',
       href: '/tools',
@@ -102,9 +132,14 @@
     }
   ];
 
+  let isAudiencesActive = $derived(!!audiences.some((a) => activeLink.startsWith(a.href)));
   let isFreeToolsActive = $derived(activeLink.startsWith('/tools'));
 
   function isNavItemActive(navItem: NavItem) {
+    if (navItem.key === 'audiences') {
+      return isAudiencesActive;
+    }
+
     if (navItem.key === 'free-tools') {
       return isFreeToolsActive;
     }
@@ -123,7 +158,13 @@
           {...restProps}
         >
           <div class="shrink-0">
-            {#if key === 'progress'}
+            {#if key === 'for-counselors'}
+              <ClipboardList size={24} />
+            {:else if key === 'for-parents'}
+              <Heart size={24} />
+            {:else if key === 'for-participants'}
+              <Sparkles size={24} />
+            {:else if key === 'progress'}
               <LoaderCircle size={24} />
             {:else if key === 'pomodoro'}
               <Hourglass size={24} />

@@ -57,7 +57,30 @@
     </div>
 
     <!-- Nav columns -->
-    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Who it's for</p>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href="/for-counselors"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Counselors</a
+            >
+          </li>
+          <li>
+            <a href="/for-parents" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Parents</a
+            >
+          </li>
+          <li>
+            <a
+              href="/for-participants"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Participants</a
+            >
+          </li>
+        </ul>
+      </div>
+
       <div>
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Product</p>
         <ul class="space-y-3">
@@ -69,6 +92,11 @@
           <li>
             <a href="/pricing" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
               >Pricing</a
+            >
+          </li>
+          <li>
+            <a href="/demo" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Try a sample lesson</a
             >
           </li>
         </ul>
