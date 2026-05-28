@@ -36,7 +36,8 @@ export const PUBLIC_ROUTES = [
   '^/counselor(/.*)?$',
   `^${ROUTE.VERIFY_EMAIL_ERROR}$`,
   ROUTE.AUTH_FAILED,
-  '^/csp-report$'
+  '^/csp-report$',
+  '^/accept-invite/.*'
 ];
 
 export const PUBLIC_API_ROUTES = ['/api/polar', '/api/lmz', '/api/verify'];

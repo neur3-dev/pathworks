@@ -157,6 +157,12 @@ services:
       PUBLIC_IS_SELFHOSTED: ${PUBLIC_IS_SELFHOSTED:-true}
       PUBLIC_SERVER_URL: ${PUBLIC_SERVER_URL:-http://localhost:3081}
       PRIVATE_SERVER_URL: ${PRIVATE_SERVER_URL:-http://api:3081}
+      # Direct DB access for SvelteKit server-side routes that read/write
+      # the seat table (POST /api/seats, /accept-invite/[token]). Proper
+      # long-term fix is to move these to the API container per the
+      # CLAUDE.md 7-step route protocol; for now the dashboard uses
+      # @cio/db queries directly which require DATABASE_URL.
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/pathworks}
       PRIVATE_SERVER_KEY: ${PRIVATE_SERVER_KEY:-local-dev-api-key}
       PRIVATE_APP_HOST: ${PRIVATE_APP_HOST:-localhost}
       PRIVATE_APP_SUBDOMAINS: ${PRIVATE_APP_SUBDOMAINS:-app}
