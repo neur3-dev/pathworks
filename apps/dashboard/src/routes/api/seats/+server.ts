@@ -1,4 +1,4 @@
-import { createPendingSeat, getBuyerById } from '@cio/db/queries/seat';
+import { createPendingSeat, getBuyerById } from '@cio/db/queries';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getSessionData } from '$lib/utils/services/auth/session';

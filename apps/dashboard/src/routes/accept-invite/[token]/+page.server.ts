@@ -1,4 +1,4 @@
-import { activateSeat, getBuyerById, getSeatByToken } from '@cio/db/queries/seat';
+import { activateSeat, getBuyerById, getSeatByToken } from '@cio/db/queries';
 import { auth } from '@cio/db/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
