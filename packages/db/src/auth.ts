@@ -47,6 +47,33 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     changeEmail: {
       enabled: true,
       sendChangeEmailConfirmation
+    },
+    additionalFields: {
+      purchaserType: {
+        type: 'string',
+        required: false,
+        input: true
+      },
+      parentUserId: {
+        type: 'string',
+        required: false,
+        input: false
+      },
+      counselorUserId: {
+        type: 'string',
+        required: false,
+        input: false
+      },
+      agencyName: {
+        type: 'string',
+        required: false,
+        input: true
+      },
+      birthYear: {
+        type: 'number',
+        required: false,
+        input: true
+      }
     }
   },
   emailVerification: {

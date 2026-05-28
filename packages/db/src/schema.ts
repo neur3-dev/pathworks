@@ -93,6 +93,7 @@ export const participantProgressStatus = pgEnum('PARTICIPANT_PROGRESS_STATUS', [
   'in_progress',
   'completed'
 ]);
+export const purchaserType = pgEnum('PURCHASER_TYPE', ['parent', 'adult', 'counselor', 'advisor', 'participant']);
 
 export const user = pgTable('user', {
   id: uuid()
@@ -112,7 +113,12 @@ export const user = pgTable('user', {
   banned: boolean('banned').default(false),
   banReason: text('ban_reason'),
   banExpires: timestamp('ban_expires'),
-  isAnonymous: boolean('is_anonymous')
+  isAnonymous: boolean('is_anonymous'),
+  purchaserType: purchaserType('purchaser_type'),
+  parentUserId: uuid('parent_user_id').references((): any => user.id, { onDelete: 'set null' }),
+  counselorUserId: uuid('counselor_user_id').references((): any => user.id, { onDelete: 'set null' }),
+  agencyName: text('agency_name'),
+  birthYear: integer('birth_year')
 });
 
 export const ssoProvider = pgTable('sso_provider', {

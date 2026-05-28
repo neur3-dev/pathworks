@@ -24,7 +24,17 @@
   let { data } = $props();
   const emailFromUrl = page.url.searchParams.get('email') ?? '';
   const isEmailPrefilled = !!emailFromUrl;
+
+  const VALID_ROLES = ['parent', 'adult', 'counselor', 'advisor'] as const;
+  type PurchaserRole = (typeof VALID_ROLES)[number];
+  const roleFromUrl = page.url.searchParams.get('role');
+  const purchaserType: PurchaserRole | undefined = VALID_ROLES.includes(roleFromUrl as PurchaserRole)
+    ? (roleFromUrl as PurchaserRole)
+    : undefined;
+  const isCounselorOrAdvisor = purchaserType === 'counselor' || purchaserType === 'advisor';
+
   let fields = $state(Object.assign({}, SIGNUP_FIELDS, emailFromUrl ? { email: emailFromUrl } : {}));
+  let agencyName = $state('');
   let loading = $state(false);
   let errors: {
     email?: string;
@@ -122,35 +132,40 @@
       // if in cloud instance, ONLY pass when on subdomain i.e student experience
       const headers = $globalStore.isOrgSite ? { 'cio-org-id': org.id } : undefined;
 
-      const { error } = await authClient.signUp.email(
-        {
-          email: fields.email,
-          password: fields.password,
-          name: name
-        },
-        {
-          headers,
-          onSuccess: (ctx) => {
-            console.log('Signup successful');
-            capturePosthogEvent('user_signed_up', {
+      const signupPayload: Record<string, unknown> = {
+        email: fields.email,
+        password: fields.password,
+        name: name
+      };
+      if (purchaserType) {
+        signupPayload.purchaserType = purchaserType;
+      }
+      if (isCounselorOrAdvisor && agencyName.trim()) {
+        signupPayload.agencyName = agencyName.trim();
+      }
+
+      const { error } = await authClient.signUp.email(signupPayload as Parameters<typeof authClient.signUp.email>[0], {
+        headers,
+        onSuccess: (ctx) => {
+          console.log('Signup successful');
+          capturePosthogEvent('user_signed_up', {
+            distinct_id: ctx.data.user.id || '',
+            email: ctx.data.user.email,
+            username: name
+          });
+
+          if ($globalStore.isOrgSite) {
+            capturePosthogEvent('student_signed_up', {
               distinct_id: ctx.data.user.id || '',
               email: ctx.data.user.email,
               username: name
             });
-
-            if ($globalStore.isOrgSite) {
-              capturePosthogEvent('student_signed_up', {
-                distinct_id: ctx.data.user.id || '',
-                email: ctx.data.user.email,
-                username: name
-              });
-            }
-
-            const redirect = redirectUrl || '/';
-            window.location.href = redirect.startsWith('/') ? redirect : `/?redirect=${encodeURIComponent(redirect)}`;
           }
+
+          const redirect = redirectUrl || '/';
+          window.location.href = redirect.startsWith('/') ? redirect : `/?redirect=${encodeURIComponent(redirect)}`;
         }
-      );
+      });
 
       if (error) throw error;
     } catch (error) {
@@ -223,6 +238,21 @@
     getPasswordAuthAlternative={ssoState.available ? getPasswordAuthAlternative : undefined}
   >
     <div class="ui:flex ui:flex-col ui:gap-6">
+      {#if purchaserType}
+        <div class="ui:rounded-md ui:bg-blue-50 ui:px-4 ui:py-3 ui:text-sm ui:text-blue-900">
+          {#if purchaserType === 'parent'}
+            You are signing up as a <strong>parent or guardian</strong>. After your account is created, you will add
+            your student.
+          {:else if purchaserType === 'adult'}
+            You are signing up as an <strong>adult learner</strong> (age 18+).
+          {:else if purchaserType === 'counselor'}
+            You are signing up as a <strong>vocational rehabilitation counselor</strong>.
+          {:else if purchaserType === 'advisor'}
+            You are signing up as a <strong>workforce development advisor</strong>.
+          {/if}
+        </div>
+      {/if}
+
       <Field.Field>
         <Field.Label for="email">{$t('login.fields.email')}</Field.Label>
         <Field.Content>
@@ -279,6 +309,31 @@
             {/if}
           </Field.Content>
         </Field.Field>
+
+        {#if isCounselorOrAdvisor}
+          <Field.Field>
+            <Field.Label for="agencyName">
+              {purchaserType === 'counselor' ? 'Agency name' : 'Organization name'}
+            </Field.Label>
+            <Field.Content>
+              <Input
+                id="agencyName"
+                type="text"
+                bind:value={agencyName}
+                placeholder={purchaserType === 'counselor'
+                  ? 'e.g. Texas Workforce Solutions, VR Division'
+                  : 'e.g. Workforce Development Board'}
+                disabled={loading}
+                autocomplete="organization"
+              />
+              <Field.Description>
+                {purchaserType === 'counselor'
+                  ? 'The VR agency you work with. You will upload approval documentation per participant after signup.'
+                  : 'The workforce development organization you advise for.'}
+              </Field.Description>
+            </Field.Content>
+          </Field.Field>
+        {/if}
 
         {#if submitError}
           <p class="ui:text-sm ui:text-destructive">{submitError}</p>
