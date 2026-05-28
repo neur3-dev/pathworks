@@ -1,13 +1,13 @@
 import { activateSeat, getBuyerById, getSeatByToken } from '@cio/db/queries';
-import { auth } from '@cio/db/auth';
+import { env } from '$env/dynamic/public';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 /**
  * GET /accept-invite/[token]
  *
- * Loads a seat by invite token. If the seat exists, is pending, and the
- * invite has not expired, the participant signup form is rendered.
+ * Loads a seat by invite token. Renders friendly error blocks for
+ * not_found / already_accepted / cancelled / expired.
  */
 export const load: PageServerLoad = async ({ params }) => {
   const row = await getSeatByToken(params.token);
@@ -41,13 +41,18 @@ export const load: PageServerLoad = async ({ params }) => {
 /**
  * POST /accept-invite/[token]
  *
- * Participant accepts the seat. Creates a user account with
- * purchaser_type='participant' linked to the buyer (parent_user_id or
- * counselor_user_id depending on buyer's purchaser_type), then marks the
- * seat as active.
+ * Participant accepts the seat. POSTs to the API container's Better-Auth
+ * /api/auth/sign-up/email endpoint to create the participant user with
+ * purchaserType='participant' and parentUserId or counselorUserId linked
+ * based on the buyer's purchaser_type. Then marks the seat active.
+ *
+ * The API call goes to PUBLIC_SERVER_URL rather than importing the auth
+ * instance directly, because importing @cio/db/auth pulls Better-Auth's
+ * entire runtime into the dashboard bundle and breaks the SvelteKit build
+ * (__dirname undefined in ES module scope).
  */
 export const actions: Actions = {
-  default: async ({ params, request }) => {
+  default: async ({ params, request, fetch: localFetch, cookies }) => {
     const data = await request.formData();
     const name = String(data.get('name') ?? '').trim();
     const password = String(data.get('password') ?? '');
@@ -73,8 +78,13 @@ export const actions: Actions = {
 
     const linkField = buyer.purchaserType === 'parent' ? 'parentUserId' : 'counselorUserId';
 
-    type SignupExtras = { purchaserType?: string; parentUserId?: string; counselorUserId?: string };
-    const signupBody: { email: string; password: string; name: string } & SignupExtras = {
+    const apiBase = env.PUBLIC_SERVER_URL || '';
+    if (!apiBase) {
+      console.error('[accept-invite] PUBLIC_SERVER_URL is not set');
+      return fail(500, { error: 'Server is not configured for signups' });
+    }
+
+    const signupBody: Record<string, unknown> = {
       email: row.participantEmail,
       password,
       name,
@@ -82,22 +92,44 @@ export const actions: Actions = {
       [linkField]: buyer.id
     };
 
-    let signupResponse: { user?: { id: string } };
+    let signupRes: Response;
     try {
-      const res = await auth.api.signUpEmail({
-        body: signupBody,
-        asResponse: false
+      signupRes = await localFetch(`${apiBase}/api/auth/sign-up/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signupBody)
       });
-      signupResponse = res as typeof signupResponse;
     } catch (err) {
-      console.error('[accept-invite] Better-Auth signUpEmail failed', err);
-      const message = (err as { message?: string })?.message ?? 'Could not create account';
-      return fail(400, { error: message });
+      console.error('[accept-invite] signup fetch failed', err);
+      return fail(502, { error: 'Could not reach the signup service' });
     }
 
-    const participantId = signupResponse?.user?.id;
+    if (!signupRes.ok) {
+      const text = await signupRes.text().catch(() => '');
+      console.error('[accept-invite] signup returned non-ok', signupRes.status, text);
+      let parsed: { message?: string } = {};
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        // not JSON
+      }
+      return fail(signupRes.status, { error: parsed.message ?? 'Could not create account' });
+    }
+
+    const signupPayload = (await signupRes.json()) as { user?: { id: string } };
+    const participantId = signupPayload.user?.id;
     if (!participantId) {
       return fail(500, { error: 'Account creation returned no user id' });
+    }
+
+    // Forward any Set-Cookie headers from the signup response so the
+    // participant is logged in on this dashboard origin too
+    const setCookie = signupRes.headers.get('set-cookie');
+    if (setCookie) {
+      // Note: SvelteKit's cookies API expects parsed key/value pairs, not
+      // a raw header string. For now, log and rely on the participant
+      // logging in via the standard flow. This is a follow-up.
+      console.log('[accept-invite] signup set-cookie present (not forwarded yet)', setCookie.length, 'bytes');
     }
 
     const updated = await activateSeat(row.id, participantId);
@@ -112,6 +144,7 @@ export const actions: Actions = {
       });
     }
 
-    throw redirect(303, '/');
+    // Redirect to login since we couldn't forward the session cookie cleanly
+    throw redirect(303, '/login?invite_accepted=1');
   }
 };
