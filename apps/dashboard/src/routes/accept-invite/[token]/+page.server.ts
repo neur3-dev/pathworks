@@ -1,4 +1,4 @@
-import { activateSeat, getBuyerById, getSeatByToken } from '@cio/db/queries';
+import { activateSeat, getBuyerById, getSeatByToken, linkParticipantToBuyer } from '@cio/db/queries';
 import { env } from '$env/dynamic/public';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -76,7 +76,10 @@ export const actions: Actions = {
     const buyer = await getBuyerById(row.buyerUserId);
     if (!buyer) return fail(500, { error: 'The buyer account is no longer accessible' });
 
-    const linkField = buyer.purchaserType === 'parent' ? 'parentUserId' : 'counselorUserId';
+    if (buyer.purchaserType !== 'parent' && buyer.purchaserType !== 'counselor' && buyer.purchaserType !== 'advisor') {
+      return fail(500, { error: 'Buyer has an unexpected purchaser type' });
+    }
+    const buyerKind = buyer.purchaserType as 'parent' | 'counselor' | 'advisor';
 
     const apiBase = env.PUBLIC_SERVER_URL || '';
     if (!apiBase) {
@@ -84,12 +87,15 @@ export const actions: Actions = {
       return fail(500, { error: 'Server is not configured for signups' });
     }
 
+    // Better-Auth's signup will only accept the input:true fields. The
+    // parent_user_id / counselor_user_id link is intentionally NOT
+    // accepted at signup (input:false in auth.ts) to prevent arbitrary
+    // claim. We attach the link via a server-side UPDATE after signup.
     const signupBody: Record<string, unknown> = {
       email: row.participantEmail,
       password,
       name,
-      purchaserType: 'participant',
-      [linkField]: buyer.id
+      purchaserType: 'participant'
     };
 
     let signupRes: Response;
@@ -122,14 +128,12 @@ export const actions: Actions = {
       return fail(500, { error: 'Account creation returned no user id' });
     }
 
-    // Forward any Set-Cookie headers from the signup response so the
-    // participant is logged in on this dashboard origin too
-    const setCookie = signupRes.headers.get('set-cookie');
-    if (setCookie) {
-      // Note: SvelteKit's cookies API expects parsed key/value pairs, not
-      // a raw header string. For now, log and rely on the participant
-      // logging in via the standard flow. This is a follow-up.
-      console.log('[accept-invite] signup set-cookie present (not forwarded yet)', setCookie.length, 'bytes');
+    // Attach the participant to their buyer (parent_user_id or
+    // counselor_user_id) now that we have a participant user_id.
+    try {
+      await linkParticipantToBuyer(participantId, buyer.id, buyerKind);
+    } catch (err) {
+      console.error('[accept-invite] linkParticipantToBuyer failed', err);
     }
 
     const updated = await activateSeat(row.id, participantId);
@@ -139,7 +143,7 @@ export const actions: Actions = {
       console.log('[accept-invite] activated seat', {
         seatId: row.id,
         participantId,
-        linkField,
+        buyerKind,
         buyerId: buyer.id
       });
     }

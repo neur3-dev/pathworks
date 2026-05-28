@@ -1,4 +1,5 @@
 import { createPendingSeat, getBuyerById } from '@cio/db/queries';
+import { sendEmail } from '@cio/email';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getSessionData } from '$lib/utils/services/auth/session';
@@ -19,11 +20,11 @@ import { getSessionData } from '$lib/utils/services/auth/session';
  *   participantName: string (optional)
  *   planName: 'BASIC' | 'EARLY_ADOPTER' | 'ENTERPRISE' (optional)
  *
- * Returns: { seat: { id, inviteToken, inviteUrl, participantEmail, ... } }
+ * Returns: { seat: { id, inviteToken, inviteUrl, participantEmail, ... }, emailSent }
  *
- * Note: this MVP does NOT send email. The inviteUrl is returned in the
- * response so the parent or counselor UI can copy or share it. Email send
- * is a follow-up that wires into packages/email's invite templates.
+ * Side effect: fires the participantSeatInvite email via @cio/email. The
+ * send is awaited but failures do not fail the request — the inviteUrl is
+ * still returned so the buyer UI can copy or share it as a fallback.
  */
 export const POST: RequestHandler = async ({ request, cookies, url }) => {
   const session = await getSessionData(cookies);
@@ -77,10 +78,37 @@ export const POST: RequestHandler = async ({ request, cookies, url }) => {
     inviteUrl
   });
 
+  const inviterRole = buyer.purchaserType as 'parent' | 'counselor' | 'advisor';
+  const inviterName = buyer.name?.trim() || buyer.email;
+  const expiresAtLabel = new Date(createdSeat.inviteExpiresAt).toISOString().slice(0, 10);
+
+  let emailSent = false;
+  try {
+    await sendEmail('participantSeatInvite', {
+      to: participantEmail,
+      fields: {
+        participantName: createdSeat.participantName ?? undefined,
+        inviterName,
+        inviterRole,
+        inviteLink: inviteUrl,
+        expiresAt: expiresAtLabel,
+        planName: createdSeat.planName ?? undefined
+      }
+    });
+    emailSent = true;
+  } catch (err) {
+    console.error('[seat] invite email send failed', {
+      seatId: createdSeat.id,
+      participantEmail,
+      error: err instanceof Error ? err.message : String(err)
+    });
+  }
+
   return json({
     seat: {
       ...createdSeat,
       inviteUrl
-    }
+    },
+    emailSent
   });
 };

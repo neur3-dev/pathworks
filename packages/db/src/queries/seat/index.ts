@@ -99,9 +99,27 @@ export async function activateSeat(seatId: string, participantUserId: string): P
   return updated.length;
 }
 
+/**
+ * Link a participant user to their parent or counselor after they accept
+ * an invite. Server-side only because parent_user_id and counselor_user_id
+ * are not accepted by Better-Auth's signup endpoint (input:false in the
+ * auth additionalFields config) to prevent arbitrary claim of linkage.
+ */
+export async function linkParticipantToBuyer(
+  participantUserId: string,
+  buyerUserId: string,
+  buyerPurchaserType: 'parent' | 'counselor' | 'advisor'
+): Promise<void> {
+  const updates: Partial<typeof schema.user.$inferInsert> =
+    buyerPurchaserType === 'parent' ? { parentUserId: buyerUserId } : { counselorUserId: buyerUserId };
+
+  await db.update(schema.user).set(updates).where(eq(schema.user.id, participantUserId));
+}
+
 export type BuyerLookup = {
   id: string;
   email: string;
+  name: string;
   purchaserType: 'parent' | 'adult' | 'counselor' | 'advisor' | 'participant' | null;
 };
 
@@ -110,6 +128,7 @@ export async function getBuyerById(id: string): Promise<BuyerLookup | null> {
     .select({
       id: schema.user.id,
       email: schema.user.email,
+      name: schema.user.name,
       purchaserType: schema.user.purchaserType
     })
     .from(schema.user)

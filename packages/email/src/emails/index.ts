@@ -22,6 +22,7 @@ export * from './teacher-course-welcome';
 export * from './student-org-invite';
 export * from './student-program-welcome';
 export * from './program-goal-reminder';
+export * from './participant-seat-invite';
 
 import type { newsfeedCommentEmail, newsfeedPostEmail } from './newsfeed';
 
@@ -36,6 +37,7 @@ import type { studentProvePaymentEmail } from './student-prove-payment';
 import type { studentOrgInviteEmail } from './student-org-invite';
 import type { studentProgramWelcomeEmail } from './student-program-welcome';
 import type { programGoalReminderEmail } from './program-goal-reminder';
+import type { participantSeatInviteEmail } from './participant-seat-invite';
 import type { teacherCourseWelcomeEmail } from './teacher-course-welcome';
 import type { teacherStudentBuyRequestEmail } from './teacher-student-buy-request';
 import type { teacherStudentJoinedEmail } from './teacher-student-joined';
@@ -66,4 +68,5 @@ export type EmailSchemas = {
   studentOrgInvite: typeof studentOrgInviteEmail.template.schema;
   studentProgramWelcome: typeof studentProgramWelcomeEmail.template.schema;
   programGoalReminder: typeof programGoalReminderEmail.template.schema;
+  participantSeatInvite: typeof participantSeatInviteEmail.template.schema;
 };

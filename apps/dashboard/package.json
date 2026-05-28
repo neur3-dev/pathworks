@@ -26,6 +26,7 @@
     "@cio/api": "workspace:*",
     "@cio/certificates": "workspace:*",
     "@cio/db": "workspace:*",
+    "@cio/email": "workspace:*",
     "@cio/question-types": "workspace:*",
     "@cio/ui": "workspace:*",
     "@cio/utils": "workspace:*",
