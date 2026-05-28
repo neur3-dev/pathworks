@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Briefcase from '@lucide/svelte/icons/briefcase';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
   import ClipboardList from '@lucide/svelte/icons/clipboard-list';
   import Gamepad from '@lucide/svelte/icons/gamepad';
@@ -61,21 +62,27 @@
   const audiences: NavCollectionItem[] = [
     {
       key: 'for-counselors',
-      title: 'For Counselors',
-      subtitle: 'WIOA-aligned reporting for your caseload.',
+      title: 'For Counselors & Advisors',
+      subtitle: 'VR caseload or workforce dev referral.',
       href: '/for-counselors'
     },
     {
       key: 'for-parents',
       title: 'For Parents',
-      subtitle: 'Set up your student. Watch them grow.',
+      subtitle: 'Set up your Pre-ETS student (13–17).',
       href: '/for-parents'
     },
     {
       key: 'for-participants',
-      title: 'For Participants',
-      subtitle: 'Work skills, at your own pace.',
+      title: 'For VR Participants',
+      subtitle: 'Adults with a disability barrier.',
       href: '/for-participants'
+    },
+    {
+      key: 'for-job-seekers',
+      title: 'For Job Seekers',
+      subtitle: 'Laid off, unemployed, career change.',
+      href: '/for-job-seekers'
     }
   ];
 
@@ -118,6 +125,11 @@
       title: 'Who PathWorks is for',
       href: '/',
       items: audiences
+    },
+    {
+      key: 'industries',
+      title: 'Industries',
+      href: '/industries'
     },
     {
       key: 'free-tools',
@@ -164,6 +176,8 @@
               <Heart size={24} />
             {:else if key === 'for-participants'}
               <Sparkles size={24} />
+            {:else if key === 'for-job-seekers'}
+              <Briefcase size={24} />
             {:else if key === 'progress'}
               <LoaderCircle size={24} />
             {:else if key === 'pomodoro'}

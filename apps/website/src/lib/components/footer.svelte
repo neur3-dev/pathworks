@@ -57,14 +57,15 @@
     </div>
 
     <!-- Nav columns -->
-    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-5">
       <div>
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Who it's for</p>
         <ul class="space-y-3">
           <li>
             <a
               href="/for-counselors"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Counselors</a
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Counselors &amp; Advisors</a
             >
           </li>
           <li>
@@ -75,7 +76,42 @@
           <li>
             <a
               href="/for-participants"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Participants</a
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">VR Participants</a
+            >
+          </li>
+          <li>
+            <a
+              href="/for-job-seekers"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Job Seekers</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Industries</p>
+        <ul class="space-y-3">
+          <li>
+            <a href="/industries" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >All sectors</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/it-and-ai"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">IT &amp; AI</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/advanced-manufacturing"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Manufacturing</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/transportation-and-logistics"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Transportation</a
             >
           </li>
         </ul>

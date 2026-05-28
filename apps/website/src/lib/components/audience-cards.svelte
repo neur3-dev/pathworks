@@ -13,27 +13,35 @@
   const audiences: Audience[] = [
     {
       key: 'counselors',
-      title: 'For Counselors',
-      subtitle: 'WIOA-aligned reporting',
+      title: 'For Counselors & Advisors',
+      subtitle: 'VR or workforce development',
       description:
-        'Buy seats for a caseload, monitor progress against IPE goals, and export WCAG-conformant completion evidence for your agency.',
+        'Enroll participants on IPE plans (VR) or general referral (workforce dev). Monitor progress, export completion evidence, align to Texas Target Industries.',
       href: '/for-counselors'
     },
     {
       key: 'parents',
       title: 'For Parents',
-      subtitle: 'Set them up, watch them grow',
+      subtitle: 'Pre-ETS students 13 to 17',
       description:
-        'Buy a seat for your student. They learn at their own pace — no timers, no autoplay, no surprise tests. You see when they finish each module.',
+        'Buy a Student seat for your minor on a VR Pre-ETS plan. They learn at their own pace — no timers, no autoplay, no surprise tests.',
       href: '/for-parents'
     },
     {
       key: 'participants',
-      title: 'For Participants',
-      subtitle: 'Work skills, your pace',
+      title: 'For VR Participants',
+      subtitle: 'Adults with a disability barrier',
       description:
-        'Build job readiness, digital literacy, and self-advocacy with untimed lessons, content warnings before sensitive topics, and a safe exit at every step.',
+        'Build job readiness, digital literacy, and self-advocacy with untimed lessons, content warnings, and a safe exit at every step.',
       href: '/for-participants'
+    },
+    {
+      key: 'job-seekers',
+      title: 'For Job Seekers',
+      subtitle: 'Laid off, unemployed, career change',
+      description:
+        "Get back to work with the skills today's employers are hiring for. Texas Target Industry curriculum, untimed pacing, no disability requirement.",
+      href: '/for-job-seekers'
     }
   ];
 </script>
@@ -44,15 +52,15 @@
       <h2
         class="max-w-[820px] text-[clamp(1.75rem,2.8vw,2.4rem)] leading-[1.1] font-medium tracking-tight text-gray-950"
       >
-        One platform.<br />Three ways in.
+        One platform.<br />Four ways in.
       </h2>
       <p class="mt-3 max-w-[620px] text-sm leading-relaxed text-gray-500">
-        Counselors and parents purchase seats. Participants learn at their own pace. Everyone sees the same evidence of
-        progress.
+        Counselors and advisors enroll. Parents set up Pre-ETS students. Adults sign up for themselves — VR or general
+        work readiness, same plan. Everyone sees the same evidence of progress.
       </p>
     </BlurFade>
 
-    <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {#each audiences as audience, i}
         <BlurFade delay={0.05 + i * 0.05} once>
           <a

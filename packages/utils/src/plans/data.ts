@@ -2,7 +2,7 @@ export default {
   BASIC: {
     NAME: 'Student',
     DESCRIPTION:
-      'For ages 13 to 17. A parent or guardian creates the account and adds the student. The student learns at their own pace.',
+      'Pre-ETS Vocational Rehabilitation only. Ages 13 to 17. A parent or guardian creates the account and adds the student.',
     PRICE: {
       CURRENCY: '$',
       MONTHLY: '19.99',
@@ -10,9 +10,9 @@ export default {
       IS_PREMIUM: false
     },
     FEATURES: [
-      'For students ages 13 to 17',
+      'For Pre-ETS VR students ages 13 to 17',
       'Parent or guardian signs up first',
-      'Full PathWorks module library',
+      'Full PathWorks Pre-ETS module library',
       'Untimed lessons, save and resume',
       'No autoplay, content warnings on sensitive topics',
       'Module completion emails to parent',
@@ -29,7 +29,8 @@ export default {
   },
   EARLY_ADOPTER: {
     NAME: 'Adult',
-    DESCRIPTION: 'For self-directed learners age 18 and over. Sign up for yourself, no parent or counselor required.',
+    DESCRIPTION:
+      'Adults 18 and over. Same plan for VR participants and general work-readiness learners — laid off, unemployed, career change.',
     PRICE: {
       CURRENCY: '$',
       MONTHLY: '39.99',
@@ -38,9 +39,12 @@ export default {
     },
     FEATURES: [
       'For ages 18 and over',
-      'Self-signup, no parent required',
-      'Everything in Student',
-      'Adult-focused modules: workplace negotiation, asking for accommodations, professional communication',
+      'Self-signup, no parent or counselor required',
+      'Full module library — VR-track and work-readiness-track content',
+      'Texas Target Industry curriculum: manufacturing, IT and AI, energy, logistics, and more',
+      'Untimed lessons, save and resume',
+      'No autoplay, content warnings on sensitive topics',
+      'Workplace negotiation, asking for accommodations, professional communication',
       'Career-planning prompts and self-advocacy practice',
       'Priority email support',
       'Cancel anytime'
@@ -56,8 +60,9 @@ export default {
     }
   },
   ENTERPRISE: {
-    NAME: 'VR Counselor & Agency',
-    DESCRIPTION: 'For vocational rehabilitation counselors and state agencies enrolling participants on IPE plans.',
+    NAME: 'Counselor, Advisor & Agency',
+    DESCRIPTION:
+      'For VR counselors, workforce development advisors, and state agencies enrolling participants. VR or general work readiness — same dashboard.',
     PRICE: {
       CURRENCY: '',
       MONTHLY: 'Contact us',
@@ -66,10 +71,11 @@ export default {
     },
     FEATURES: [
       'Bulk participant seats (5 or more)',
-      'Upload IPE / approval documentation per participant',
-      'Add participant contact information at enrollment',
+      'VR flow: upload IPE / approval documentation per participant',
+      'Workforce dev flow: simpler referral form, no IPE required',
       'Counselor dashboard with per-participant progress',
-      'WIOA Pre-ETS reporting and completion evidence',
+      'WIOA Pre-ETS reporting and completion evidence (VR caseload)',
+      'General workforce-readiness reporting (advisor caseload)',
       'WCAG 2.1 AA conformance statement (VPAT)',
       'SSO and admin controls',
       'BAA and DPA available',

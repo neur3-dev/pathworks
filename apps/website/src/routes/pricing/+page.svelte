@@ -21,8 +21,8 @@
       <span class="relative text-blue-700">the participant.</span>
     </h1>
     <p class="mt-10 w-[90%] text-center text-lg font-normal text-slate-700 md:w-[60%] lg:mt-7">
-      Three plans. Students need a parent. Adults sign up for themselves. Vocational rehabilitation counselors and
-      agencies enroll on IPE plans.
+      Three plans. Students (13&ndash;17) need a parent. Adults sign up for themselves &mdash; VR or general work
+      readiness, same plan. Counselors, workforce development advisors, and agencies enroll on IPE plans or referral.
     </p>
     <div class="mt-8">
       <PricingToggle
@@ -58,8 +58,8 @@
       </div>
     </div>
     <p class="mt-6 text-center text-sm text-slate-500">
-      Student and Adult plans are billed per participant. Counselor and agency pricing is per seat with volume tiers —
-      reach out for a quote.
+      Student and Adult plans are billed per learner. Counselor / Advisor / Agency pricing is per seat with volume tiers
+      &mdash; reach out for a quote tailored to VR or general workforce-readiness caseloads.
     </p>
   </div>
 </section>
