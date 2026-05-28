@@ -7,7 +7,6 @@
   import Cpu from '@lucide/svelte/icons/cpu';
   import Factory from '@lucide/svelte/icons/factory';
   import Flame from '@lucide/svelte/icons/flame';
-  import MapPin from '@lucide/svelte/icons/map-pin';
   import Microscope from '@lucide/svelte/icons/microscope';
   import Pickaxe from '@lucide/svelte/icons/pickaxe';
   import Truck from '@lucide/svelte/icons/truck';
@@ -46,7 +45,7 @@
       class="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 no-underline hover:underline"
     >
       <ArrowLeft size={14} />
-      All Texas Target Industries
+      All industries
     </a>
 
     <div class="mt-6 flex items-start gap-4">
@@ -58,7 +57,7 @@
         {/if}
       </div>
       <div>
-        <p class="text-xs font-medium tracking-wide text-blue-700 uppercase">Texas Target Industry</p>
+        <p class="text-xs font-medium tracking-wide text-blue-700 uppercase">Industry sector</p>
         <h1 class="mt-1 text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.1] font-medium tracking-tight text-gray-950">
           {industry.name}
         </h1>
@@ -76,9 +75,7 @@
     <BlurFade once>
       <div>
         <h2 class="text-lg font-medium tracking-tight text-gray-950">Target clusters</h2>
-        <p class="mt-2 text-sm leading-relaxed text-gray-500">
-          The state has identified these clusters within {industry.name}.
-        </p>
+        <p class="mt-2 text-sm leading-relaxed text-gray-500">Specialized areas within {industry.name}.</p>
         <ul class="mt-4 space-y-2">
           {#each industry.clusters as cluster}
             <li class="flex gap-2 text-sm text-gray-700">
@@ -92,9 +89,18 @@
 
     <BlurFade delay={0.05} once>
       <div>
-        <h2 class="text-lg font-medium tracking-tight text-gray-950">Why Texas</h2>
+        <h2 class="text-lg font-medium tracking-tight text-gray-950">Outlook</h2>
         <p class="mt-4 text-sm leading-relaxed text-gray-700">
-          {industry.whyTexas}
+          {industry.outlook}
+        </p>
+        <p class="mt-3 text-xs leading-relaxed text-gray-500">
+          Growth claims align with the U.S. Bureau of Labor Statistics
+          <a
+            href="https://www.bls.gov/ooh/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-700 underline hover:text-blue-800">Occupational Outlook Handbook</a
+          >.
         </p>
       </div>
     </BlurFade>
@@ -108,8 +114,8 @@
         Sample roles to train for.
       </h2>
       <p class="mt-3 max-w-[620px] text-sm leading-relaxed text-gray-500">
-        Entry-level and growth-track positions PathWorks curriculum supports. Sector-specific modules expand on the
-        universal work-readiness foundation (resume, interviewing, workplace communication, self-advocacy).
+        Entry-level and growth-track positions PathWorks curriculum supports. Sector modules expand on the universal
+        work-readiness foundation: resume, interviewing, workplace communication, self-advocacy.
       </p>
     </BlurFade>
 
@@ -122,25 +128,6 @@
         </BlurFade>
       {/each}
     </div>
-  </div>
-</section>
-
-<section class="bg-white px-6 py-12 lg:px-12 lg:py-16">
-  <div class="mx-auto max-w-[1100px]">
-    <BlurFade once>
-      <div class="flex items-center gap-2 text-sm font-medium tracking-wide text-blue-700 uppercase">
-        <MapPin size={14} />
-        Where in Texas
-      </div>
-      <p class="mt-3 max-w-[760px] text-base leading-relaxed text-gray-700">
-        {industry.name} clusters in these Texas metros and regions:
-      </p>
-      <div class="mt-4 flex flex-wrap gap-2">
-        {#each industry.metros as metro}
-          <span class="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700">{metro}</span>
-        {/each}
-      </div>
-    </BlurFade>
   </div>
 </section>
 

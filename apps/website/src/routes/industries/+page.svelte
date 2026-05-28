@@ -29,24 +29,33 @@
 </script>
 
 <svelte:head>
-  <title>Texas Target Industries | PathWorks</title>
+  <title>Industries | PathWorks</title>
   <meta
     name="description"
-    content="PathWorks curriculum aligned to Texas Target Industries: advanced manufacturing, energy, IT and AI, transportation, life sciences, and more. Pick the sector you want to work in."
+    content="PathWorks curriculum aligns to high-growth industry sectors: advanced manufacturing, energy, IT and AI, transportation, life sciences, and more. Pick the sector you want to work in."
   />
 </svelte:head>
 
 <section class="bg-[#f7fafc] px-6 pt-32 pb-16 lg:px-12 lg:pt-40 lg:pb-24">
   <div class="mx-auto flex max-w-[1100px] flex-col items-center text-center">
-    <p class="text-xs font-medium tracking-wide text-blue-700 uppercase">Texas Target Industries</p>
+    <p class="text-xs font-medium tracking-wide text-blue-700 uppercase">Industries</p>
     <h1
       class="mt-3 max-w-[820px] text-[clamp(2rem,4vw,3.25rem)] leading-[1.1] font-medium tracking-tight text-gray-950"
     >
-      Train for the sectors <em class="text-blue-700 not-italic">Texas is hiring in.</em>
+      Train for sectors growing <em class="text-blue-700 not-italic">through 2026 and beyond.</em>
     </h1>
     <p class="mt-5 max-w-[640px] text-sm leading-relaxed text-gray-600 lg:text-base">
-      The Texas Economic Development governor's office has identified target industry sectors with growth priorities.
-      PathWorks aligns curriculum to all of them &mdash; so you train for jobs employers are actually filling.
+      PathWorks curriculum aligns to high-growth industry sectors. Pick a sector, sign up, and the modules that map to
+      that path move to the top of your library.
+    </p>
+    <p class="mt-3 max-w-[640px] text-xs leading-relaxed text-gray-500">
+      Sector growth claims align with the U.S. Bureau of Labor Statistics
+      <a
+        href="https://www.bls.gov/ooh/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-blue-700 underline hover:text-blue-800">Occupational Outlook Handbook</a
+      >.
     </p>
   </div>
 </section>

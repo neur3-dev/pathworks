@@ -2,14 +2,9 @@
   import Briefcase from '@lucide/svelte/icons/briefcase';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
   import ClipboardList from '@lucide/svelte/icons/clipboard-list';
-  import Gamepad from '@lucide/svelte/icons/gamepad';
   import Heart from '@lucide/svelte/icons/heart';
-  import Hourglass from '@lucide/svelte/icons/hourglass';
-  import LoaderCircle from '@lucide/svelte/icons/loader-circle';
   import Menu from '@lucide/svelte/icons/menu';
-  import MousePointerClick from '@lucide/svelte/icons/mouse-pointer-click';
   import Sparkles from '@lucide/svelte/icons/sparkles';
-  import Timer from '@lucide/svelte/icons/timer';
   import X from '@lucide/svelte/icons/x';
   import { page } from '$app/state';
   import { fly } from 'svelte/transition';
@@ -86,39 +81,6 @@
     }
   ];
 
-  const freeTools: NavCollectionItem[] = [
-    {
-      key: 'progress',
-      title: 'Progress Tracker',
-      subtitle: 'Monitor learning journeys.',
-      href: '/tools/progress'
-    },
-    {
-      key: 'pomodoro',
-      title: 'Pomodoro Timer',
-      subtitle: 'Boost focus and productivity.',
-      href: '/tools/pomodoro'
-    },
-    {
-      key: 'name-picker',
-      title: 'Name Picker',
-      subtitle: 'Randomly select names.',
-      href: '/tools/name-picker'
-    },
-    {
-      key: 'stopwatch',
-      title: 'Activity Stopwatch',
-      subtitle: 'Track time accurately.',
-      href: '/tools/stopwatch'
-    },
-    {
-      key: 'tic-tac-toe',
-      title: 'Tic Tac Toe',
-      subtitle: 'Play the classic game.',
-      href: '/tools/tic-tac-toe'
-    }
-  ];
-
   const navItems: NavItem[] = [
     {
       key: 'audiences',
@@ -132,12 +94,6 @@
       href: '/industries'
     },
     {
-      key: 'free-tools',
-      title: 'Free Tools',
-      href: '/tools',
-      items: freeTools
-    },
-    {
       key: 'pricing',
       title: 'Pricing',
       href: '/pricing'
@@ -145,15 +101,10 @@
   ];
 
   let isAudiencesActive = $derived(!!audiences.some((a) => activeLink.startsWith(a.href)));
-  let isFreeToolsActive = $derived(activeLink.startsWith('/tools'));
 
   function isNavItemActive(navItem: NavItem) {
     if (navItem.key === 'audiences') {
       return isAudiencesActive;
-    }
-
-    if (navItem.key === 'free-tools') {
-      return isFreeToolsActive;
     }
 
     return navItem.href ? activeLink.startsWith(navItem.href) : false;
@@ -178,16 +129,6 @@
               <Sparkles size={24} />
             {:else if key === 'for-job-seekers'}
               <Briefcase size={24} />
-            {:else if key === 'progress'}
-              <LoaderCircle size={24} />
-            {:else if key === 'pomodoro'}
-              <Hourglass size={24} />
-            {:else if key === 'name-picker'}
-              <MousePointerClick size={24} />
-            {:else if key === 'stopwatch'}
-              <Timer size={24} />
-            {:else if key === 'tic-tac-toe'}
-              <Gamepad size={24} />
             {/if}
           </div>
           <div class="ml-3 text-start">

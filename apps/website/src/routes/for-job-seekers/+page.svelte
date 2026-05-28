@@ -17,13 +17,13 @@
       icon: Factory,
       title: 'Industry-aligned curriculum',
       description:
-        'Modules cover the sectors Texas is hiring in right now: advanced manufacturing, IT and AI, energy, transportation and logistics, life sciences, hospitality, and more. Pick a sector, get the path.'
+        'Modules cover the sectors hiring through 2026 and beyond: advanced manufacturing, IT and AI, energy, transportation and logistics, life sciences, hospitality, and more. Pick a sector, get the path.'
     },
     {
       icon: Target,
       title: 'Built for adults rebuilding',
       description:
-        'Untimed. No autoplay. Save and come back. Designed by accessibility experts and available to anyone who needs the training — no disability requirement, no doctor note, no counselor referral.'
+        'Untimed. No autoplay. Save and come back. Designed by accessibility experts and available to anyone who needs the training, no disability requirement, no doctor note, no counselor referral.'
     }
   ];
 
@@ -38,7 +38,7 @@
       number: '2',
       title: 'Pick your sector',
       description:
-        'Pick the Texas Target Industry you want to work in — or stay general. We surface the modules that map to that path so you are not wasting time on the wrong curriculum.'
+        'Pick the industry you want to work in, or stay general. We surface the modules that map to that path so you are not wasting time on the wrong curriculum.'
     },
     {
       number: '3',
@@ -53,7 +53,7 @@
   <title>For Job Seekers | PathWorks</title>
   <meta
     name="description"
-    content="Get back to work with skills today's employers are hiring for. Online work-readiness training for adults — laid off, unemployed, or switching careers. Texas Target Industries aligned."
+    content="Get back to work with skills today's employers are hiring for. Online work-readiness training for adults: laid off, unemployed, or switching careers. Industry-aligned curriculum."
   />
 </svelte:head>
 
@@ -66,9 +66,9 @@
       Get back to work <em class="text-blue-700 not-italic">with the right skills.</em>
     </h1>
     <p class="mt-5 max-w-[640px] text-sm leading-relaxed text-gray-600 lg:text-base">
-      If you have been laid off, you are switching careers, or you walked into a workforce development center today
-      &mdash; PathWorks meets you where you are. Same accessibility-first design that powers our vocational
-      rehabilitation track. Available to anyone who needs the training.
+      If you have been laid off, you are switching careers, or you walked into a workforce development center today,
+      PathWorks meets you where you are. Same accessibility-first design we use across the platform. Available to anyone
+      who needs the training.
     </p>
     <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
       <Button href="/demo">Try a sample lesson</Button>
@@ -131,7 +131,7 @@
     </div>
 
     <div class="mt-8 text-center">
-      <Button href="/industries" variant="outline">Browse Texas Target Industries</Button>
+      <Button href="/industries" variant="outline">Browse industries</Button>
     </div>
   </div>
 </section>

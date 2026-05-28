@@ -56,7 +56,7 @@
         'Your name, agency, and work email',
         'IPE or other VR approval documentation for each participant you plan to enroll',
         'Contact information for each participant',
-        'Agency billing details (per-seat pricing — contact us for a quote)'
+        'Agency billing details (per-seat pricing, contact us for a quote)'
       ],
       ctaLabel: 'Continue as counselor',
       href: `${DASHBOARD_SIGNUP}?role=counselor`

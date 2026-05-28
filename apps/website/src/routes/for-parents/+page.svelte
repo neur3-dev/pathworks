@@ -23,7 +23,7 @@
       icon: Mail,
       title: 'What you will see',
       description:
-        'You set them up with a seat. They sign in to their own account. You get a confirmation email when they finish a module — no peeking at their work in progress, no pressure on either of you.'
+        'You set them up with a seat. They sign in to their own account. You get a confirmation email when they finish a module, no peeking at their work in progress, no pressure on either of you.'
     }
   ];
 
@@ -31,7 +31,7 @@
     {
       number: '1',
       title: 'Pick a Solo seat',
-      description: 'One participant seat, $39 per month or $390 per year. Cancel anytime — no contract.'
+      description: 'One participant seat, $39 per month or $390 per year. Cancel anytime, no contract.'
     },
     {
       number: '2',
@@ -52,7 +52,7 @@
   <title>For Parents | PathWorks</title>
   <meta
     name="description"
-    content="Help your student build the skills to start work — at their own pace. PathWorks is a vocational rehabilitation learning platform with untimed lessons, content warnings, and a safe exit at every step."
+    content="Help your student build the skills to start work, at their own pace. PathWorks is a vocational rehabilitation learning platform with untimed lessons, content warnings, and a safe exit at every step."
   />
 </svelte:head>
 
@@ -132,7 +132,7 @@
 
 <PageSignupCTA
   header="Want to see what your student will see?"
-  subText="Try a sample lesson before you commit. No signup, no credit card — just one module so you can feel the pace."
+  subText="Try a sample lesson before you commit. No signup, no credit card, just one module so you can feel the pace."
   btnLabel="Try a sample lesson"
   link="/demo"
   demo={false}

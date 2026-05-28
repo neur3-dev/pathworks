@@ -12,7 +12,7 @@
 
 <PageSignupCTA
   header="Work readiness, paced for real people."
-  subText="PathWorks helps VR participants build job skills without timers, autoplay, or pressure loops. Counselors and parents buy a seat; participants learn at their own pace."
+  subText="No timers. No autoplay. No surprise tests. Counselors, advisors, and parents enroll participants. Adults sign up for themselves. Everyone learns at their own pace."
   btnLabel="Try a sample lesson"
   link="/demo"
   demo={false}

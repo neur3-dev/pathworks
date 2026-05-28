@@ -11,17 +11,17 @@ export async function load({ url }) {
 
 function getBaseMetaTags(url: URL) {
   const metatags = Object.freeze({
-    title: 'PathWorks | Work Readiness Learning for VR Participants',
+    title: 'PathWorks | Work Readiness Training That Meets You Where You Are',
     description:
-      'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
+      'Online work-readiness training built around the learner. For students, adults, and the counselors and advisors who support them.',
     canonical: new URL(url.pathname, url.origin).href,
     openGraph: {
       type: 'website',
       url: new URL(url.pathname, url.origin).href,
       locale: 'en_US',
-      title: 'PathWorks | Work Readiness Learning for VR Participants',
+      title: 'PathWorks | Work Readiness Training That Meets You Where You Are',
       description:
-        'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
+        'Online work-readiness training built around the learner. For students, adults, and the counselors and advisors who support them.',
       siteName: 'PathWorks',
       images: [
         {
@@ -38,9 +38,9 @@ function getBaseMetaTags(url: URL) {
       handle: '@neur3dev',
       site: '@neur3dev',
       cardType: 'summary_large_image' as const,
-      title: 'PathWorks | Work Readiness Learning for VR Participants',
+      title: 'PathWorks | Work Readiness Training That Meets You Where You Are',
       description:
-        'A vocational rehabilitation learning platform for building work readiness skills at a participant-friendly pace.',
+        'Online work-readiness training built around the learner. For students, adults, and the counselors and advisors who support them.',
       image: '/pathworks-og.png',
       imageAlt: 'PathWorks preview image'
     }

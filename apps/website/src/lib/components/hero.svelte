@@ -9,7 +9,7 @@
     class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#f7f9fc_0%,#eef2fa_60%,#e5ecf7_100%)]"
   ></div>
 
-  <!-- Bordered clouds, top-left — crisp SVG silhouettes -->
+  <!-- Bordered clouds, top-left, crisp SVG silhouettes -->
   <div class="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
     <!-- Cloud 1 (largest) -->
     <svg
@@ -81,7 +81,7 @@
     </svg>
   </div>
 
-  <!-- Particle cloud — same component used in the footer at lower intensity -->
+  <!-- Particle cloud, same component used in the footer at lower intensity -->
   <ParticleField class="pointer-events-none absolute inset-0 z-[2] hidden h-full w-full md:block" />
 
   <!-- Bottom fade to next section -->
@@ -96,8 +96,8 @@
     </h1>
 
     <p class="mt-5 max-w-[580px] text-sm leading-relaxed lg:text-base">
-      A vocational rehabilitation learning platform for participants building job readiness, digital literacy, job
-      search skills, and self-advocacy.
+      Work-readiness training that meets you where you are. Job readiness, digital literacy, workplace communication,
+      and self-advocacy. Built for students, adults, and the counselors and advisors who support them.
     </p>
 
     <div class="mt-7 flex flex-wrap items-center justify-center gap-3">

@@ -136,7 +136,7 @@
         <div class="flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#ecebe6] p-6 lg:p-7">
           <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Resume anytime</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
-            Stop in the middle of a lesson and come back tomorrow. Progress saves automatically — no warnings, no "are
+            Stop in the middle of a lesson and come back tomorrow. Progress saves automatically, no warnings, no "are
             you sure," no lost work.
           </p>
 
@@ -179,7 +179,7 @@
           <h3 class="text-base font-medium tracking-tight text-gray-950 lg:text-lg">Accessibility first</h3>
           <p class="mt-2 max-w-[420px] text-sm leading-relaxed text-gray-500">
             Built for WCAG 2.1 AA and Section 508. Designed with the realities of psychiatric, learning, and physical
-            disability in mind — not retrofitted to them.
+            disability in mind, not retrofitted to them.
           </p>
 
           <!-- Visual: accessibility checklist -->

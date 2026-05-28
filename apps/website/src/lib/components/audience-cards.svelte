@@ -5,7 +5,6 @@
   type Audience = {
     key: string;
     title: string;
-    subtitle: string;
     description: string;
     href: string;
   };
@@ -14,23 +13,20 @@
     {
       key: 'counselors',
       title: 'For Counselors & Advisors',
-      subtitle: 'VR or workforce development',
       description:
-        'Enroll participants on IPE plans (VR) or general referral (workforce dev). Monitor progress, export completion evidence, align to Texas Target Industries.',
+        'Enroll participants on IPE plans or general referral. Monitor progress, export completion evidence, align modules to growing industries.',
       href: '/for-counselors'
     },
     {
       key: 'parents',
       title: 'For Parents',
-      subtitle: 'Pre-ETS students 13 to 17',
       description:
-        'Buy a Student seat for your minor on a VR Pre-ETS plan. They learn at their own pace — no timers, no autoplay, no surprise tests.',
+        'Buy a Student seat for your child. They learn at their own pace. No timers, no autoplay, no surprise tests.',
       href: '/for-parents'
     },
     {
       key: 'participants',
       title: 'For VR Participants',
-      subtitle: 'Adults with a disability barrier',
       description:
         'Build job readiness, digital literacy, and self-advocacy with untimed lessons, content warnings, and a safe exit at every step.',
       href: '/for-participants'
@@ -38,9 +34,8 @@
     {
       key: 'job-seekers',
       title: 'For Job Seekers',
-      subtitle: 'Laid off, unemployed, career change',
       description:
-        "Get back to work with the skills today's employers are hiring for. Texas Target Industry curriculum, untimed pacing, no disability requirement.",
+        "Get back to work with the skills today's employers are hiring for. Industry-aligned curriculum, untimed pacing, available to anyone.",
       href: '/for-job-seekers'
     }
   ];
@@ -55,8 +50,8 @@
         One platform.<br />Four ways in.
       </h2>
       <p class="mt-3 max-w-[620px] text-sm leading-relaxed text-gray-500">
-        Counselors and advisors enroll. Parents set up Pre-ETS students. Adults sign up for themselves — VR or general
-        work readiness, same plan. Everyone sees the same evidence of progress.
+        Counselors and advisors enroll. Parents set up their child. Adults sign up for themselves. Everyone sees the
+        same evidence of progress.
       </p>
     </BlurFade>
 
@@ -67,10 +62,7 @@
             href={audience.href}
             class="group flex h-full flex-col rounded-2xl border border-gray-200/80 bg-[#f7fafc] p-6 no-underline transition-all duration-200 hover:border-blue-200 hover:bg-blue-50/30 hover:shadow-sm lg:p-7"
           >
-            <p class="text-xs font-medium tracking-wide text-blue-700 uppercase">
-              {audience.subtitle}
-            </p>
-            <h3 class="mt-2 text-lg font-medium tracking-tight text-gray-950">
+            <h3 class="text-lg font-medium tracking-tight text-gray-950">
               {audience.title}
             </h3>
             <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-600">

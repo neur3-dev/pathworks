@@ -59,7 +59,7 @@
   <title>For Participants | PathWorks</title>
   <meta
     name="description"
-    content="Work skills, at your pace. PathWorks is a learning platform for getting ready to start work — untimed, with content warnings, save-and-resume, and real skills."
+    content="Work skills, at your pace. PathWorks is a learning platform for getting ready to start work, untimed, with content warnings, save-and-resume, and real skills."
   />
 </svelte:head>
 

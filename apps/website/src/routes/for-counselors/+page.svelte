@@ -10,7 +10,7 @@
   const capabilities = [
     {
       icon: ClipboardCheck,
-      title: 'Progress against IPE goals — or referral outcomes',
+      title: 'Progress against IPE goals, or referral outcomes',
       description:
         'Counselor dashboard maps each VR participant to their Individualized Plan for Employment goals. For workforce dev referrals, track module completion and skill demonstrations against the referral target. One dashboard, two reporting modes.'
     },
@@ -24,13 +24,13 @@
       icon: ShieldCheck,
       title: 'Procurement-ready accessibility',
       description:
-        'WCAG 2.1 AA conformance, Section 508 compliance, and a downloadable VPAT for your agency procurement file. Designed with input from VR participants across psychiatric, learning, and physical disability backgrounds — and used by general workforce-readiness learners every day.'
+        'WCAG 2.1 AA conformance, Section 508 compliance, and a downloadable VPAT for your agency procurement file. Designed with input from VR participants across psychiatric, learning, and physical disability backgrounds, and used by general workforce-readiness learners every day.'
     },
     {
       icon: Users,
-      title: 'Texas Target Industry alignment',
+      title: 'Industry-aligned curriculum',
       description:
-        'Modules tagged by Texas governor-target industry sectors: advanced manufacturing, IT and AI, energy, transportation, life sciences, and more. Match participants to sectors hiring in their region.'
+        'Modules tagged by high-growth industry sectors: advanced manufacturing, IT and AI, energy, transportation, life sciences, and more. Match participants to sectors hiring in their region.'
     }
   ];
 
@@ -45,7 +45,7 @@
       number: '2',
       title: 'Add participant contact information',
       description:
-        "Provide each participant's contact info. We send them an invite to set up their own sign-in. Their progress lives in their own account — no shared logins, no credential drift."
+        "Provide each participant's contact info. We send them an invite to set up their own sign-in. Their progress lives in their own account, no shared logins, no credential drift."
     },
     {
       number: '3',
@@ -118,7 +118,7 @@
     <BlurFade once>
       <h2 class="text-[clamp(1.5rem,2.4vw,2rem)] font-medium tracking-tight text-gray-950">How it works.</h2>
       <p class="mt-3 max-w-[620px] text-sm leading-relaxed text-gray-500">
-        Three steps from procurement to documented outcomes — VR or general workforce.
+        Three steps from procurement to documented outcomes, VR or general workforce.
       </p>
     </BlurFade>
 

@@ -30,7 +30,7 @@ export default {
   EARLY_ADOPTER: {
     NAME: 'Adult',
     DESCRIPTION:
-      'Adults 18 and over. Same plan for VR participants and general work-readiness learners — laid off, unemployed, career change.',
+      'Adults 18 and over. Same plan for VR participants and general work-readiness learners, laid off, unemployed, career change.',
     PRICE: {
       CURRENCY: '$',
       MONTHLY: '39.99',
@@ -40,8 +40,8 @@ export default {
     FEATURES: [
       'For ages 18 and over',
       'Self-signup, no parent or counselor required',
-      'Full module library — VR-track and work-readiness-track content',
-      'Texas Target Industry curriculum: manufacturing, IT and AI, energy, logistics, and more',
+      'Full module library: VR-track and work-readiness-track content',
+      'Industry-aligned curriculum: manufacturing, IT and AI, energy, logistics, and more',
       'Untimed lessons, save and resume',
       'No autoplay, content warnings on sensitive topics',
       'Workplace negotiation, asking for accommodations, professional communication',
@@ -62,7 +62,7 @@ export default {
   ENTERPRISE: {
     NAME: 'Counselor, Advisor & Agency',
     DESCRIPTION:
-      'For VR counselors, workforce development advisors, and state agencies enrolling participants. VR or general work readiness — same dashboard.',
+      'For VR counselors, workforce development advisors, and state agencies enrolling participants. VR or general work readiness, same dashboard.',
     PRICE: {
       CURRENCY: '',
       MONTHLY: 'Contact us',

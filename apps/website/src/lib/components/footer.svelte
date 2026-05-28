@@ -1,7 +1,7 @@
 <footer
   class="ui:border-border relative overflow-hidden border-t bg-[linear-gradient(to_top,#eef3fb_0%,#f8fafc_100%)] px-[5%] py-12 lg:px-[10%]"
 >
-  <!-- Minor cloud — top-left, smaller than the hero -->
+  <!-- Minor cloud, top-left, smaller than the hero -->
   <svg
     class="pointer-events-none absolute -top-4 left-3 z-[2] h-12 w-[160px] md:-top-5 md:left-4 md:h-16 md:w-[210px] lg:-top-6 lg:h-20 lg:w-[260px]"
     viewBox="0 0 240 110"
@@ -52,7 +52,7 @@
     <div class="flex flex-col gap-4 lg:max-w-[260px]">
       <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="PathWorks logo" />
       <p class="ui:text-muted-foreground text-sm leading-6">
-        Work readiness learning for vocational rehabilitation participants.
+        Work-readiness training that meets you where you are. For students, adults, and the counselors who support them.
       </p>
     </div>
 
@@ -120,11 +120,6 @@
       <div>
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Product</p>
         <ul class="space-y-3">
-          <li>
-            <a href="/tools" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Free Tools</a
-            >
-          </li>
           <li>
             <a href="/pricing" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
               >Pricing</a
