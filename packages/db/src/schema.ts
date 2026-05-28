@@ -94,6 +94,7 @@ export const participantProgressStatus = pgEnum('PARTICIPANT_PROGRESS_STATUS', [
   'completed'
 ]);
 export const purchaserType = pgEnum('PURCHASER_TYPE', ['parent', 'adult', 'counselor', 'advisor', 'participant']);
+export const seatStatus = pgEnum('SEAT_STATUS', ['pending', 'active', 'cancelled', 'expired']);
 
 export const user = pgTable('user', {
   id: uuid()
@@ -3605,5 +3606,37 @@ export const deadLetterJob = pgTable(
   (table) => [
     index('idx_dead_letter_job_domain_created').on(table.domain, table.createdAt),
     index('idx_dead_letter_job_org_created').on(table.organizationId, table.createdAt)
+  ]
+);
+
+export const seat = pgTable(
+  'seat',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    buyerUserId: uuid('buyer_user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'restrict' }),
+    participantUserId: uuid('participant_user_id').references(() => user.id, { onDelete: 'set null' }),
+    participantEmail: text('participant_email').notNull(),
+    participantName: text('participant_name'),
+    status: seatStatus('status').default('pending').notNull(),
+    inviteToken: text('invite_token').notNull(),
+    inviteExpiresAt: timestamp('invite_expires_at', { withTimezone: true, mode: 'string' }).notNull(),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true, mode: 'string' }),
+    polarSubscriptionId: text('polar_subscription_id'),
+    polarProductId: text('polar_product_id'),
+    planName: text('plan_name'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    unique('seat_invite_token_unique').on(table.inviteToken),
+    index('idx_seat_buyer_user_id').on(table.buyerUserId),
+    index('idx_seat_participant_user_id').on(table.participantUserId),
+    index('idx_seat_status').on(table.status),
+    index('idx_seat_polar_subscription_id').on(table.polarSubscriptionId)
   ]
 );
