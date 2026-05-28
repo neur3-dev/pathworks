@@ -10,28 +10,25 @@
 </script>
 
 <svelte:head>
-  <title>Free Tools | PathWorks</title>
-  <meta property="og:image" itemprop="image" content="https://brand.cdn.clsrio.com/og/free-tools.png" />
-  <meta property="og:title" content="PathWorks Free Tools" />
+  <title>Free Focus Tools | PathWorks</title>
+  <meta property="og:title" content="PathWorks Free Focus Tools" />
   <meta
     property="og:description"
-    content="At PathWorks, we have built a suit of tools for anyone to use freely while collaborating with students"
+    content="Small ADHD-friendly utilities — pomodoro, stopwatch, name picker, and more. Free, no signup."
   />
-
-  <meta property="og:image:secure_url" itemprop="image" content="https://brand.cdn.clsrio.com/og/free-tools.png" />
-
-  <meta name="twitter:title" content="PathWorks Free Tools" />
+  <meta name="twitter:title" content="PathWorks Free Focus Tools" />
   <meta
     name="twitter:description"
-    content="At PathWorks, we have built a suit of tools for anyone to use freely while collaborating with students"
+    content="Small ADHD-friendly utilities — pomodoro, stopwatch, name picker, and more. Free, no signup."
   />
-  <meta name="twitter:image" content="https://brand.cdn.clsrio.com/og/free-tools.png" />
 </svelte:head>
 
 {@render children?.()}
 
 <PageSignupCTA
-  header="Stop forwarding help articles."
-  subText="Launch a branded academy on your domain in days."
-  btnLabel="Book a Demo"
+  header="Free tools are the start."
+  subText="When you are ready for full work-readiness training — VR-aligned or general — sign up for an account."
+  btnLabel="See sign-up options"
+  link="/signup"
+  demo={false}
 />
