@@ -42,10 +42,10 @@
     <!-- Fonts as <link> (not @import in app.css) so Tailwind isn’t blocked on first paint -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Geist (site body font) — synchronous so first paint has the brand font. -->
+    <!-- Geist (site body font), synchronous so first paint has the brand font. -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" />
 
-    <!-- JetBrains Mono (code blocks) — non-blocking. Preload as a stylesheet, then swap rel to apply. -->
+    <!-- JetBrains Mono (code blocks), non-blocking. Preload as a stylesheet, then swap rel to apply. -->
     <link
       rel="preload"
       as="style"

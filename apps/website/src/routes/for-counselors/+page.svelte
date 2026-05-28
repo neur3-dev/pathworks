@@ -60,7 +60,7 @@
   <title>For Counselors & Advisors | PathWorks</title>
   <meta
     name="description"
-    content="For VR counselors and workforce development advisors. Enroll participants on IPE plans or general referral. Monitor progress, export completion evidence, align modules to Texas Target Industries."
+    content="For VR counselors and workforce development advisors. Enroll participants on IPE plans or general referral. Monitor progress, export completion evidence, align modules to high-growth industry sectors."
   />
 </svelte:head>
 
