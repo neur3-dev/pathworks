@@ -1,6 +1,4 @@
-import { db } from '@cio/db/drizzle';
-import { seat, user } from '@cio/db/schema';
-import { eq } from 'drizzle-orm';
+import { createPendingSeat, getBuyerById } from '@cio/db/queries/seat';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getSessionData } from '$lib/utils/services/auth/session';
@@ -11,22 +9,21 @@ import { getSessionData } from '$lib/utils/services/auth/session';
  * Provisions a pending seat owned by the calling user for a named participant
  * email. The participant later accepts via /accept-invite/[token].
  *
- * Auth: caller must be logged in and have purchaser_type in ('parent', 'counselor', 'advisor').
- * Adults do not call this endpoint; their seat is provisioned by the Polar
- * webhook at subscription.created (or in dev, by signup flow directly).
+ * Auth: caller must be logged in and have purchaser_type in
+ * ('parent', 'counselor', 'advisor'). Adults do not call this endpoint;
+ * their seat is provisioned by the Polar webhook at subscription.created
+ * (deferred until Polar products are recreated at the new prices).
  *
  * Body:
  *   participantEmail: string (required)
  *   participantName: string (optional)
- *   planName: 'BASIC' | 'EARLY_ADOPTER' | 'ENTERPRISE' (optional, defaults to BASIC for parents and EARLY_ADOPTER otherwise)
+ *   planName: 'BASIC' | 'EARLY_ADOPTER' | 'ENTERPRISE' (optional)
  *
- * Returns:
- *   { seat: { id, inviteToken, inviteUrl, participantEmail, status, inviteExpiresAt } }
+ * Returns: { seat: { id, inviteToken, inviteUrl, participantEmail, ... } }
  *
- * Note on email send: this MVP does NOT send an email. The invite URL is
- * returned in the response so the parent or counselor UI can copy or share it.
- * Email sending is a follow-up that wires into packages/email's existing
- * invite templates (student-org-invite.ts pattern).
+ * Note: this MVP does NOT send email. The inviteUrl is returned in the
+ * response so the parent or counselor UI can copy or share it. Email send
+ * is a follow-up that wires into packages/email's invite templates.
  */
 export const POST: RequestHandler = async ({ request, cookies, url }) => {
   const session = await getSessionData(cookies);
@@ -34,17 +31,7 @@ export const POST: RequestHandler = async ({ request, cookies, url }) => {
     error(401, 'Sign in required');
   }
 
-  const callerId = session.user.id;
-  const buyer = await db
-    .select({
-      id: user.id,
-      purchaserType: user.purchaserType
-    })
-    .from(user)
-    .where(eq(user.id, callerId))
-    .limit(1)
-    .then((rows) => rows[0]);
-
+  const buyer = await getBuyerById(session.user.id);
   if (!buyer) {
     error(401, 'Account not found');
   }
@@ -74,32 +61,21 @@ export const POST: RequestHandler = async ({ request, cookies, url }) => {
   const participantName = body.participantName?.trim() || null;
   const planName = body.planName || (buyer.purchaserType === 'parent' ? 'BASIC' : 'EARLY_ADOPTER');
 
-  const inviteToken = crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '');
-  const inviteExpiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+  const createdSeat = await createPendingSeat({
+    buyerUserId: buyer.id,
+    participantEmail,
+    participantName,
+    planName
+  });
 
-  const inserted = await db
-    .insert(seat)
-    .values({
-      buyerUserId: buyer.id,
-      participantEmail,
-      participantName,
-      status: 'pending',
-      inviteToken,
-      inviteExpiresAt,
-      planName
-    })
-    .returning({
-      id: seat.id,
-      inviteToken: seat.inviteToken,
-      participantEmail: seat.participantEmail,
-      status: seat.status,
-      inviteExpiresAt: seat.inviteExpiresAt
-    });
-
-  const createdSeat = inserted[0];
   const inviteUrl = `${url.origin}/accept-invite/${createdSeat.inviteToken}`;
 
-  console.log('[seat] created seat', { id: createdSeat.id, participantEmail, buyerId: buyer.id, inviteUrl });
+  console.log('[seat] created seat', {
+    id: createdSeat.id,
+    participantEmail,
+    buyerId: buyer.id,
+    inviteUrl
+  });
 
   return json({
     seat: {

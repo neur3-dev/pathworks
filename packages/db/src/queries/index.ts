@@ -20,3 +20,4 @@ export * from './widget';
 export * from './jobs';
 export * from './media-transcript';
 export * from './pathworks';
+export * from './seat';
