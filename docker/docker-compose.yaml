@@ -117,6 +117,9 @@ services:
       SMTP_PORT: ${SMTP_PORT:-}
       SMTP_SENDER: ${SMTP_SENDER:-}
       SMTP_INSECURE: ${SMTP_INSECURE:-}
+      POSTMARK_API_KEY: ${POSTMARK_API_KEY:-}
+      POSTMARK_FROM: ${POSTMARK_FROM:-}
+      POSTMARK_MESSAGE_STREAM: ${POSTMARK_MESSAGE_STREAM:-}
       CLOUDFLARE_BUCKET_DOMAIN: ${CLOUDFLARE_BUCKET_DOMAIN:-}
       CLOUDFLARE_ACCESS_KEY: ${CLOUDFLARE_ACCESS_KEY:-}
       CLOUDFLARE_SECRET_ACCESS_KEY: ${CLOUDFLARE_SECRET_ACCESS_KEY:-}
@@ -174,6 +177,11 @@ services:
       CSP_FRAME_SRC_DOMAINS: ${CSP_FRAME_SRC_DOMAINS:-}
       CSP_FONT_SRC_DOMAINS: ${CSP_FONT_SRC_DOMAINS:-}
       CSP_MEDIA_SRC_DOMAINS: ${CSP_MEDIA_SRC_DOMAINS:-}
+      # Postmark transport for transactional email (POST /api/seats fires
+      # the participant invite email directly from the dashboard server).
+      POSTMARK_API_KEY: ${POSTMARK_API_KEY:-}
+      POSTMARK_FROM: ${POSTMARK_FROM:-}
+      POSTMARK_MESSAGE_STREAM: ${POSTMARK_MESSAGE_STREAM:-}
     restart: unless-stopped
 
 volumes:
