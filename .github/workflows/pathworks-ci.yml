@@ -29,8 +29,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Check formatting
@@ -53,8 +51,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Typecheck core packages
@@ -72,8 +68,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Check migrations
@@ -89,8 +83,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install axe runner dependencies
