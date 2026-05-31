@@ -1,0 +1,12 @@
+# Caddy with the Cloudflare DNS provider plugin baked in.
+# Required because the default caddy:2-alpine image doesn't include third-party
+# DNS providers, and PathWorks uses DNS-01 challenges against Cloudflare so it
+# can issue certs (including for the media.* subdomain) without needing
+# inbound port 80 reachable for HTTP-01 challenges.
+
+FROM caddy:2-builder-alpine AS builder
+RUN xcaddy build \
+  --with github.com/caddy-dns/cloudflare
+
+FROM caddy:2-alpine
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy

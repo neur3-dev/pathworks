@@ -1,0 +1,17 @@
+[Unit]
+Description=PathWorks data tier (postgres + redis + minio)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/opt/pathworks
+EnvironmentFile=/etc/pathworks/.env
+ExecStart=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml up -d --remove-orphans
+ExecStop=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml down
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target

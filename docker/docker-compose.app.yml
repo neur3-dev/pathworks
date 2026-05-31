@@ -1,0 +1,54 @@
+# LXC-B: app tier (api + dashboard + caddy)
+# Connects to LXC-A's postgres/redis/minio over the private bridge (10.0.0.10).
+# Caddy terminates TLS publicly on 80/443.
+# Read /etc/pathworks/.env for credentials and URLs.
+
+services:
+  api:
+    image: ghcr.io/neur3-dev/pathworks-api:${API_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: /etc/pathworks/.env
+    expose:
+      - "3081"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3081/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  dashboard:
+    image: ghcr.io/neur3-dev/pathworks-dashboard:${DASHBOARD_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: /etc/pathworks/.env
+    expose:
+      - "3082"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile.caddy
+    image: pathworks-caddy:cloudflare
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+      PATHWORKS_DOMAIN: ${PATHWORKS_DOMAIN}
+      DATA_LXC_IP: ${DATA_LXC_IP:-10.0.0.10}
+    volumes:
+      - /opt/pathworks/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - dashboard
+
+volumes:
+  caddy_data:
+  caddy_config:
