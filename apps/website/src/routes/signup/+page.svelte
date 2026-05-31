@@ -6,7 +6,7 @@
   import Heart from '@lucide/svelte/icons/heart';
   import User from '@lucide/svelte/icons/user';
 
-  const DASHBOARD_SIGNUP = 'https://pathworks.neur3.dev/signup';
+  const DASHBOARD_SIGNUP = 'https://pathworks-domain.invalid/signup';
 
   type SignupPath = {
     key: string;

@@ -4,7 +4,7 @@ Our aim is to keep this Agreement as readable as possible, but in some cases for
 
 ## Your Acceptance of this Agreement
 
-These terms of service are entered into by and between You and PathWorks ("Company," "we," "our," or "us"). The following terms and conditions, together with any documents they expressly incorporate by reference (collectively "Terms of Service"), govern your access to and use of pathworks.neur3.dev, including any content, functionality, and services offered on or through pathworks.neur3.dev (the "Website").
+These terms of service are entered into by and between You and PathWorks ("Company," "we," "our," or "us"). The following terms and conditions, together with any documents they expressly incorporate by reference (collectively "Terms of Service"), govern your access to and use of pathworks-domain.invalid, including any content, functionality, and services offered on or through pathworks-domain.invalid (the "Website").
 
 Please read the Terms of Service carefully before you start to use the Website.
 

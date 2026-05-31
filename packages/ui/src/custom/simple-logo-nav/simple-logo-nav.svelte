@@ -2,7 +2,7 @@
   class="ui:absolute ui:top-2 ui:border ui:border-dashed ui:px-4 ui:py-1 ui:rounded-md ui:flex ui:items-center ui:flex-col"
 >
   <a
-    href="https://pathworks.neur3.dev"
+    href="https://pathworks-domain.invalid"
     target="_blank"
     rel="noopener noreferrer"
     class="ui:flex ui:items-center ui:justify-center ui:gap-2"

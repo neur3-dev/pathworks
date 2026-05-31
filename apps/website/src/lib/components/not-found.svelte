@@ -18,7 +18,7 @@
       return goto('/');
     }
 
-    return goto('https://pathworks.neur3.dev');
+    return goto('https://pathworks-domain.invalid');
   }
 </script>
 

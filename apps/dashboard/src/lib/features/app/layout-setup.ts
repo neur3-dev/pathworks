@@ -100,9 +100,11 @@ function isURLCustomDomain(url: URL) {
     return false;
   }
 
-  const notCustomDomainHosts = [env.PRIVATE_APP_HOST || '', 'pathworks.neur3.dev', 'mypathworks.neur3.dev'].filter(
-    Boolean
-  );
+  const notCustomDomainHosts = [
+    env.PRIVATE_APP_HOST || '',
+    'pathworks-domain.invalid',
+    'mypathworks-domain.invalid'
+  ].filter(Boolean);
 
   return !notCustomDomainHosts.some((host) => url.host.endsWith(host));
 }

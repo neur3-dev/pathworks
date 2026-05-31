@@ -39,7 +39,7 @@
     </Dialog.Header>
     <p class="text-md text-black dark:text-white">
       {$t('welcome_modal.we_at')}
-      <a href="https://pathworks.neur3.dev/" class="ui:text-primary no-underline hover:no-underline">PathWorks</a>
+      <a href="https://pathworks-domain.invalid/" class="ui:text-primary no-underline hover:no-underline">PathWorks</a>
       {$t('welcome_modal.small_team')}
       <span class="ui:text-primary">{$t('welcome_modal.thank_you')};</span>
       {$t('welcome_modal.deeply_appreciate')}

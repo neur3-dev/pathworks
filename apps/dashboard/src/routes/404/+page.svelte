@@ -8,7 +8,7 @@
   let isOrg = $derived(query.get('type') === 'org');
 
   function handleClick() {
-    window.location.href = isOrg ? 'https://pathworks.neur3.dev' : '/';
+    window.location.href = isOrg ? 'https://pathworks-domain.invalid' : '/';
   }
 </script>
 

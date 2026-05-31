@@ -31,7 +31,7 @@
   }: Props = $props();
 
   const href = $derived.by(() => {
-    const url = new URL('https://pathworks.neur3.dev');
+    const url = new URL('https://pathworks-domain.invalid');
 
     url.searchParams.set('utm_source', utmSource);
     url.searchParams.set('utm_medium', 'powered-by');

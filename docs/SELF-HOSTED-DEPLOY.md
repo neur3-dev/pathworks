@@ -2,7 +2,7 @@
 
 This is the on-prem alternative to `docs/DEPLOY.md` (which targets managed cloud services). Use this track to run PathWorks on a single Proxmox host until you have signed customers and a reason to migrate to managed cloud.
 
-> The existing `docs/DEPLOY.md` references `pathworks.neur3.dev` — that's a stale, incorrect domain. Neur3 owns `neur3.com`, not `neur3.dev`. A dedicated PathWorks domain (TBD) will replace both. Throughout this doc, `<PATHWORKS_DOMAIN>` is the placeholder; the running example uses `pathworks.example.com`.
+> Neur3 owns `neur3.com`. A dedicated PathWorks domain is TBD. Throughout this doc, `<PATHWORKS_DOMAIN>` is the placeholder; the running example uses `pathworks.example.com`.
 
 ## Why Self-Host First
 
@@ -302,4 +302,3 @@ All app code stays the same. Only `DATABASE_URL`, `REDIS_URL`, and `OBJECT_STORA
 - [ ] Fill in `/etc/pathworks/.env` on both LXCs
 - [ ] Test restore from `pg-backup.sh` once before announcing
 - [ ] Decide on offsite backup destination
-- [ ] Update `docs/DEPLOY.md` and `BLOCKED.md` to remove stale `pathworks.neur3.dev` references (separate cleanup PR)

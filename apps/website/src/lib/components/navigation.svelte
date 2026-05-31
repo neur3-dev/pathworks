@@ -204,7 +204,7 @@
     <div class="hidden! flex-row items-center justify-between gap-3 lg:flex!">
       <a
         class="text-sm font-medium transition-opacity duration-200 after:ml-2 after:content-['→'] hover:opacity-80"
-        href="https://pathworks.neur3.dev/login"
+        href="https://pathworks-domain.invalid/login"
       >
         Sign in
       </a>
@@ -275,7 +275,7 @@
         <div class="mt-5 flex flex-col items-start gap-y-2 border-t pt-5">
           <a
             class="w-full rounded-md px-4 py-4 text-left text-sm font-semibold transition-all duration-200 after:ml-2 after:content-['→'] hover:bg-gray-100 md:text-lg"
-            href="https://pathworks.neur3.dev/login"
+            href="https://pathworks-domain.invalid/login"
           >
             Sign in
           </a>
