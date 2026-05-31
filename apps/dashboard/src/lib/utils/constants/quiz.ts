@@ -1,13 +1,14 @@
 export const themeImages = {
   standard: {
-    card: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/standard-quiz-card.svg',
-    editor: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/standard-quiz-editor.svg',
-    play: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/standard-quiz-play.svg'
+    card: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/standard-quiz-card.svg',
+    editor: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/standard-quiz-editor.svg',
+    play: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/standard-quiz-play.svg'
   },
   mainland: {
-    card: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/mainstream-quiz-card.svg',
-    editor: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/mainstream-quiz-editor.svg',
-    play: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/mainstream-quiz-play.svg'
+    card: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/mainstream-quiz-card.svg',
+    editor:
+      'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/mainstream-quiz-editor.svg',
+    play: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/mainstream-quiz-play.svg'
   }
 };
 
@@ -18,12 +19,12 @@ export const defOption = {
 };
 
 export const optionImage = {
-  circle: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/circle.svg',
-  spade: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/spade.svg',
-  square: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/square.svg',
-  pentagon: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/pentagon.svg',
-  hexagon: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/hexagon.svg',
-  triangle: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/triangle.svg'
+  circle: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/circle.svg',
+  spade: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/spade.svg',
+  square: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/square.svg',
+  pentagon: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/pentagon.svg',
+  hexagon: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/hexagon.svg',
+  triangle: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/triangle.svg'
 };
 
 export const allOptions = [
@@ -62,12 +63,12 @@ export const booleanOptions = [
   {
     id: 'triangle',
     label: 'True',
-    image: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/triangle.svg'
+    image: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/triangle.svg'
   },
   {
     id: 'square',
     label: 'False',
-    image: 'https://pathworks-pgrest.neur3.dev/storage/v1/object/public/avatars/quizes/square.svg'
+    image: 'https://pathworks-pgrest-domain.invalid/storage/v1/object/public/avatars/quizes/square.svg'
   }
 ];
 export const allThemes = [

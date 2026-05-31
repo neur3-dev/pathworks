@@ -138,7 +138,7 @@
         <ul class="space-y-3">
           <li>
             <a
-              href="https://pathworks.neur3.dev/login"
+              href="https://pathworks-domain.invalid/login"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Sign in</a
             >
           </li>
@@ -149,7 +149,7 @@
           </li>
           <li>
             <a
-              href="mailto:hello@neur3.dev"
+              href="mailto:pathworks@neur3.com"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Support</a
             >
           </li>

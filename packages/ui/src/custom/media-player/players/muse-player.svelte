@@ -10,7 +10,7 @@
 
   const embedUrl = $derived(
     svid
-      ? `https://muse.ai/embed/${svid}?logo=https://pathworks.neur3.dev/logo-512.png&subtitles=auto&cover_play_position=center`
+      ? `https://muse.ai/embed/${svid}?logo=https://pathworks-domain.invalid/logo-512.png&subtitles=auto&cover_play_position=center`
       : ''
   );
 </script>

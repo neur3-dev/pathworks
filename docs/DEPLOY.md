@@ -10,18 +10,18 @@ Use Render for the API and dashboard Docker web services, Neon for managed Postg
 
 | Host | Target | Notes |
 | --- | --- | --- |
-| `pathworks.neur3.dev` | Render dashboard service | User-facing SvelteKit app. Set dashboard `ORIGIN=https://pathworks.neur3.dev`. |
-| `api.pathworks.neur3.dev` | Render API service | Hono API and Better Auth endpoints. Set API `PUBLIC_SERVER_URL=https://api.pathworks.neur3.dev`. |
-| `media.pathworks.neur3.dev` | Cloudflare R2 public/custom domain | Public media bucket base, used by `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL`. |
+| `<PATHWORKS_DOMAIN>` | Render dashboard service | User-facing SvelteKit app. Set dashboard `ORIGIN=https://<PATHWORKS_DOMAIN>`. |
+| `api.<PATHWORKS_DOMAIN>` | Render API service | Hono API and Better Auth endpoints. Set API `PUBLIC_SERVER_URL=https://api.<PATHWORKS_DOMAIN>`. |
+| `media.<PATHWORKS_DOMAIN>` | Cloudflare R2 public/custom domain | Public media bucket base, used by `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL`. |
 
-Set `AUTH_COOKIE_DOMAIN=.pathworks.neur3.dev` so auth cookies work across dashboard and API subdomains.
+Set `AUTH_COOKIE_DOMAIN=.<PATHWORKS_DOMAIN>` so auth cookies work across dashboard and API subdomains.
 
 ## Services
 
 | Service | Runtime | Command/Build | Public URL |
 | --- | --- | --- | --- |
-| API | Render Docker web service | `docker/Dockerfile.api` | `https://api.pathworks.neur3.dev` |
-| Dashboard | Render Docker web service | `docker/Dockerfile.dashboard` with `PUBLIC_IS_SELFHOSTED=true` build arg | `https://pathworks.neur3.dev` |
+| API | Render Docker web service | `docker/Dockerfile.api` | `https://api.<PATHWORKS_DOMAIN>` |
+| Dashboard | Render Docker web service | `docker/Dockerfile.dashboard` with `PUBLIC_IS_SELFHOSTED=true` build arg | `https://<PATHWORKS_DOMAIN>` |
 | Postgres | Neon managed Postgres | Managed | Private connection string in `DATABASE_URL` |
 | Redis | Upstash Redis | Managed | `REDIS_URL` |
 | Object storage | Cloudflare R2 | Managed buckets | S3-compatible endpoint plus public media domain |
@@ -34,12 +34,12 @@ Set `AUTH_COOKIE_DOMAIN=.pathworks.neur3.dev` so auth cookies work across dashbo
 | `PRIVATE_DATABASE_URL` | DB scripts that use private connection fallback | Same Neon direct URL as `DATABASE_URL` unless separate direct URL is preferred | High |
 | `REDIS_URL` | Queue/cache backend for API workers and jobs | Upstash Redis URL | High |
 | `BETTER_AUTH_SECRET` | Better Auth session and magic-link signing | Generate with `openssl rand -base64 48` | Critical |
-| `AUTH_COOKIE_DOMAIN` | Cross-subdomain auth cookies | Literal `.pathworks.neur3.dev` | Low |
-| `PUBLIC_SERVER_URL` | Browser-visible API base URL | `https://api.pathworks.neur3.dev` | Low |
-| `PRIVATE_SERVER_URL` | Dashboard SSR-to-API calls | Render internal API URL if available, otherwise `https://api.pathworks.neur3.dev` | Low |
-| `TRUSTED_ORIGINS` | API CORS and auth origin checks | `https://pathworks.neur3.dev` | Low |
-| `DASHBOARD_ORIGIN` | Invite and counselor magic-link destinations | `https://pathworks.neur3.dev` | Low |
-| `ORIGIN` | SvelteKit CSRF/origin checks for dashboard | `https://pathworks.neur3.dev` | Low |
+| `AUTH_COOKIE_DOMAIN` | Cross-subdomain auth cookies | Literal `.<PATHWORKS_DOMAIN>` | Low |
+| `PUBLIC_SERVER_URL` | Browser-visible API base URL | `https://api.<PATHWORKS_DOMAIN>` | Low |
+| `PRIVATE_SERVER_URL` | Dashboard SSR-to-API calls | Render internal API URL if available, otherwise `https://api.<PATHWORKS_DOMAIN>` | Low |
+| `TRUSTED_ORIGINS` | API CORS and auth origin checks | `https://<PATHWORKS_DOMAIN>` | Low |
+| `DASHBOARD_ORIGIN` | Invite and counselor magic-link destinations | `https://<PATHWORKS_DOMAIN>` | Low |
+| `ORIGIN` | SvelteKit CSRF/origin checks for dashboard | `https://<PATHWORKS_DOMAIN>` | Low |
 | `PRIVATE_SERVER_KEY` | Dashboard-to-API trusted server key | Generate with `openssl rand -base64 48`; same value in API and dashboard | Critical |
 | `AUTH_BEARER_TOKEN` | Internal API bearer fallback | Generate with `openssl rand -base64 48`; same value in API and dashboard if enabled | Critical |
 | `PUBLIC_IS_SELFHOSTED` | Enables self-hosted PathWorks behavior | `true` | Low |
@@ -51,7 +51,7 @@ Set `AUTH_COOKIE_DOMAIN=.pathworks.neur3.dev` so auth cookies work across dashbo
 | `OBJECT_STORAGE_BUCKET_VIDEOS` | Lesson video uploads | R2 bucket name | Low |
 | `OBJECT_STORAGE_BUCKET_DOCUMENTS` | Lesson document uploads | R2 bucket name | Low |
 | `OBJECT_STORAGE_BUCKET_MEDIA` | Images/thumbnails/media uploads | R2 bucket name | Low |
-| `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL` | Public image/media delivery | `https://media.pathworks.neur3.dev` | Low |
+| `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL` | Public image/media delivery | `https://media.<PATHWORKS_DOMAIN>` | Low |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_SENDER` | Email delivery for login, invites, and notifications | Chosen SMTP provider | High for password, medium otherwise |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional Google OAuth | Google Cloud OAuth app | High |
 | `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `ANTHROPIC_API_KEY` | Optional AI assistant/provider access | Provider consoles | Critical |
@@ -67,7 +67,7 @@ Use the direct Neon URL for migrations and backups. Use the pooled URL for norma
 
 ## Object Storage
 
-Use Cloudflare R2 instead of self-hosted MinIO for production. MinIO is excellent locally, but R2 removes disk management and backup work, has S3-compatible credentials for the current code, and can expose media through `media.pathworks.neur3.dev` without routing through the API.
+Use Cloudflare R2 instead of self-hosted MinIO for production. MinIO is excellent locally, but R2 removes disk management and backup work, has S3-compatible credentials for the current code, and can expose media through `media.<PATHWORKS_DOMAIN>` without routing through the API.
 
 Create three buckets or prefixes: videos, documents, and media. If using a single bucket, set all three bucket vars to that bucket name and use folder prefixes in application code only after a follow-up confirms prefix support end-to-end.
 
@@ -93,18 +93,18 @@ For Render deploys, do not run migrations automatically inside every web-service
 ## Deploy Order
 
 1. Create Neon Postgres and Upstash Redis.
-2. Create R2 buckets and access keys; attach `media.pathworks.neur3.dev` to the media bucket.
+2. Create R2 buckets and access keys; attach `media.<PATHWORKS_DOMAIN>` to the media bucket.
 3. Create Render API service from `docker/Dockerfile.api`; set all API secrets.
 4. Create Render dashboard service from `docker/Dockerfile.dashboard`; set build arg `PUBLIC_IS_SELFHOSTED=true` and dashboard env vars.
-5. Add DNS records for `pathworks.neur3.dev`, `api.pathworks.neur3.dev`, and `media.pathworks.neur3.dev`.
+5. Add DNS records for `<PATHWORKS_DOMAIN>`, `api.<PATHWORKS_DOMAIN>`, and `media.<PATHWORKS_DOMAIN>`.
 6. Run migrations once against Neon.
 7. Deploy API, then dashboard.
 8. Run smoke tests before inviting real users.
 
 ## Post-Deploy Smoke Tests
 
-1. Visit `https://api.pathworks.neur3.dev/health` and confirm HTTP 200.
-2. Visit `https://pathworks.neur3.dev/login`, request a login link, and confirm email delivery.
+1. Visit `https://api.<PATHWORKS_DOMAIN>/health` and confirm HTTP 200.
+2. Visit `https://<PATHWORKS_DOMAIN>/login`, request a login link, and confirm email delivery.
 3. Complete onboarding as an operator/admin and verify the Work Readiness Foundations course exists.
 4. Create a draft lesson, add body content and a content warning, publish it, and confirm it appears in the course lesson list.
 5. Open a participant magic link, visit `/lms/mylearning`, open the published lesson, and confirm draft lessons are hidden.

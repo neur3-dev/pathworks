@@ -5,9 +5,9 @@ Branch: codex/pathworks-phase-4
 
 Goal 1 asks for a real production deploy to these URLs:
 
-- https://pathworks.neur3.dev
-- https://api.pathworks.neur3.dev
-- https://media.pathworks.neur3.dev
+- https://<PATHWORKS_DOMAIN>
+- https://api.<PATHWORKS_DOMAIN>
+- https://media.<PATHWORKS_DOMAIN>
 
 The user confirmed that hosting and DNS are not available yet. We are testing locally first.
 
@@ -31,9 +31,9 @@ The user confirmed that hosting and DNS are not available yet. We are testing lo
    - S3 endpoint, access key id, secret access key, bucket names, and public media base URL.
 
 5. DNS control
-   - Ability to point `pathworks.neur3.dev` at the dashboard host.
-   - Ability to point `api.pathworks.neur3.dev` at the API host.
-   - Ability to point `media.pathworks.neur3.dev` at the public media bucket or CDN.
+   - Ability to point `<PATHWORKS_DOMAIN>` at the dashboard host.
+   - Ability to point `api.<PATHWORKS_DOMAIN>` at the API host.
+   - Ability to point `media.<PATHWORKS_DOMAIN>` at the public media bucket or CDN.
 
 6. Email provider
    - SMTP or Zoho credentials for login links, invites, and counselor links.
@@ -72,7 +72,7 @@ above still applies. What changed since then:
 - **Managed Postgres** — no Neon project yet (`DATABASE_URL` empty)
 - **Managed Redis** — no Upstash instance yet (`REDIS_URL` empty)
 - **Object storage** — no Cloudflare R2 buckets or keys yet (`OBJECT_STORAGE_*` empty)
-- **DNS** — `pathworks.neur3.dev`, `api.pathworks.neur3.dev`, `media.pathworks.neur3.dev` not pointed
+- **DNS** — `<PATHWORKS_DOMAIN>`, `api.<PATHWORKS_DOMAIN>`, `media.<PATHWORKS_DOMAIN>` not pointed
 - **Secrets** — `BETTER_AUTH_SECRET`, `PRIVATE_SERVER_KEY`, `AUTH_BEARER_TOKEN` not generated for prod
 
 ## Provisioning Checklist (Do These Before Touching `docs/DEPLOY.md`)
@@ -96,14 +96,14 @@ Recommended order. Each step is something the human must do — agents cannot cr
 4. **Cloudflare R2** (~20 min, https://dash.cloudflare.com)
    - Create three buckets: `pathworks-videos`, `pathworks-documents`, `pathworks-media`
    - Generate an R2 API token with read/write on all three; copy keys → `OBJECT_STORAGE_ACCESS_KEY_ID` / `OBJECT_STORAGE_SECRET_ACCESS_KEY`
-   - On the `pathworks-media` bucket, enable a custom public domain `media.pathworks.neur3.dev`
+   - On the `pathworks-media` bucket, enable a custom public domain `media.<PATHWORKS_DOMAIN>`
    - S3 endpoint → `OBJECT_STORAGE_ENDPOINT`; set `OBJECT_STORAGE_FORCE_PATH_STYLE=true`
-   - `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL=https://media.pathworks.neur3.dev`
+   - `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL=https://media.<PATHWORKS_DOMAIN>`
 
-5. **DNS** (~5 min, wherever `neur3.dev` is hosted)
-   - `pathworks.neur3.dev` → CNAME → Render dashboard service
-   - `api.pathworks.neur3.dev` → CNAME → Render API service
-   - `media.pathworks.neur3.dev` → CNAME → R2 custom-domain target
+5. **DNS** (~5 min, wherever `<PATHWORKS_DOMAIN>` is hosted)
+   - `<PATHWORKS_DOMAIN>` → CNAME → Render dashboard service
+   - `api.<PATHWORKS_DOMAIN>` → CNAME → Render API service
+   - `media.<PATHWORKS_DOMAIN>` → CNAME → R2 custom-domain target
 
 6. **Generate prod secrets** (~1 min, local terminal)
    ```bash
@@ -111,7 +111,7 @@ Recommended order. Each step is something the human must do — agents cannot cr
    openssl rand -base64 48  # → PRIVATE_SERVER_KEY
    openssl rand -base64 48  # → AUTH_BEARER_TOKEN
    ```
-   Set `AUTH_COOKIE_DOMAIN=.pathworks.neur3.dev`, `PUBLIC_IS_SELFHOSTED=true`.
+   Set `AUTH_COOKIE_DOMAIN=.<PATHWORKS_DOMAIN>`, `PUBLIC_IS_SELFHOSTED=true`.
 
 7. **Render web services** (~20 min, https://dashboard.render.com)
    - Create API service from `docker/Dockerfile.api`; paste all API env vars
@@ -149,6 +149,30 @@ turbo-aware `pnpm turbo run build --filter=...^...`) before the typecheck
 step so dependent packages' `dist/` outputs exist when downstream `tsc`
 runs. Alternative: use TS project references / `tsc -b` from the repo root
 so the build order is implicit.
+
+## CI-3: Community feature broken by `pathworks.neur3.devmunity` typo
+
+Surfaced while cleaning up stale `neur3.dev` references on 2026-05-31. The
+community module's RPC calls reference `pathworks.neur3.devmunity` instead of
+`pathworks.community`. This is the residue of an earlier sloppy `classroomio`
+→ `pathworks` rename that did `s|classroomio.com|pathworks.neur3.dev|g` and
+turned `classroomio.community` into `pathworks.neur3.devmunity`.
+
+**Affected files:**
+
+- `apps/dashboard/src/routes/(app)/org/[slug]/community/+page.server.ts` (1 ref)
+- `apps/dashboard/src/routes/(app)/org/[slug]/community/[cslug]/+page.server.ts` (1 ref)
+- `apps/dashboard/src/lib/features/community/utils/types.ts` (6 refs)
+- `apps/dashboard/src/lib/features/community/api/community.svelte.ts` (~14 refs)
+
+**Impact:** the entire community feature is broken — types don't resolve and
+runtime calls go to a nonexistent RPC path. This is one of the major drivers
+of CI-1's `Cannot find module` cascade.
+
+**Fix direction:** `sed -i 's|pathworks\.neur3\.devmunity|pathworks.community|g'`
+across the four files above, then verify the resulting `pathworks.community.*`
+RPC paths exist in the API schema. If the API never had a `community` endpoint
+group, the wiring needs to be either restored or removed from the dashboard.
 
 ## CI-2: Two real Svelte lint errors
 

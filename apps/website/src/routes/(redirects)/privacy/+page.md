@@ -239,7 +239,7 @@ We may modify this Policy at any time. If we make changes to this Policy then we
 
 To request a copy of your information, unsubscribe from our email list, request for your data to be deleted, or ask a question about your data privacy:
 
-Email [hello@neur3.dev](mailto:hello@neur3.dev)
+Email [pathworks@neur3.com](mailto:pathworks@neur3.com)
 
 Write to us at:
 

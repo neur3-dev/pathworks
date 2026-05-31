@@ -93,7 +93,7 @@
     <p class="my-2 text-red-500">{appInitApi.error}</p>
     <div class="flex gap-2">
       <Button variant="secondary" onclick={() => window.location.reload()}>Reload Page</Button>
-      <Button variant="default" href="https://pathworks.neur3.dev/contact">Contact Us</Button>
+      <Button variant="default" href="https://pathworks-domain.invalid/contact">Contact Us</Button>
     </div>
   </Empty>
 {:else}

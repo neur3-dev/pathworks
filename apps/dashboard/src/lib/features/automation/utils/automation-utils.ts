@@ -15,7 +15,7 @@ export function getClaudeCodeSnippet(secret: string | null) {
   "command": "npx",
   "args": ["-y", "@pathworks/mcp"],
   "env": {
-    "PATHWORKS_API_URL": "https://api.pathworks.neur3.dev",
+    "PATHWORKS_API_URL": "https://api.pathworks-domain.invalid",
     "PATHWORKS_API_KEY": "${apiKey}"
   }
 }'`;
@@ -25,7 +25,7 @@ export function getCodexSnippet(secret: string | null) {
   const apiKey = getAutomationSetupSecret(secret);
 
   return `codex mcp add pathworks \\
-  --env PATHWORKS_API_URL=https://api.pathworks.neur3.dev \\
+  --env PATHWORKS_API_URL=https://api.pathworks-domain.invalid \\
   --env PATHWORKS_API_KEY=${apiKey} \\
   -- npx -y @pathworks/mcp`;
 }
@@ -41,7 +41,7 @@ export function getOpenCodeSnippet(secret: string | null) {
       "command": ["npx", "-y", "@pathworks/mcp"],
       "enabled": true,
       "environment": {
-        "PATHWORKS_API_URL": "https://api.pathworks.neur3.dev",
+        "PATHWORKS_API_URL": "https://api.pathworks-domain.invalid",
         "PATHWORKS_API_KEY": "${apiKey}"
       }
     }
@@ -58,7 +58,7 @@ export function getCursorSnippet(secret: string | null) {
       "command": "npx",
       "args": ["-y", "@pathworks/mcp"],
       "env": {
-        "PATHWORKS_API_URL": "https://api.pathworks.neur3.dev",
+        "PATHWORKS_API_URL": "https://api.pathworks-domain.invalid",
         "PATHWORKS_API_KEY": "${apiKey}"
       }
     }

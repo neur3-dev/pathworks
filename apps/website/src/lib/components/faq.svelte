@@ -11,8 +11,8 @@
       class="ui:text-muted-foreground text-sm font-normal tracking-normal md:text-lg lg:px-[20%] lg:text-xl lg:tracking-wide"
     >
       Can't find the answer you're looking for?
-      <a class="text-blue-700 hover:underline" href="mailto:hello@neur3.dev" target="_blank">Shoot us an email</a> and we'll
-      get back to you ASAP.
+      <a class="text-blue-700 hover:underline" href="mailto:pathworks@neur3.com" target="_blank">Shoot us an email</a> and
+      we'll get back to you ASAP.
     </p>
   </header>
 

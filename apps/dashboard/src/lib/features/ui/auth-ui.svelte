@@ -44,7 +44,7 @@
 
     const params = new URLSearchParams(window.location.search);
     console.log({ params });
-    // const redirectTo = `https://pathworks.neur3.dev?forwardTo=${
+    // const redirectTo = `https://pathworks-domain.invalid?forwardTo=${
     //   window.location.origin + params.get('redirect')
     // }`;
     const pathname = redirectPathname || params.get('redirect') || '';

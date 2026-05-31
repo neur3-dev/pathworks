@@ -42,7 +42,7 @@
   });
 
   function handleSupport() {
-    window.open('mailto:help@pathworks.neur3.dev?subject=Email Verification Issue&body=Error Type: ' + type, '_blank');
+    window.open('mailto:pathworks@neur3.com?subject=Email Verification Issue&body=Error Type: ' + type, '_blank');
   }
 </script>
 
