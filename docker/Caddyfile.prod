@@ -1,0 +1,50 @@
+# PathWorks production reverse proxy on LXC-B.
+# Terminates TLS for three subdomains, proxies to internal app containers,
+# and reverse-proxies the public media bucket on MinIO in LXC-A.
+#
+# Env vars expected (set in docker-compose.app.yml -> caddy service):
+#   PATHWORKS_DOMAIN     e.g. pathworks.example.com  (the apex/dashboard host)
+#   DATA_LXC_IP          e.g. 10.0.0.10              (MinIO host on private bridge)
+#   CLOUDFLARE_API_TOKEN scoped Zone:DNS:Edit token  (for DNS-01 challenges)
+
+{
+	email admin@{$PATHWORKS_DOMAIN}
+	# DNS-01 via Cloudflare: works behind NAT, no port 80 required
+	acme_dns cloudflare {$CLOUDFLARE_API_TOKEN}
+}
+
+# Dashboard (SvelteKit)
+{$PATHWORKS_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy dashboard:3082 {
+		health_uri  /
+		health_interval 10s
+		health_timeout  3s
+	}
+}
+
+# API (Hono + Better Auth)
+api.{$PATHWORKS_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy api:3081 {
+		health_uri  /health
+		health_interval 10s
+		health_timeout  3s
+	}
+}
+
+# Public media bucket, proxied to MinIO on LXC-A.
+# The bucket name is hard-coded as `pathworks-media` to match the .env example.
+# Only GET/HEAD are allowed publicly — uploads go through the api signed-URL flow.
+media.{$PATHWORKS_DOMAIN} {
+	encode zstd gzip
+	@write {
+		method POST PUT DELETE PATCH
+	}
+	respond @write 405
+
+	rewrite * /pathworks-media{uri}
+	reverse_proxy http://{$DATA_LXC_IP}:9000 {
+		header_up Host {upstream_hostport}
+	}
+}

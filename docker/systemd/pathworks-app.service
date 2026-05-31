@@ -1,0 +1,19 @@
+[Unit]
+Description=PathWorks app tier (api + dashboard + caddy)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/opt/pathworks
+EnvironmentFile=/etc/pathworks/.env
+ExecStartPre=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml pull
+ExecStartPre=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml build caddy
+ExecStart=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml up -d --remove-orphans
+ExecStop=/usr/bin/docker compose -f /opt/pathworks/docker-compose.yml down
+TimeoutStartSec=600
+
+[Install]
+WantedBy=multi-user.target
