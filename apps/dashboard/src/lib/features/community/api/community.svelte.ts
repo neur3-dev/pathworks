@@ -72,8 +72,8 @@ class CommunityApi extends BaseApiWithErrors {
    * @param orgId Organization ID
    */
   async fetchCommunityQuestions({ orgId }: { orgId: string }) {
-    await this.execute<typeof pathworks.neur3.devmunity.$get>({
-      requestFn: () => pathworks.neur3.devmunity.$get({ query: { orgId } }),
+    await this.execute<typeof pathworks.community.$get>({
+      requestFn: () => pathworks.community.$get({ query: { orgId } }),
       logContext: 'fetching community questions',
       onSuccess: (response) => {
         this.questions = response.data;
@@ -91,8 +91,8 @@ class CommunityApi extends BaseApiWithErrors {
    * @param slug Question slug
    */
   async fetchCommunityQuestion({ slug }: { slug: string }) {
-    await this.execute<(typeof pathworks.neur3.devmunity)[':slug']['$get']>({
-      requestFn: () => pathworks.neur3.devmunity[':slug'].$get({ param: { slug } }),
+    await this.execute<(typeof pathworks.community)[':slug']['$get']>({
+      requestFn: () => pathworks.community[':slug'].$get({ param: { slug } }),
       logContext: 'fetching community question',
       onSuccess: (response) => {
         if (response.data) {
@@ -132,7 +132,7 @@ class CommunityApi extends BaseApiWithErrors {
 
     await this.execute<CreateCommunityQuestionRequest>({
       requestFn: () =>
-        pathworks.neur3.devmunity.$post({
+        pathworks.community.$post({
           json: {
             title: result.data.title,
             body: result.data.body,
@@ -197,7 +197,7 @@ class CommunityApi extends BaseApiWithErrors {
     this.isCommenting = true;
     await this.execute<CreateCommentRequest>({
       requestFn: () =>
-        pathworks.neur3.devmunity[':id'].comment.$post({
+        pathworks.community[':id'].comment.$post({
           param: { id: String(questionId) },
           json: {
             body: result.data.body,
@@ -247,7 +247,7 @@ class CommunityApi extends BaseApiWithErrors {
   async upvotePost({ id, isQuestion }: { id: number | string; isQuestion: boolean }) {
     await this.execute<UpvotePostRequest>({
       requestFn: () =>
-        pathworks.neur3.devmunity[':id'].upvote.$post({
+        pathworks.community[':id'].upvote.$post({
           param: { id: id.toString() },
           json: { isQuestion }
         }),
@@ -297,7 +297,7 @@ class CommunityApi extends BaseApiWithErrors {
     this.isEditing = true;
     await this.execute<UpdateQuestionRequest>({
       requestFn: () =>
-        pathworks.neur3.devmunity[':id'].$put({
+        pathworks.community[':id'].$put({
           param: { id: String(questionId) },
           json: {
             title: result.data.title,
@@ -366,8 +366,8 @@ class CommunityApi extends BaseApiWithErrors {
    * @param questionId Question ID
    */
   async deleteQuestion(questionId: string) {
-    await this.execute<(typeof pathworks.neur3.devmunity)[':id']['$delete']>({
-      requestFn: () => pathworks.neur3.devmunity[':id'].$delete({ param: { id: questionId } }),
+    await this.execute<(typeof pathworks.community)[':id']['$delete']>({
+      requestFn: () => pathworks.community[':id'].$delete({ param: { id: questionId } }),
       logContext: 'deleting community question',
       onSuccess: () => {
         // Show success message
@@ -394,9 +394,9 @@ class CommunityApi extends BaseApiWithErrors {
    * @param commentId Comment ID
    */
   async deleteComment(commentId: string) {
-    await this.execute<(typeof pathworks.neur3.devmunity)[':id']['comment']['$delete']>({
+    await this.execute<(typeof pathworks.community)[':id']['comment']['$delete']>({
       requestFn: () =>
-        pathworks.neur3.devmunity[':id'].comment.$delete({
+        pathworks.community[':id'].comment.$delete({
           param: { id: commentId }
         }),
       logContext: 'deleting community comment',

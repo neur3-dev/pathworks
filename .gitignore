@@ -59,3 +59,7 @@ storybook-static
 company/
 # PathWorks generated audit reports
 audits/axe-*.json
+
+# macOS metadata
+.DS_Store
+._*

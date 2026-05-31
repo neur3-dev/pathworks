@@ -150,30 +150,6 @@ step so dependent packages' `dist/` outputs exist when downstream `tsc`
 runs. Alternative: use TS project references / `tsc -b` from the repo root
 so the build order is implicit.
 
-## CI-3: Community feature broken by `pathworks.neur3.devmunity` typo
-
-Surfaced while cleaning up stale `neur3.dev` references on 2026-05-31. The
-community module's RPC calls reference `pathworks.neur3.devmunity` instead of
-`pathworks.community`. This is the residue of an earlier sloppy `classroomio`
-→ `pathworks` rename that did `s|classroomio.com|pathworks.neur3.dev|g` and
-turned `classroomio.community` into `pathworks.neur3.devmunity`.
-
-**Affected files:**
-
-- `apps/dashboard/src/routes/(app)/org/[slug]/community/+page.server.ts` (1 ref)
-- `apps/dashboard/src/routes/(app)/org/[slug]/community/[cslug]/+page.server.ts` (1 ref)
-- `apps/dashboard/src/lib/features/community/utils/types.ts` (6 refs)
-- `apps/dashboard/src/lib/features/community/api/community.svelte.ts` (~14 refs)
-
-**Impact:** the entire community feature is broken — types don't resolve and
-runtime calls go to a nonexistent RPC path. This is one of the major drivers
-of CI-1's `Cannot find module` cascade.
-
-**Fix direction:** `sed -i 's|pathworks\.neur3\.devmunity|pathworks.community|g'`
-across the four files above, then verify the resulting `pathworks.community.*`
-RPC paths exist in the API schema. If the API never had a `community` endpoint
-group, the wiring needs to be either restored or removed from the dashboard.
-
 ## CI-2: Two real Svelte lint errors
 
 **Workflow:** `.github/workflows/pathworks-ci.yml` → `Format + PathWorks lint` job
