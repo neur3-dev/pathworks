@@ -10,7 +10,7 @@ overrides:
 
 patchedDependencies:
   layerchart@2.0.0-next.27:
-    hash: jvwsr5474wa2fkdqnemgt34aqi
+    hash: 51dabc4b4462058655e01199047915e5582cfd0492e97d6ecd0c244dc17e5a3a
     path: patches/layerchart@2.0.0-next.27.patch
 
 importers:
@@ -1043,7 +1043,7 @@ importers:
         version: 22.19.3
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.23(postcss@8.5.6)
+        version: 10.4.23(postcss@8.5.9)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1511,7 +1511,7 @@ importers:
         version: 3.5.1(svelte@5.46.0)(vue@3.5.26(typescript@5.9.3))
       layerchart:
         specifier: 2.0.0-next.27
-        version: 2.0.0-next.27(patch_hash=jvwsr5474wa2fkdqnemgt34aqi)(svelte@5.46.0)
+        version: 2.0.0-next.27(patch_hash=51dabc4b4462058655e01199047915e5582cfd0492e97d6ecd0c244dc17e5a3a)(svelte@5.46.0)
       mode-watcher:
         specifier: ^1.1.0
         version: 1.1.0(svelte@5.46.0)
@@ -3855,6 +3855,7 @@ packages:
 
   '@evilmartians/lefthook@1.13.6':
     resolution: {integrity: sha512-79vplrUBWL4Fkt59YkEBdSpqBVhNrY8t5+jEp+wX5QbsmbQLcSULqwS7FmbNRyECa2LWMrUWpe6ENIfNwB4jiw==}
+    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -21517,13 +21518,13 @@ snapshots:
 
   atob@2.1.2: {}
 
-  autoprefixer@10.4.23(postcss@8.5.6):
+  autoprefixer@10.4.23(postcss@8.5.9):
     dependencies:
       browserslist: 4.28.1
       caniuse-lite: 1.0.30001761
       fraction.js: 5.3.4
       picocolors: 1.1.1
-      postcss: 8.5.6
+      postcss: 8.5.9
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -24995,7 +24996,7 @@ snapshots:
 
   kysely@0.28.9: {}
 
-  layerchart@2.0.0-next.27(patch_hash=jvwsr5474wa2fkdqnemgt34aqi)(svelte@5.46.0):
+  layerchart@2.0.0-next.27(patch_hash=51dabc4b4462058655e01199047915e5582cfd0492e97d6ecd0c244dc17e5a3a)(svelte@5.46.0):
     dependencies:
       '@dagrejs/dagre': 1.1.8
       '@layerstack/svelte-actions': 1.0.1-next.12
@@ -26610,7 +26611,6 @@ snapshots:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
-    optional: true
 
   postgres-array@2.0.0: {}
 
