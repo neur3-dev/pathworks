@@ -181,6 +181,14 @@ class AppInitApi extends BaseApi {
     const isStudent = get(isOrgStudent);
     const userHasOrganizations = this.data.organizations.length > 0;
     const isCloud = env.PUBLIC_IS_SELFHOSTED !== 'true';
+    const isParticipant = get(profile).purchaserType === 'participant';
+
+    // Participants are seat-invited learners — they never own an org.
+    // Skip the org-creation onboarding and send them straight to the LMS.
+    if (isParticipant) {
+      if (!shouldRedirectOnAuth(page.url.pathname)) return;
+      return this.goToLMS();
+    }
 
     // CLOUD: when user has no orgs and isOrgSite is false, route to /onboarding
     // isOrgSite - means the user is on a multi tenant organization site, we don't want to redirect to /onboarding in this case
