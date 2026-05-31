@@ -57,6 +57,75 @@ Continue Phase 4 locally until production access is ready:
 
 ---
 
+# Provisioning Status (2026-05-31)
+
+Updated when the user asked to deploy to production. The 2026-05-26 blocker list
+above still applies. What changed since then:
+
+## Resolved
+
+- **Email provider** — Postmark transport landed (`packages/email/src/utils/services/postmark.ts`). Reuses the shared `noreply@neur3.com` server; only `POSTMARK_API_KEY` is required. The SMTP slots (`SMTP_HOST`/`SMTP_USER`/`SMTP_PASSWORD`/`SMTP_SENDER`) are no longer required if Postmark is used.
+
+## Still Blocking
+
+- **Hosting** — no Render (or equivalent) account / web services exist yet
+- **Managed Postgres** — no Neon project yet (`DATABASE_URL` empty)
+- **Managed Redis** — no Upstash instance yet (`REDIS_URL` empty)
+- **Object storage** — no Cloudflare R2 buckets or keys yet (`OBJECT_STORAGE_*` empty)
+- **DNS** — `pathworks.neur3.dev`, `api.pathworks.neur3.dev`, `media.pathworks.neur3.dev` not pointed
+- **Secrets** — `BETTER_AUTH_SECRET`, `PRIVATE_SERVER_KEY`, `AUTH_BEARER_TOKEN` not generated for prod
+
+## Provisioning Checklist (Do These Before Touching `docs/DEPLOY.md`)
+
+Recommended order. Each step is something the human must do — agents cannot create accounts or hold payment methods.
+
+1. **Postmark sender domain** (~10 min, free tier)
+   - Confirm `neur3.com` is verified in the existing Postmark account
+   - Create or reuse an API token; save as `POSTMARK_API_KEY`
+   - Set `POSTMARK_FROM='"PathWorks" <noreply@neur3.com>'`
+
+2. **Neon Postgres** (~10 min, https://console.neon.tech)
+   - Create project `pathworks-prod` (region close to Render region)
+   - Create `main` database; copy pooled URL → `DATABASE_URL`, direct URL → `PRIVATE_DATABASE_URL`
+   - Take a manual branch/snapshot before first migration
+
+3. **Upstash Redis** (~5 min, https://console.upstash.com)
+   - Create Redis database in same region as Neon
+   - Copy connection URL → `REDIS_URL`
+
+4. **Cloudflare R2** (~20 min, https://dash.cloudflare.com)
+   - Create three buckets: `pathworks-videos`, `pathworks-documents`, `pathworks-media`
+   - Generate an R2 API token with read/write on all three; copy keys → `OBJECT_STORAGE_ACCESS_KEY_ID` / `OBJECT_STORAGE_SECRET_ACCESS_KEY`
+   - On the `pathworks-media` bucket, enable a custom public domain `media.pathworks.neur3.dev`
+   - S3 endpoint → `OBJECT_STORAGE_ENDPOINT`; set `OBJECT_STORAGE_FORCE_PATH_STYLE=true`
+   - `OBJECT_STORAGE_MEDIA_PUBLIC_BASE_URL=https://media.pathworks.neur3.dev`
+
+5. **DNS** (~5 min, wherever `neur3.dev` is hosted)
+   - `pathworks.neur3.dev` → CNAME → Render dashboard service
+   - `api.pathworks.neur3.dev` → CNAME → Render API service
+   - `media.pathworks.neur3.dev` → CNAME → R2 custom-domain target
+
+6. **Generate prod secrets** (~1 min, local terminal)
+   ```bash
+   openssl rand -base64 48  # → BETTER_AUTH_SECRET
+   openssl rand -base64 48  # → PRIVATE_SERVER_KEY
+   openssl rand -base64 48  # → AUTH_BEARER_TOKEN
+   ```
+   Set `AUTH_COOKIE_DOMAIN=.pathworks.neur3.dev`, `PUBLIC_IS_SELFHOSTED=true`.
+
+7. **Render web services** (~20 min, https://dashboard.render.com)
+   - Create API service from `docker/Dockerfile.api`; paste all API env vars
+   - Create dashboard service from `docker/Dockerfile.dashboard` with build arg `PUBLIC_IS_SELFHOSTED=true`; paste all dashboard env vars
+   - Defer first auto-deploy until DNS and migrations are done
+
+8. **Run migrations once** (against Neon direct URL — see DEPLOY.md migration runbook)
+
+9. **Deploy API → smoke test → deploy dashboard → smoke test** (see DEPLOY.md smoke test list)
+
+Once steps 1–9 are done, `docs/DEPLOY.md` becomes executable instead of aspirational.
+
+---
+
 # CI Followups (filed 2026-05-31)
 
 Surfaced after admin-merging PR #4 (`codex/pathworks-marketing-rebrand` → `main`,
