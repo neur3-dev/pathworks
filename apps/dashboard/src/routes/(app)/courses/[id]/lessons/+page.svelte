@@ -7,6 +7,7 @@
   import { contentCreateStoreUtils, contentEditingStore } from '$features/course/components/content/store';
   import { courseApi } from '$features/course/api';
   import { profile } from '$lib/utils/store/user';
+  import Plus from '@lucide/svelte/icons/plus';
 
   let { data } = $props();
 
@@ -35,9 +36,13 @@
           <Button variant="outline" onclick={() => (reorder = !reorder)} disabled={!!$contentEditingStore}>
             {$t(`course.navItem.lessons.add_lesson.${reorder ? 'end_reorder' : 'start_reorder'}`)}
           </Button>
-          <Button onclick={addContent} disabled={!!$contentEditingStore}
-            >{$t('course.navItem.lessons.add_content')}</Button
-          >
+          <Button onclick={() => contentCreateStoreUtils.openLesson()} disabled={!!$contentEditingStore}>
+            <Plus class="size-4" />
+            New lesson
+          </Button>
+          <Button variant="outline" onclick={addContent} disabled={!!$contentEditingStore}>
+            {$t('course.navItem.lessons.add_content')}
+          </Button>
         </RoleBasedSecurity>
         <RefreshPageData onRefresh={() => courseApi.refreshCourse(data.courseId, $profile.id)} />
       </div>

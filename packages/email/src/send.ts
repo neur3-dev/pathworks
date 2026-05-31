@@ -4,6 +4,7 @@ import { ZDeliverEmail, type TDeliverEmail } from '@cio/utils/validation/mail';
 import { env } from './config/env';
 import { sendWithZoho } from './utils/services/zeptomail';
 import { sendWithNodemailer } from './utils/services/nodemailer';
+import { sendWithPostmark } from './utils/services/postmark';
 import type { EmailResponse, EmailId, EmailSchemaFor } from './utils/types';
 import type { DefineEmailConfig, EmailDefinition, EmailTemplate, SendConfig } from './core/types';
 import { EmailRegistry } from './core/registry';
@@ -66,7 +67,7 @@ export function defineEmail<TSchema extends z.ZodType>(config: DefineEmailConfig
  *   fields: {
  *     name: 'John Doe',
  *     email: 'user@example.com',
- *     link: 'https://app.classroomio.com/reset?token=abc123'
+ *     link: 'https://app.pathworks.com/reset?token=abc123'
  *   }
  * });
  * ```
@@ -127,7 +128,11 @@ export const deliverEmail = async (args: TDeliverEmail): Promise<EmailResponse[]
           from: emailItem.from ?? EMAIL_FROM
         };
 
-        const res = env.ZOHO_TOKEN ? await sendWithZoho(emailPayload) : await sendWithNodemailer(emailPayload);
+        const res = env.POSTMARK_API_KEY
+          ? await sendWithPostmark(emailPayload)
+          : env.ZOHO_TOKEN
+            ? await sendWithZoho(emailPayload)
+            : await sendWithNodemailer(emailPayload);
 
         console.log('Email status', res);
         return res;

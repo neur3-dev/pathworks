@@ -1,13 +1,7 @@
-<script>
-  import Facebook from '@lucide/svelte/icons/facebook';
-  import Youtube from '@lucide/svelte/icons/youtube';
-  import Twitter from '@lucide/svelte/icons/twitter';
-</script>
-
 <footer
   class="ui:border-border relative overflow-hidden border-t bg-[linear-gradient(to_top,#eef3fb_0%,#f8fafc_100%)] px-[5%] py-12 lg:px-[10%]"
 >
-  <!-- Minor cloud — top-left, smaller than the hero -->
+  <!-- Minor cloud, top-left, smaller than the hero -->
   <svg
     class="pointer-events-none absolute -top-4 left-3 z-[2] h-12 w-[160px] md:-top-5 md:left-4 md:h-16 md:w-[210px] lg:-top-6 lg:h-20 lg:w-[260px]"
     viewBox="0 0 240 110"
@@ -55,138 +49,116 @@
 
   <div class="relative z-10 flex flex-col gap-10 lg:flex-row lg:justify-between">
     <!-- Brand -->
-    <div class="flex flex-col gap-4 lg:max-w-[220px]">
-      <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="ClassroomIO logo" />
+    <div class="flex flex-col gap-4 lg:max-w-[260px]">
+      <img width="32" height="32" loading="lazy" src="/logo-192.png" alt="PathWorks logo" />
       <p class="ui:text-muted-foreground text-sm leading-6">
-        The Open Source LMS for compliance training and certification programs.
+        Work-readiness training that meets you where you are. For students, adults, and the counselors who support them.
       </p>
-      <div class="flex items-center gap-2">
-        <a
-          href="https://www.facebook.com/classroomiohq"
-          target="_blank"
-          aria-label="Facebook"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Facebook size={18} />
-        </a>
-        <a
-          href="https://twitter.com/classroomio"
-          target="_blank"
-          aria-label="Twitter"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Twitter size={18} />
-        </a>
-        <a
-          href="https://www.youtube.com/@ClassroomIO"
-          target="_blank"
-          aria-label="YouTube"
-          class="ui:text-muted-foreground ui:hover:text-foreground p-1 transition-colors"
-        >
-          <Youtube size={18} />
-        </a>
-      </div>
     </div>
 
     <!-- Nav columns -->
-    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+    <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-5">
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Who it's for</p>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href="/for-counselors"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Counselors &amp; Advisors</a
+            >
+          </li>
+          <li>
+            <a href="/for-parents" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Parents</a
+            >
+          </li>
+          <li>
+            <a
+              href="/for-participants"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">VR Participants</a
+            >
+          </li>
+          <li>
+            <a
+              href="/for-job-seekers"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Job Seekers</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Industries</p>
+        <ul class="space-y-3">
+          <li>
+            <a href="/industries" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >All sectors</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/it-and-ai"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">IT &amp; AI</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/advanced-manufacturing"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Manufacturing</a
+            >
+          </li>
+          <li>
+            <a
+              href="/industries/transportation-and-logistics"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Transportation</a
+            >
+          </li>
+        </ul>
+      </div>
+
       <div>
         <p class="ui:text-foreground mb-4 text-sm font-semibold">Product</p>
         <ul class="space-y-3">
-          <li>
-            <a href="/mcp-recipes" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >MCP Recipes</a
-            >
-          </li>
-          <li>
-            <a href="/automation" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >API & MCP</a
-            >
-          </li>
           <li>
             <a href="/pricing" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
               >Pricing</a
             >
           </li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Solutions</p>
-        <ul class="space-y-3">
           <li>
-            <a
-              href="/customer-education"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Customer Education</a
-            >
-          </li>
-          <li>
-            <a
-              href="/compliance-training"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Compliance Training</a
-            >
-          </li>
-          <li>
-            <a
-              href="/partner-training"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Partner Training</a
+            <a href="/demo" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Try a sample lesson</a
             >
           </li>
         </ul>
       </div>
 
       <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Resources</p>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Get Started</p>
         <ul class="space-y-3">
           <li>
             <a
-              href="/docs-vs-company-academy"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Docs vs Company Academy</a
+              href="https://pathworks.neur3.dev/login"
+              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Sign in</a
             >
           </li>
           <li>
-            <a href="/teach" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Teach with us</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://classroomio.com/docs/"
-              target="_blank"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Help Center</a
+            <a href="/signup" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
+              >Sign up</a
             >
           </li>
           <li>
             <a
-              href="https://classroomio.com/docs/quickstart/signup"
-              target="_blank"
-              class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Getting Started</a
-            >
-          </li>
-          <li>
-            <a href="/oss-friends" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >OSS Friends</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="ui:text-foreground mb-4 text-sm font-semibold">Company</p>
-        <ul class="space-y-3">
-          <li>
-            <a href="/roadmap" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
-              >Roadmap</a
-            >
-          </li>
-          <li>
-            <a
-              href="mailto:help@classroomio.com"
-              target="_blank"
+              href="mailto:hello@neur3.dev"
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Support</a
             >
           </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="ui:text-foreground mb-4 text-sm font-semibold">Legal</p>
+        <ul class="space-y-3">
           <li>
             <a href="/privacy" class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors"
               >Privacy Policy</a
@@ -205,6 +177,6 @@
   <div
     class="ui:border-border ui:text-muted-foreground relative z-10 mt-10 border-t pt-6 text-center text-xs lg:text-left"
   >
-    All rights reserved — ClassroomIO © {new Date().getFullYear()}
+    All rights reserved - PathWorks © {new Date().getFullYear()}
   </div>
 </footer>

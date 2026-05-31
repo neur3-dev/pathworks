@@ -8,9 +8,11 @@ import {
   integer,
   json,
   jsonb,
+  numeric,
   pgEnum,
   pgTable,
   pgView,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -68,6 +70,31 @@ export const organizationInviteEventType = pgEnum('ORGANIZATION_INVITE_EVENT_TYP
   'EMAIL_FAILED',
   'ABUSE_BLOCKED'
 ]);
+export const vrDisabilityCategory = pgEnum('VR_DISABILITY_CATEGORY', [
+  'physical',
+  'sensory_visual',
+  'sensory_hearing',
+  'cognitive',
+  'psychiatric',
+  'tbi',
+  'substance_use',
+  'other'
+]);
+export const preEtsDomain = pgEnum('PRE_ETS_DOMAIN', [
+  'job_exploration',
+  'work_based_learning',
+  'postsecondary_counseling',
+  'workplace_readiness',
+  'self_advocacy',
+  'mixed'
+]);
+export const participantProgressStatus = pgEnum('PARTICIPANT_PROGRESS_STATUS', [
+  'not_started',
+  'in_progress',
+  'completed'
+]);
+export const purchaserType = pgEnum('PURCHASER_TYPE', ['parent', 'adult', 'counselor', 'advisor', 'participant']);
+export const seatStatus = pgEnum('SEAT_STATUS', ['pending', 'active', 'cancelled', 'expired']);
 
 export const user = pgTable('user', {
   id: uuid()
@@ -87,7 +114,12 @@ export const user = pgTable('user', {
   banned: boolean('banned').default(false),
   banReason: text('ban_reason'),
   banExpires: timestamp('ban_expires'),
-  isAnonymous: boolean('is_anonymous')
+  isAnonymous: boolean('is_anonymous'),
+  purchaserType: purchaserType('purchaser_type'),
+  parentUserId: uuid('parent_user_id').references((): any => user.id, { onDelete: 'set null' }),
+  counselorUserId: uuid('counselor_user_id').references((): any => user.id, { onDelete: 'set null' }),
+  agencyName: text('agency_name'),
+  birthYear: integer('birth_year')
 });
 
 export const ssoProvider = pgTable('sso_provider', {
@@ -969,6 +1001,7 @@ export const lesson = pgTable(
     teacherId: uuid('teacher_id'),
     isComplete: boolean('is_complete').default(false),
     callUrl: text('call_url'),
+    contentWarning: text('content_warning'),
     // You can use { mode: "bigint" } if numbers are exceeding js number limitations
     order: bigint({ mode: 'number' }),
     isUnlocked: boolean('is_unlocked').default(false),
@@ -1019,6 +1052,121 @@ export const lesson = pgTable(
       name: 'lesson_teacher_id_fkey'
     }),
     index('idx_lesson_course_slug').on(table.courseId, table.slug)
+  ]
+);
+
+export const vrParticipant = pgTable(
+  'vr_participants',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    disabilityCategory: vrDisabilityCategory('disability_category'),
+    prefExtendedTime: boolean('pref_extended_time').default(true).notNull(),
+    prefNoAutoplay: boolean('pref_no_autoplay').default(true).notNull(),
+    prefContentWarnings: boolean('pref_content_warnings').default(true).notNull(),
+    prefMicrolearning: boolean('pref_microlearning').default(true).notNull(),
+    ipeVocationalGoal: text('ipe_vocational_goal'),
+    counselorName: text('counselor_name'),
+    counselorEmail: text('counselor_email'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [unique('vr_participants_user_id_unique').on(table.userId)]
+);
+
+export const learningPath = pgTable(
+  'learning_paths',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organization.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    description: text('description'),
+    preEtsDomain: preEtsDomain('pre_ets_domain'),
+    estimatedHours: numeric('estimated_hours', { precision: 5, scale: 1 }),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    index('idx_learning_paths_org_id').on(table.orgId),
+    index('idx_learning_paths_pre_ets_domain').on(table.preEtsDomain)
+  ]
+);
+
+export const learningPathCourse = pgTable(
+  'learning_path_courses',
+  {
+    pathId: uuid('path_id')
+      .notNull()
+      .references(() => learningPath.id, { onDelete: 'cascade' }),
+    courseId: uuid('course_id')
+      .notNull()
+      .references(() => course.id, { onDelete: 'cascade' }),
+    position: integer('position').notNull()
+  },
+  (table) => [
+    primaryKey({ columns: [table.pathId, table.courseId], name: 'learning_path_courses_pkey' }),
+    unique('learning_path_courses_path_position_unique').on(table.pathId, table.position),
+    index('idx_learning_path_courses_course_id').on(table.courseId)
+  ]
+);
+
+export const pathworksCounselorNote = pgTable(
+  'pathworks_counselor_notes',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    participantUserId: uuid('participant_user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    counselorEmail: text('counselor_email').notNull(),
+    note: text('note').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    index('idx_pathworks_counselor_notes_participant').on(table.participantUserId),
+    index('idx_pathworks_counselor_notes_counselor').on(table.counselorEmail),
+    index('idx_pathworks_counselor_notes_created_at').on(table.createdAt)
+  ]
+);
+
+export const participantProgress = pgTable(
+  'participant_progress',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    courseId: uuid('course_id')
+      .notNull()
+      .references(() => course.id, { onDelete: 'cascade' }),
+    lessonId: uuid('lesson_id').references(() => lesson.id, { onDelete: 'set null' }),
+    status: participantProgressStatus('status').default('not_started').notNull(),
+    lastPosition: integer('last_position').default(0).notNull(),
+    score: numeric('score', { precision: 5, scale: 2 }),
+    attempts: integer('attempts').default(0).notNull(),
+    completedAt: timestamp('completed_at', { withTimezone: true, mode: 'string' }),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    index('idx_participant_progress_user_id').on(table.userId),
+    index('idx_participant_progress_course_id').on(table.courseId),
+    index('idx_participant_progress_lesson_id').on(table.lessonId),
+    index('idx_participant_progress_status').on(table.status)
   ]
 );
 
@@ -3458,5 +3606,37 @@ export const deadLetterJob = pgTable(
   (table) => [
     index('idx_dead_letter_job_domain_created').on(table.domain, table.createdAt),
     index('idx_dead_letter_job_org_created').on(table.organizationId, table.createdAt)
+  ]
+);
+
+export const seat = pgTable(
+  'seat',
+  {
+    id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .primaryKey()
+      .notNull(),
+    buyerUserId: uuid('buyer_user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'restrict' }),
+    participantUserId: uuid('participant_user_id').references(() => user.id, { onDelete: 'set null' }),
+    participantEmail: text('participant_email').notNull(),
+    participantName: text('participant_name'),
+    status: seatStatus('status').default('pending').notNull(),
+    inviteToken: text('invite_token').notNull(),
+    inviteExpiresAt: timestamp('invite_expires_at', { withTimezone: true, mode: 'string' }).notNull(),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true, mode: 'string' }),
+    polarSubscriptionId: text('polar_subscription_id'),
+    polarProductId: text('polar_product_id'),
+    planName: text('plan_name'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow().notNull()
+  },
+  (table) => [
+    unique('seat_invite_token_unique').on(table.inviteToken),
+    index('idx_seat_buyer_user_id').on(table.buyerUserId),
+    index('idx_seat_participant_user_id').on(table.participantUserId),
+    index('idx_seat_status').on(table.status),
+    index('idx_seat_polar_subscription_id').on(table.polarSubscriptionId)
   ]
 );

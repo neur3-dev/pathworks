@@ -1,68 +1,68 @@
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 
 // List lessons types
-export type ListLessonsRequest = (typeof classroomio.course)[':courseId']['lesson']['$get'];
+export type ListLessonsRequest = (typeof pathworks.course)[':courseId']['lesson']['$get'];
 export type ListLessonsResponse = InferResponseType<ListLessonsRequest> | null;
 export type ListLessonsSuccess = Extract<InferResponseType<ListLessonsRequest>, { success: true }>;
 export type ListLessons = ListLessonsSuccess['data'];
 
 // Get lesson types
-export type GetLessonRequest = (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['$get'];
+export type GetLessonRequest = (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['$get'];
 export type GetLessonResponse = InferResponseType<GetLessonRequest> | null;
 export type GetLessonSuccess = Extract<InferResponseType<GetLessonRequest>, { success: true }>;
 export type Lesson = GetLessonSuccess['data'];
 
 // Create lesson types
-export type CreateLessonRequest = (typeof classroomio.course)[':courseId']['lesson']['$post'];
+export type CreateLessonRequest = (typeof pathworks.course)[':courseId']['lesson']['$post'];
 export type CreateLessonResponse = InferResponseType<CreateLessonRequest>;
 export type CreateLessonSuccess = Extract<CreateLessonResponse, { success: true }>;
 export type CreateLessonData = CreateLessonSuccess['data'];
 
 // Update lesson types
-export type UpdateLessonRequest = (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['$put'];
+export type UpdateLessonRequest = (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['$put'];
 export type UpdateLessonResponse = InferResponseType<UpdateLessonRequest>;
 export type UpdateLessonSuccess = Extract<UpdateLessonResponse, { success: true }>;
 export type UpdateLessonData = UpdateLessonSuccess['data'];
 
 // Delete lesson types
-export type DeleteLessonRequest = (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['$delete'];
+export type DeleteLessonRequest = (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['$delete'];
 export type DeleteLessonResponse = InferResponseType<DeleteLessonRequest>;
 export type DeleteLessonSuccess = Extract<DeleteLessonResponse, { success: true }>;
 export type DeleteLessonData = DeleteLessonSuccess['data'];
 
 // Create course section types
-export type CreateCourseSectionRequest = (typeof classroomio.course)[':courseId']['section']['$post'];
+export type CreateCourseSectionRequest = (typeof pathworks.course)[':courseId']['section']['$post'];
 export type CreateCourseSectionResponse = InferResponseType<CreateCourseSectionRequest>;
 export type CreateCourseSectionSuccess = Extract<CreateCourseSectionResponse, { success: true }>;
 export type CreateCourseSectionData = CreateCourseSectionSuccess['data'];
 
 // Update course section types
-export type UpdateCourseSectionRequest = (typeof classroomio.course)[':courseId']['section'][':sectionId']['$put'];
+export type UpdateCourseSectionRequest = (typeof pathworks.course)[':courseId']['section'][':sectionId']['$put'];
 export type UpdateCourseSectionResponse = InferResponseType<UpdateCourseSectionRequest>;
 export type UpdateCourseSectionSuccess = Extract<UpdateCourseSectionResponse, { success: true }>;
 export type UpdateCourseSectionData = UpdateCourseSectionSuccess['data'];
 
 // Delete course section types
-export type DeleteCourseSectionRequest = (typeof classroomio.course)[':courseId']['section'][':sectionId']['$delete'];
+export type DeleteCourseSectionRequest = (typeof pathworks.course)[':courseId']['section'][':sectionId']['$delete'];
 export type DeleteCourseSectionResponse = InferResponseType<DeleteCourseSectionRequest>;
 export type DeleteCourseSectionSuccess = Extract<DeleteCourseSectionResponse, { success: true }>;
 export type DeleteCourseSectionData = DeleteCourseSectionSuccess['data'];
 
 // Reorder course sections types
-export type ReorderCourseSectionsRequest = (typeof classroomio.course)[':courseId']['section']['reorder']['$post'];
+export type ReorderCourseSectionsRequest = (typeof pathworks.course)[':courseId']['section']['reorder']['$post'];
 export type ReorderCourseSectionsResponse = InferResponseType<ReorderCourseSectionsRequest>;
 export type ReorderCourseSectionsSuccess = Extract<ReorderCourseSectionsResponse, { success: true }>;
 export type ReorderCourseSectionsData = ReorderCourseSectionsSuccess['data'];
 
 // Promote ungrouped section types
 export type PromoteUngroupedSectionRequest =
-  (typeof classroomio.course)[':courseId']['section']['promote-ungrouped']['$post'];
+  (typeof pathworks.course)[':courseId']['section']['promote-ungrouped']['$post'];
 export type PromoteUngroupedSectionResponse = InferResponseType<PromoteUngroupedSectionRequest>;
 export type PromoteUngroupedSectionSuccess = Extract<PromoteUngroupedSectionResponse, { success: true }>;
 export type PromoteUngroupedSectionData = PromoteUngroupedSectionSuccess['data'];
 
 // Reorder lessons types
-export type ReorderLessonsRequest = (typeof classroomio.course)[':courseId']['lesson']['reorder']['$post'];
+export type ReorderLessonsRequest = (typeof pathworks.course)[':courseId']['lesson']['reorder']['$post'];
 export type ReorderLessonsResponse = InferResponseType<ReorderLessonsRequest>;
 export type ReorderLessonsSuccess = Extract<ReorderLessonsResponse, { success: true }>;
 export type ReorderLessonsData = ReorderLessonsSuccess['data'];
@@ -78,8 +78,7 @@ export interface CourseSectionWithLessons extends CourseSection {
 }
 
 // Get lesson comments types
-export type GetLessonCommentsRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['comment']['$get'];
+export type GetLessonCommentsRequest = (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['comment']['$get'];
 export type GetLessonCommentsResponse = InferResponseType<GetLessonCommentsRequest> | null;
 export type GetLessonCommentsSuccess = Extract<InferResponseType<GetLessonCommentsRequest>, { success: true }>;
 export type LessonCommentsData = GetLessonCommentsSuccess['data'];
@@ -87,61 +86,60 @@ export type LessonComments = LessonCommentsData['items'];
 
 // Create lesson comment types
 export type CreateLessonCommentRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['comment']['$post'];
+  (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['comment']['$post'];
 export type CreateLessonCommentResponse = InferResponseType<CreateLessonCommentRequest>;
 export type CreateLessonCommentSuccess = Extract<CreateLessonCommentResponse, { success: true }>;
 export type CreateLessonComment = CreateLessonCommentSuccess['data'];
 
 // Delete lesson comment types
 export type DeleteLessonCommentRequest =
-  (typeof classroomio.course)[':courseId']['lesson']['comment'][':commentId']['$delete'];
+  (typeof pathworks.course)[':courseId']['lesson']['comment'][':commentId']['$delete'];
 export type DeleteLessonCommentResponse = InferResponseType<DeleteLessonCommentRequest>;
 export type DeleteLessonCommentSuccess = Extract<DeleteLessonCommentResponse, { success: true }>;
 export type DeleteLessonCommentData = DeleteLessonCommentSuccess['data'];
 
 // Update lesson comment types
 export type UpdateLessonCommentRequest =
-  (typeof classroomio.course)[':courseId']['lesson']['comment'][':commentId']['$put'];
+  (typeof pathworks.course)[':courseId']['lesson']['comment'][':commentId']['$put'];
 export type UpdateLessonCommentResponse = InferResponseType<UpdateLessonCommentRequest>;
 export type UpdateLessonCommentSuccess = Extract<UpdateLessonCommentResponse, { success: true }>;
 export type UpdateLessonCommentData = UpdateLessonCommentSuccess['data'];
 
 // Payment request types
-export type CreatePaymentRequestRequest = (typeof classroomio.course)[':courseId']['payment-request']['$post'];
+export type CreatePaymentRequestRequest = (typeof pathworks.course)[':courseId']['payment-request']['$post'];
 export type CreatePaymentRequestResponse = InferResponseType<CreatePaymentRequestRequest>;
 export type CreatePaymentRequestSuccess = Extract<CreatePaymentRequestResponse, { success: true }>;
 export type PaymentRequestData = CreatePaymentRequestSuccess['data'];
 
 // Get lesson completion types
 export type GetLessonCompletionRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['completion']['$get'];
+  (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['completion']['$get'];
 export type GetLessonCompletionResponse = InferResponseType<GetLessonCompletionRequest> | null;
 export type GetLessonCompletionSuccess = Extract<InferResponseType<GetLessonCompletionRequest>, { success: true }>;
 export type LessonCompletion = GetLessonCompletionSuccess['data'];
 
 // Update lesson completion types
 export type UpdateLessonCompletionRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['completion']['$put'];
+  (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['completion']['$put'];
 export type UpdateLessonCompletionResponse = InferResponseType<UpdateLessonCompletionRequest>;
 export type UpdateLessonCompletionSuccess = Extract<UpdateLessonCompletionResponse, { success: true }>;
 export type UpdateLessonCompletionData = UpdateLessonCompletionSuccess['data'];
 
 // Get lesson history types
-export type GetLessonHistoryRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['history']['$get'];
+export type GetLessonHistoryRequest = (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['history']['$get'];
 export type GetLessonHistoryResponse = InferResponseType<GetLessonHistoryRequest> | null;
 export type GetLessonHistorySuccess = Extract<InferResponseType<GetLessonHistoryRequest>, { success: true }>;
 export type LessonHistory = GetLessonHistorySuccess['data'];
 
 // Lesson language types
 export type GetLessonLanguageRequest =
-  (typeof classroomio.course)[':courseId']['lesson'][':lessonId']['language']['$get'];
+  (typeof pathworks.course)[':courseId']['lesson'][':lessonId']['language']['$get'];
 export type GetLessonLanguageResponse = InferResponseType<GetLessonLanguageRequest> | null;
 export type GetLessonLanguageSuccess = Extract<InferResponseType<GetLessonLanguageRequest>, { success: true }>;
 export type LessonLanguage = GetLessonLanguageSuccess['data'];
 
 // Exercise types
-export type GetExerciseRequest = (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['$get'];
+export type GetExerciseRequest = (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['$get'];
 export type GetExerciseResponse = InferResponseType<GetExerciseRequest> | null;
 export type GetExerciseSuccess = Extract<InferResponseType<GetExerciseRequest>, { success: true }>;
 
@@ -159,47 +157,47 @@ export type Exercise = Omit<ApiExercise, 'courseId' | 'sectionId' | 'order'>;
 //   questions?: Exercise['questions'];
 // };
 
-export type CreateExerciseRequest = (typeof classroomio.course)[':courseId']['exercise']['$post'];
+export type CreateExerciseRequest = (typeof pathworks.course)[':courseId']['exercise']['$post'];
 export type CreateExerciseFromTemplateRequest =
-  (typeof classroomio.course)[':courseId']['exercise']['from-template']['$post'];
+  (typeof pathworks.course)[':courseId']['exercise']['from-template']['$post'];
 export type CreateExerciseFromTemplateResponse = InferResponseType<CreateExerciseFromTemplateRequest>;
 export type CreateExerciseFromTemplateSuccess = Extract<CreateExerciseFromTemplateResponse, { success: true }>;
 export type CreateExerciseFromTemplateData = CreateExerciseFromTemplateSuccess['data'];
 
-export type UpdateExerciseRequest = (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['$put'];
-export type DeleteExerciseRequest = (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['$delete'];
+export type UpdateExerciseRequest = (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['$put'];
+export type DeleteExerciseRequest = (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['$delete'];
 export type SubmitExerciseRequest =
-  (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['submission']['$post'];
+  (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['submission']['$post'];
 
 // Newsfeed types
-export type ListNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed']['$get'];
+export type ListNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed']['$get'];
 export type ListNewsfeedResponse = InferResponseType<ListNewsfeedRequest> | null;
 export type ListNewsfeedSuccess = Extract<InferResponseType<ListNewsfeedRequest>, { success: true }>;
 export type ListNewsfeedPaginated = ListNewsfeedSuccess['data'];
 export type ListNewsfeed = ListNewsfeedPaginated['items'];
 
-export type GetNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['$get'];
-export type CreateNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed']['$post'];
-export type UpdateNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['$put'];
+export type GetNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['$get'];
+export type CreateNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed']['$post'];
+export type UpdateNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['$put'];
 
-export type ReactToNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['react']['$put'];
+export type ReactToNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['react']['$put'];
 export type ReactToNewsfeedResponse = InferResponseType<ReactToNewsfeedRequest>;
 export type ReactToNewsfeedSuccess = Extract<ReactToNewsfeedResponse, { success: true }>;
 export type ReactToNewsfeed = ReactToNewsfeedSuccess['data'];
 
-export type DeleteNewsfeedRequest = (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['$delete'];
+export type DeleteNewsfeedRequest = (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['$delete'];
 export type GetNewsfeedCommentsRequest =
-  (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['comments']['$get'];
+  (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['comments']['$get'];
 export type GetNewsfeedCommentsResponse = InferResponseType<GetNewsfeedCommentsRequest> | null;
 export type GetNewsfeedCommentsSuccess = Extract<InferResponseType<GetNewsfeedCommentsRequest>, { success: true }>;
 export type NewsfeedCommentsResponse = GetNewsfeedCommentsSuccess['data'];
 
 export type CreateNewsfeedCommentRequest =
-  (typeof classroomio.course)[':courseId']['newsfeed'][':feedId']['comment']['$post'];
+  (typeof pathworks.course)[':courseId']['newsfeed'][':feedId']['comment']['$post'];
 export type UpdateNewsfeedCommentRequest =
-  (typeof classroomio.course)[':courseId']['newsfeed']['comment'][':commentId']['$put'];
+  (typeof pathworks.course)[':courseId']['newsfeed']['comment'][':commentId']['$put'];
 export type DeleteNewsfeedCommentRequest =
-  (typeof classroomio.course)[':courseId']['newsfeed']['comment'][':commentId']['$delete'];
+  (typeof pathworks.course)[':courseId']['newsfeed']['comment'][':commentId']['$delete'];
 
 // Get single newsfeed response types (includes full structure with author)
 export type GetNewsfeedResponse = InferResponseType<GetNewsfeedRequest> | null;
@@ -214,17 +212,17 @@ export type Reaction = NonNullable<Feed['reaction']>;
 
 // Attendance types
 // Note: Only POST (upsert) route exists, no GET or PUT routes
-export type UpsertAttendanceRequest = (typeof classroomio.course)[':courseId']['attendance']['$post'];
+export type UpsertAttendanceRequest = (typeof pathworks.course)[':courseId']['attendance']['$post'];
 
 // Mark types
-export type GetMarksRequest = (typeof classroomio.course)[':courseId']['mark']['$get'];
+export type GetMarksRequest = (typeof pathworks.course)[':courseId']['mark']['$get'];
 export type GetMarksResponse = InferResponseType<GetMarksRequest> | null;
 export type GetMarksSuccess = Extract<InferResponseType<GetMarksRequest>, { success: true }>;
 export type Marks = GetMarksSuccess['data'];
 
 // Submission types — from exercise submissions (mySubmission/allSubmissions)
 export type ListExerciseSubmissionsRequest =
-  (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['submissions']['$get'];
+  (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['submissions']['$get'];
 export type ListExerciseSubmissionsSuccess = Extract<
   InferResponseType<ListExerciseSubmissionsRequest>,
   { success: true }
@@ -236,7 +234,7 @@ export type SubmissionListItem = ExerciseSubmissionsData['allSubmissions'][numbe
 
 // List submissions for grading types
 export type ListSubmissionsForGradingRequest =
-  (typeof classroomio.course)[':courseId']['submission']['for-grading']['$get'];
+  (typeof pathworks.course)[':courseId']['submission']['for-grading']['$get'];
 export type ListSubmissionsForGradingResponse = InferResponseType<ListSubmissionsForGradingRequest> | null;
 export type ListSubmissionsForGradingSuccess = Extract<
   InferResponseType<ListSubmissionsForGradingRequest>,
@@ -249,18 +247,17 @@ export type SubmissionSection = SubmissionsForGradingData['sections'][number];
 export type SubmissionItem = SubmissionSection['items'][number];
 export type SubmissionIdData = SubmissionsForGradingData['submissionIdData'][string];
 
-export type UpdateSubmissionRequest = (typeof classroomio.course)[':courseId']['submission'][':submissionId']['$put'];
-export type DeleteSubmissionRequest =
-  (typeof classroomio.course)[':courseId']['submission'][':submissionId']['$delete'];
+export type UpdateSubmissionRequest = (typeof pathworks.course)[':courseId']['submission'][':submissionId']['$put'];
+export type DeleteSubmissionRequest = (typeof pathworks.course)[':courseId']['submission'][':submissionId']['$delete'];
 export type UpdateSubmissionAnswerRequest =
-  (typeof classroomio.course)[':courseId']['submission'][':submissionId']['answer']['$put'];
+  (typeof pathworks.course)[':courseId']['submission'][':submissionId']['answer']['$put'];
 export type UpdateSubmissionGradesRequest =
-  (typeof classroomio.course)[':courseId']['submission'][':submissionId']['grades']['$put'];
+  (typeof pathworks.course)[':courseId']['submission'][':submissionId']['grades']['$put'];
 
 // Course types
-export type CreateCourseRequest = typeof classroomio.course.$post;
-export type GetCourseRequest = (typeof classroomio.course)[':courseId']['$get'];
-export type GetCourseBySlugRequest = (typeof classroomio.course)['slug'][':slug']['$get'];
+export type CreateCourseRequest = typeof pathworks.course.$post;
+export type GetCourseRequest = (typeof pathworks.course)[':courseId']['$get'];
+export type GetCourseBySlugRequest = (typeof pathworks.course)['slug'][':slug']['$get'];
 export type GetCourseBySlugSuccess = Extract<InferResponseType<GetCourseBySlugRequest>, { success: true }>;
 export type GetCourseBySlugData = GetCourseBySlugSuccess['data'];
 
@@ -276,20 +273,20 @@ export type CourseSlugPayloadOrg = {
 export type CourseBySlugWithOrg = GetCourseBySlugData & {
   org?: CourseSlugPayloadOrg | null;
 };
-export type UpdateCourseRequest = (typeof classroomio.course)[':courseId']['$put'];
-export type DeleteCourseRequest = (typeof classroomio.course)[':courseId']['$delete'];
-export type UpdateCourseContentRequest = (typeof classroomio.course)[':courseId']['content']['$put'];
-export type DeleteCourseContentRequest = (typeof classroomio.course)[':courseId']['content']['$delete'];
-export type GetCourseProgressRequest = (typeof classroomio.course)[':courseId']['progress']['$get'];
+export type UpdateCourseRequest = (typeof pathworks.course)[':courseId']['$put'];
+export type DeleteCourseRequest = (typeof pathworks.course)[':courseId']['$delete'];
+export type UpdateCourseContentRequest = (typeof pathworks.course)[':courseId']['content']['$put'];
+export type DeleteCourseContentRequest = (typeof pathworks.course)[':courseId']['content']['$delete'];
+export type GetCourseProgressRequest = (typeof pathworks.course)[':courseId']['progress']['$get'];
 export type GetCertificationEvaluationRequest =
-  (typeof classroomio.course)[':courseId']['certification-evaluation']['$get'];
+  (typeof pathworks.course)[':courseId']['certification-evaluation']['$get'];
 export type GetCertificationEvaluationSuccess = Extract<
   InferResponseType<GetCertificationEvaluationRequest>,
   { success: true }
 >;
 export type CertificationEvaluationData = GetCertificationEvaluationSuccess['data'];
-export type CloneCourseRequest = (typeof classroomio.course)[':courseId']['clone']['$post'];
-export type EnrollCourseRequest = (typeof classroomio.course)[':courseId']['enroll']['$post'];
+export type CloneCourseRequest = (typeof pathworks.course)[':courseId']['clone']['$post'];
+export type EnrollCourseRequest = (typeof pathworks.course)[':courseId']['enroll']['$post'];
 
 // Course response types
 export type GetCourseResponse = InferResponseType<GetCourseRequest> | null;
@@ -335,84 +332,84 @@ export type GetCourseProgressSuccess = Extract<InferResponseType<GetCourseProgre
 export type CourseProgress = GetCourseProgressSuccess['data'];
 
 // Course Members types
-export type ListPeopleRequest = (typeof classroomio.course)[':courseId']['members']['$get'];
+export type ListPeopleRequest = (typeof pathworks.course)[':courseId']['members']['$get'];
 export type ListPeopleResponse = InferResponseType<ListPeopleRequest> | null;
 export type ListPeopleSuccess = Extract<InferResponseType<ListPeopleRequest>, { success: true }>;
 export type CourseMembers = ListPeopleSuccess['data'];
 export type CourseMember = CourseMembers[number];
 
-export type AddPeopleRequest = (typeof classroomio.course)[':courseId']['members']['$post'];
+export type AddPeopleRequest = (typeof pathworks.course)[':courseId']['members']['$post'];
 export type AddPeopleResponse = InferResponseType<AddPeopleRequest>;
 export type AddPeopleSuccess = Extract<AddPeopleResponse, { success: true }>;
 export type AddPeopleData = AddPeopleSuccess['data'];
 
-export type CreateStudentInviteRequest = (typeof classroomio.course)[':courseId']['invites']['$post'];
+export type CreateStudentInviteRequest = (typeof pathworks.course)[':courseId']['invites']['$post'];
 export type CreateStudentInviteResponse = InferResponseType<CreateStudentInviteRequest>;
 export type CreateStudentInviteSuccess = Extract<CreateStudentInviteResponse, { success: true }>;
 export type CreateStudentInviteData = CreateStudentInviteSuccess['data'];
 
-export type ListStudentInvitesRequest = (typeof classroomio.course)[':courseId']['invites']['$get'];
+export type ListStudentInvitesRequest = (typeof pathworks.course)[':courseId']['invites']['$get'];
 export type ListStudentInvitesResponse = InferResponseType<ListStudentInvitesRequest>;
 export type ListStudentInvitesSuccess = Extract<ListStudentInvitesResponse, { success: true }>;
 export type ListStudentInvitesData = ListStudentInvitesSuccess['data'];
 export type StudentInviteListItem = ListStudentInvitesData[number];
 
 export type RevokeStudentInviteRequest =
-  (typeof classroomio.course)[':courseId']['invites'][':inviteId']['revoke']['$post'];
+  (typeof pathworks.course)[':courseId']['invites'][':inviteId']['revoke']['$post'];
 export type RevokeStudentInviteResponse = InferResponseType<RevokeStudentInviteRequest>;
 export type RevokeStudentInviteSuccess = Extract<RevokeStudentInviteResponse, { success: true }>;
 export type RevokeStudentInviteData = RevokeStudentInviteSuccess['data'];
 
 export type GetStudentInviteAuditRequest =
-  (typeof classroomio.course)[':courseId']['invites'][':inviteId']['audit']['$get'];
+  (typeof pathworks.course)[':courseId']['invites'][':inviteId']['audit']['$get'];
 export type GetStudentInviteAuditResponse = InferResponseType<GetStudentInviteAuditRequest>;
 export type GetStudentInviteAuditSuccess = Extract<GetStudentInviteAuditResponse, { success: true }>;
 export type StudentInviteAuditData = GetStudentInviteAuditSuccess['data'];
 export type StudentInviteAuditItem = StudentInviteAuditData[number];
 
-export type UpdatePeopleRequest = (typeof classroomio.course)[':courseId']['members'][':memberId']['$put'];
+export type UpdatePeopleRequest = (typeof pathworks.course)[':courseId']['members'][':memberId']['$put'];
 export type UpdatePeopleResponse = InferResponseType<UpdatePeopleRequest>;
 export type UpdatePeopleSuccess = Extract<UpdatePeopleResponse, { success: true }>;
 export type UpdatePeopleData = UpdatePeopleSuccess['data'];
 
-export type DeletePeopleRequest = (typeof classroomio.course)[':courseId']['members'][':memberId']['$delete'];
+export type DeletePeopleRequest = (typeof pathworks.course)[':courseId']['members'][':memberId']['$delete'];
 export type DeletePeopleResponse = InferResponseType<DeletePeopleRequest>;
 export type DeletePeopleSuccess = Extract<DeletePeopleResponse, { success: true }>;
 export type DeletePeopleData = DeletePeopleSuccess['data'];
 
 export type GetUserCourseAnalyticsRequest =
-  (typeof classroomio.course)[':courseId']['members'][':userId']['analytics']['$get'];
+  (typeof pathworks.course)[':courseId']['members'][':userId']['analytics']['$get'];
 export type GetUserCourseAnalyticsResponse = InferResponseType<GetUserCourseAnalyticsRequest>;
 export type GetUserCourseAnalyticsSuccess = Extract<GetUserCourseAnalyticsResponse, { success: true }>;
 export type UserCourseAnalytics = GetUserCourseAnalyticsSuccess['data'];
 
-export type GetCourseAnalyticsRequest = (typeof classroomio.course)[':courseId']['analytics']['$get'];
+export type GetCourseAnalyticsRequest = (typeof pathworks.course)[':courseId']['analytics']['$get'];
 export type GetCourseAnalyticsResponse = InferResponseType<GetCourseAnalyticsRequest>;
 export type GetCourseAnalyticsSuccess = Extract<GetCourseAnalyticsResponse, { success: true }>;
 export type CourseAnalytics = GetCourseAnalyticsSuccess['data'];
 
-export type GetCourseComplianceOverviewRequest = (typeof classroomio.course)[':courseId']['compliance']['$get'];
+export type GetCourseComplianceOverviewRequest = (typeof pathworks.course)[':courseId']['compliance']['$get'];
 export type GetCourseComplianceOverviewResponse = InferResponseType<GetCourseComplianceOverviewRequest>;
 export type GetCourseComplianceOverviewSuccess = Extract<GetCourseComplianceOverviewResponse, { success: true }>;
 export type CourseComplianceOverview = GetCourseComplianceOverviewSuccess['data'];
 export type CourseComplianceLearner = CourseComplianceOverview['learners'][number];
 
 export type GetLearnerComplianceHistoryRequest =
-  (typeof classroomio.course)[':courseId']['compliance']['learners'][':profileId']['$get'];
+  (typeof pathworks.course)[':courseId']['compliance']['learners'][':profileId']['$get'];
 export type GetLearnerComplianceHistoryResponse = InferResponseType<GetLearnerComplianceHistoryRequest>;
 export type GetLearnerComplianceHistorySuccess = Extract<GetLearnerComplianceHistoryResponse, { success: true }>;
 export type LearnerComplianceHistory = GetLearnerComplianceHistorySuccess['data'];
 export type LearnerComplianceRecord = LearnerComplianceHistory['history'][number];
 
-export type ResetCourseComplianceRequest = (typeof classroomio.course)[':courseId']['compliance']['reset']['$post'];
+export type ResetCourseComplianceRequest = (typeof pathworks.course)[':courseId']['compliance']['reset']['$post'];
 export type ResetCourseComplianceResponse = InferResponseType<ResetCourseComplianceRequest>;
 export type ResetCourseComplianceSuccess = Extract<ResetCourseComplianceResponse, { success: true }>;
 
-export type ExtendCourseComplianceRequest = (typeof classroomio.course)[':courseId']['compliance']['extend']['$post'];
+export type ExtendCourseComplianceRequest = (typeof pathworks.course)[':courseId']['compliance']['extend']['$post'];
 export type ExtendCourseComplianceResponse = InferResponseType<ExtendCourseComplianceRequest>;
 export type ExtendCourseComplianceSuccess = Extract<ExtendCourseComplianceResponse, { success: true }>;
 
-export type WaiveCourseComplianceRequest = (typeof classroomio.course)[':courseId']['compliance']['waive']['$post'];
+export type WaiveCourseComplianceRequest = (typeof pathworks.course)[':courseId']['compliance']['waive']['$post'];
 export type WaiveCourseComplianceResponse = InferResponseType<WaiveCourseComplianceRequest>;
 export type WaiveCourseComplianceSuccess = Extract<WaiveCourseComplianceResponse, { success: true }>;
 
@@ -428,7 +425,7 @@ export type Review = NonNullable<NonNullable<Course['metadata']>['reviews']>[num
 export type SubmissionAnswer = NonNullable<SubmissionListItem['answers']>[number];
 
 // Exercise template types
-export type GetAllTemplatesMetadataRequest = (typeof classroomio.course)[':courseId']['exercise']['template']['$get'];
+export type GetAllTemplatesMetadataRequest = (typeof pathworks.course)[':courseId']['exercise']['template']['$get'];
 export type GetAllTemplatesMetadataSuccess = Extract<
   InferResponseType<GetAllTemplatesMetadataRequest>,
   { success: true }
@@ -436,33 +433,33 @@ export type GetAllTemplatesMetadataSuccess = Extract<
 export type GetAllTemplatesMetadataData = GetAllTemplatesMetadataSuccess['data'];
 
 export type GetTemplateByTagRequest =
-  (typeof classroomio.course)[':courseId']['exercise']['template']['tag'][':tag']['$get'];
+  (typeof pathworks.course)[':courseId']['exercise']['template']['tag'][':tag']['$get'];
 export type GetTemplateByTagSuccess = Extract<InferResponseType<GetTemplateByTagRequest>, { success: true }>;
 export type GetTemplateByTagData = GetTemplateByTagSuccess['data'];
 
-export type GetTemplateByIdRequest = (typeof classroomio.course)[':courseId']['exercise']['template'][':id']['$get'];
+export type GetTemplateByIdRequest = (typeof pathworks.course)[':courseId']['exercise']['template'][':id']['$get'];
 export type GetTemplateByIdSuccess = Extract<InferResponseType<GetTemplateByIdRequest>, { success: true }>;
 export type GetTemplateByIdData = GetTemplateByIdSuccess['data'];
 
 // Presign types
-export type DocumentUploadPresignRequest = (typeof classroomio.course)['presign']['document']['upload']['$post'];
+export type DocumentUploadPresignRequest = (typeof pathworks.course)['presign']['document']['upload']['$post'];
 export type DocumentUploadPresignSuccess = Extract<InferResponseType<DocumentUploadPresignRequest>, { success: true }>;
 
-export type DocumentDownloadPresignRequest = (typeof classroomio.course)['presign']['document']['download']['$post'];
+export type DocumentDownloadPresignRequest = (typeof pathworks.course)['presign']['document']['download']['$post'];
 export type DocumentDownloadPresignSuccess = Extract<
   InferResponseType<DocumentDownloadPresignRequest>,
   { success: true }
 >;
 
-export type VideoUploadPresignRequest = (typeof classroomio.course)['presign']['video']['upload']['$post'];
+export type VideoUploadPresignRequest = (typeof pathworks.course)['presign']['video']['upload']['$post'];
 export type VideoUploadPresignSuccess = Extract<InferResponseType<VideoUploadPresignRequest>, { success: true }>;
 
-export type VideoDownloadPresignRequest = (typeof classroomio.course)['presign']['video']['download']['$post'];
+export type VideoDownloadPresignRequest = (typeof pathworks.course)['presign']['video']['download']['$post'];
 export type VideoDownloadPresignSuccess = Extract<InferResponseType<VideoDownloadPresignRequest>, { success: true }>;
 
 export type VideoRecordingUploadInitRequest =
-  (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['question'][':questionId']['video-recording']['upload']['init']['$post'];
+  (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['question'][':questionId']['video-recording']['upload']['init']['$post'];
 export type VideoRecordingUploadCompleteRequest =
-  (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['question'][':questionId']['video-recording']['upload']['complete']['$post'];
+  (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['question'][':questionId']['video-recording']['upload']['complete']['$post'];
 export type VideoRecordingPlaybackRequest =
-  (typeof classroomio.course)[':courseId']['exercise'][':exerciseId']['submission'][':submissionId']['question'][':questionId']['video-recording']['playback']['$get'];
+  (typeof pathworks.course)[':courseId']['exercise'][':exerciseId']['submission'][':submissionId']['question'][':questionId']['video-recording']['playback']['$get'];

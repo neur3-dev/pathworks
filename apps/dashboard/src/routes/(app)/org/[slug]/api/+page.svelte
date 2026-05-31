@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>{t.get('automation.tabs.api')} - ClassroomIO</title>
+  <title>{t.get('automation.tabs.api')} - PathWorks</title>
 </svelte:head>
 
 <Page.Root class="mx-auto w-full max-w-4xl">
@@ -26,7 +26,7 @@
       <Page.Subtitle>{$t('automation.api.subtitle')}</Page.Subtitle>
     </Page.HeaderContent>
     <Page.Action>
-      <Button variant="outline" onclick={() => window.open('https://classroomio.com/docs/api/reference', '_blank')}>
+      <Button variant="outline" onclick={() => window.open('https://pathworks.neur3.dev/docs/api/reference', '_blank')}>
         <ArrowUpRightIcon size={16} />
         {$t('automation.api.view_docs')}
       </Button>

@@ -1,0 +1,113 @@
+name: PathWorks CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - codex/pathworks-phase-1
+      - codex/pathworks-phase-2
+      - codex/pathworks-phase-3
+
+concurrency:
+  group: pathworks-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20.19.3
+  PNPM_VERSION: 10.19.0
+
+jobs:
+  format-and-lint:
+    name: Format + PathWorks lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Lint PathWorks-owned dashboard surfaces
+        run: >-
+          pnpm --filter @cio/dashboard exec eslint
+          src/lib/features/pathworks
+          src/routes/counselor/+page.svelte
+          "src/routes/(app)/lms/settings"
+          "src/routes/(auth)/onboarding/+page.svelte"
+          --quiet
+
+  typecheck-and-build:
+    name: Typecheck + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck core packages
+        run: |
+          pnpm --filter @cio/db build
+          pnpm --filter @cio/api build
+          pnpm --filter @cio/dashboard build
+
+  drizzle:
+    name: Drizzle migration sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check migrations
+        working-directory: packages/db
+        run: pnpm drizzle-kit check --config drizzle.config.ts
+
+  axe:
+    name: Axe accessibility smoke check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install axe runner dependencies
+        run: |
+          mkdir -p /tmp/pathworks-axe
+          cd /tmp/pathworks-axe
+          printf '{}' > package.json
+          pnpm add playwright @axe-core/playwright
+          pnpm exec playwright install --with-deps chromium
+      - name: Start PathWorks full stack
+        run: ./run-docker-full-stack.sh
+      - name: Wait for dashboard
+        run: pnpm --filter @cio/dashboard exec wait-on http://127.0.0.1:3082/
+      - name: Seed authenticated axe fixtures
+        run: node audits/seed-a11y-fixtures.mjs audits/axe-fixtures.json
+      - name: Run axe authenticated audit
+        env:
+          PATHWORKS_AXE_BASE_URL: http://127.0.0.1:3082
+          PATHWORKS_AXE_FIXTURE_FILE: ${{ github.workspace }}/audits/axe-fixtures.json
+        run: |
+          cd /tmp/pathworks-axe
+          node ${{ github.workspace }}/audits/run-axe.mjs ${{ github.workspace }}/audits/axe-ci-$(date +%Y%m%d).json
+      - name: Upload axe report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: axe-report
+          path: audits/axe-ci-*.json

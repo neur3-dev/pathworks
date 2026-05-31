@@ -1,48 +1,35 @@
-name: 'Bug Report'
+name: PathWorks bug report
 labels: ['bug']
-description: Create a bug report to help us improve
+description: Report something that is broken or confusing in PathWorks
 body:
   - type: markdown
     attributes:
-      value: Thank you for reporting an issue.
-        Please fill in as much of the form below as you're able to.
+      value: Thanks for helping improve PathWorks. Share what happened and how we can reproduce it.
   - type: textarea
+    id: problem
     attributes:
-      label: Issue Description
-      description: Please provide a clear and concise description of the problem.
+      label: What happened?
+      description: Describe the bug and who it affects.
+    validations:
+      required: true
   - type: textarea
+    id: steps
     attributes:
-      label: Steps to Reproduce
-      description: Please provide step-by-step instructions to reproduce the issue. Include code snippets, error messages, and any other relevant information.
+      label: Steps to reproduce
+      description: Include account role, route, clicks, and any test data.
+    validations:
+      required: true
   - type: textarea
+    id: expected
     attributes:
-      label: Expected Behavior
-      description: Describe what you expected to happen.
+      label: Expected behavior
   - type: textarea
+    id: environment
     attributes:
-      label: Current Behavior
-      description: Describe what is currently happening.
+      label: Environment
+      description: Browser, device, local/preview/production, and any relevant flags.
   - type: textarea
+    id: accessibility
     attributes:
-      label: Screenshots (optional)
-      description: If applicable, add screenshots to help explain the issue.
-  - type: input
-    attributes:
-      label: Operating System [e.g., Windows 10]
-  - type: input
-    attributes:
-      label: Browser [e.g., Chrome, Firefox]
-  - type: input
-    attributes:
-      label: Environment (locally, production, selfhosted)
-      description: If applicable, describe the environment in which the issue occurs.
-  - type: checkboxes
-    attributes:
-      label: Please check the boxes that apply to this issue report.
-      options:
-        - label: I have searched the existing issues to make sure this is not a duplicate.
-        - label: I have provided steps to reproduce the issue.
-        - label: I have included relevant environment information.
-        - label: I have included any relevant screenshots.
-        - label: I understand that this is a voluntary contribution and that there is no guarantee of resolution.
-        - label: I want to work on creating a PR for this issue if approved
+      label: Accessibility impact
+      description: Note keyboard, screen reader, captions, timing, or motion issues if relevant.

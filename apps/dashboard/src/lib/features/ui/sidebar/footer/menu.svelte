@@ -108,7 +108,7 @@
             {#if !$globalStore.isOrgSite}
               <div class="space-y-4">
                 <DropdownMenu.Item class="m-0">
-                  <a href="https://classroomio.com/roadmap" target="_blank" class="flex w-full items-center gap-2">
+                  <a href="https://pathworks.neur3.dev/roadmap" target="_blank" class="flex w-full items-center gap-2">
                     <BellPlusIcon size={16} />
                     <p class="text-sm">{$t('profileMenu.whats_new')}</p>
                   </a>
@@ -116,7 +116,7 @@
 
                 <DropdownMenu.Item class="m-0">
                   <a
-                    href="https://classroomio.com/blog/launch-week"
+                    href="https://pathworks.neur3.dev/blog/launch-week"
                     target="_blank"
                     class="flex w-full items-center gap-2"
                   >
@@ -127,7 +127,7 @@
 
                 <DropdownMenu.Item class="m-0">
                   <a
-                    href="https://classroomio.com/contact"
+                    href="https://pathworks.neur3.dev/contact"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="flex h-full w-full items-center justify-start space-x-2 text-start"

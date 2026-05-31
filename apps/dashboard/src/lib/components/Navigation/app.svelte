@@ -34,11 +34,11 @@
       {/if}
       <a
         href={resolve(coursesPath, {})}
-        title="{$t('navigation.goto')} {isCoursePage ? $t('navigation.courses') : $t('navigation.classroomio_home')}"
+        title="{$t('navigation.goto')} {isCoursePage ? $t('navigation.courses') : $t('navigation.pathworks_home')}"
         id="logo"
         class="line-clamp-1 text-lg"
       >
-        {isCoursePage ? title : 'ClassroomIO'}
+        {isCoursePage ? title : 'PathWorks'}
       </a>
     </div>
 

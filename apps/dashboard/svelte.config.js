@@ -6,10 +6,13 @@ import path from 'path';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 const IS_CLOUDFLARE = process.env.CI_ENVIRONMENT === 'cloudflare';
+const isPlainHttpLocalOrigin = (value) =>
+  /^http:\/\/(localhost|127\.0\.0\.1|\d{1,3}(\.\d{1,3}){3})(:\d+)?$/i.test(value || '');
 
 const adapterCloudflare = IS_CLOUDFLARE ? (await import('@sveltejs/adapter-cloudflare')).default : null;
 const isSelfHosted = process.env.PUBLIC_IS_SELFHOSTED === 'true';
 const csp = getCspDomains(isSelfHosted, process.env.PUBLIC_SERVER_URL);
+const shouldUpgradeInsecureRequests = !isPlainHttpLocalOrigin(process.env.DASHBOARD_ORIGIN);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -56,7 +59,7 @@ const config = {
         'form-action': ['self'],
         // 'self' allows same-origin iframes (e.g. widget preview at /widget-preview). 'none' blocks all embedding.
         'frame-ancestors': ['self'],
-        'upgrade-insecure-requests': true
+        ...(shouldUpgradeInsecureRequests ? { 'upgrade-insecure-requests': true } : {})
       },
       reportOnly: {
         'default-src': ['self'],

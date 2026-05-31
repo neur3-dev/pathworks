@@ -57,3 +57,5 @@ storybook-static
 .svelte-kit/
 
 company/
+# PathWorks generated audit reports
+audits/axe-*.json

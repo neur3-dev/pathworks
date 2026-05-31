@@ -24,9 +24,7 @@
     console.log('Layout', data);
 
     const loadingIndicator = document.getElementById('app-loading-indicator');
-    if (loadingIndicator) {
-      loadingIndicator.style.display = 'none';
-    }
+    loadingIndicator?.remove();
 
     const sessionUser = data?.locals?.user;
     setupCloudAnalytics(

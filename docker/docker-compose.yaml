@@ -1,9 +1,9 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: cio-postgres
+    container_name: pathworks-postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-classroomio}
+      POSTGRES_DB: ${POSTGRES_DB:-pathworks}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     volumes:
@@ -14,7 +14,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-classroomio} && psql -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-classroomio} -tAc 'SELECT 1'",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-pathworks} && psql -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-pathworks} -tAc 'SELECT 1'",
         ]
       interval: 5s
       timeout: 5s
@@ -23,7 +23,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: cio-redis
+    container_name: pathworks-redis
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
@@ -36,7 +36,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: cio-minio
+    container_name: pathworks-minio
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -51,7 +51,7 @@ services:
 
   minio-init:
     image: minio/mc:latest
-    container_name: cio-minio-init
+    container_name: pathworks-minio-init
     depends_on:
       - minio
     entrypoint: >
@@ -72,11 +72,27 @@ services:
     profiles:
       - minio
 
+  mailpit:
+    # Local SMTP catcher for dev. Captures every mail the api tries to send
+    # and shows it in the web UI. Not for prod. SMTP_* values in docker/.env
+    # point the api at this when --profile mailpit is on.
+    image: axllent/mailpit:latest
+    container_name: pathworks-mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP - host-side useful for non-Dockerised senders
+      - "8025:8025"   # Web UI - open http://192.168.1.193:8025 to read mail
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+    profiles:
+      - mailpit
+
   api:
     build:
       context: ..
       dockerfile: docker/Dockerfile.api
-    container_name: cio-api
+    container_name: pathworks-api
     ports:
       - "3081:3081"
     depends_on:
@@ -90,8 +106,8 @@ services:
       PUBLIC_SERVER_URL: ${PUBLIC_SERVER_URL:-http://localhost:3081}
       TRUSTED_ORIGINS: ${TRUSTED_ORIGINS:-http://localhost:3082}
       AUTH_COOKIE_DOMAIN: ${AUTH_COOKIE_DOMAIN:-}
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-classroomio}
-      PRIVATE_DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-classroomio}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-pathworks}
+      PRIVATE_DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-pathworks}
       REDIS_URL: redis://redis:6379
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-docker-local-client-id}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-docker-local-client-secret}
@@ -100,6 +116,10 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_PORT: ${SMTP_PORT:-}
       SMTP_SENDER: ${SMTP_SENDER:-}
+      SMTP_INSECURE: ${SMTP_INSECURE:-}
+      POSTMARK_API_KEY: ${POSTMARK_API_KEY:-}
+      POSTMARK_FROM: ${POSTMARK_FROM:-}
+      POSTMARK_MESSAGE_STREAM: ${POSTMARK_MESSAGE_STREAM:-}
       CLOUDFLARE_BUCKET_DOMAIN: ${CLOUDFLARE_BUCKET_DOMAIN:-}
       CLOUDFLARE_ACCESS_KEY: ${CLOUDFLARE_ACCESS_KEY:-}
       CLOUDFLARE_SECRET_ACCESS_KEY: ${CLOUDFLARE_SECRET_ACCESS_KEY:-}
@@ -127,7 +147,7 @@ services:
       dockerfile: docker/Dockerfile.dashboard
       args:
         PUBLIC_IS_SELFHOSTED: ${PUBLIC_IS_SELFHOSTED:-true}
-    container_name: cio-dashboard
+    container_name: pathworks-dashboard
     ports:
       - "3082:3082"
     depends_on:
@@ -140,6 +160,12 @@ services:
       PUBLIC_IS_SELFHOSTED: ${PUBLIC_IS_SELFHOSTED:-true}
       PUBLIC_SERVER_URL: ${PUBLIC_SERVER_URL:-http://localhost:3081}
       PRIVATE_SERVER_URL: ${PRIVATE_SERVER_URL:-http://api:3081}
+      # Direct DB access for SvelteKit server-side routes that read/write
+      # the seat table (POST /api/seats, /accept-invite/[token]). Proper
+      # long-term fix is to move these to the API container per the
+      # CLAUDE.md 7-step route protocol; for now the dashboard uses
+      # @cio/db queries directly which require DATABASE_URL.
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/pathworks}
       PRIVATE_SERVER_KEY: ${PRIVATE_SERVER_KEY:-local-dev-api-key}
       PRIVATE_APP_HOST: ${PRIVATE_APP_HOST:-localhost}
       PRIVATE_APP_SUBDOMAINS: ${PRIVATE_APP_SUBDOMAINS:-app}
@@ -151,6 +177,11 @@ services:
       CSP_FRAME_SRC_DOMAINS: ${CSP_FRAME_SRC_DOMAINS:-}
       CSP_FONT_SRC_DOMAINS: ${CSP_FONT_SRC_DOMAINS:-}
       CSP_MEDIA_SRC_DOMAINS: ${CSP_MEDIA_SRC_DOMAINS:-}
+      # Postmark transport for transactional email (POST /api/seats fires
+      # the participant invite email directly from the dashboard server).
+      POSTMARK_API_KEY: ${POSTMARK_API_KEY:-}
+      POSTMARK_FROM: ${POSTMARK_FROM:-}
+      POSTMARK_MESSAGE_STREAM: ${POSTMARK_MESSAGE_STREAM:-}
     restart: unless-stopped
 
 volumes:

@@ -2,8 +2,8 @@
   import { page } from '$app/state';
   import { Button } from '@cio/ui/base/button';
   import { Empty } from '@cio/ui/custom/empty';
-  import { ExternalLinkIcon, HomeIcon, HoverableItem } from '@cio/ui/custom/moving-icons';
-  import HeartCrack from '@lucide/svelte/icons/heart-crack';
+  import { HomeIcon, HoverableItem } from '@cio/ui/custom/moving-icons';
+  import AlertCircle from '@lucide/svelte/icons/alert-circle';
 
   const isNotFound = $derived(page.status === 404);
 
@@ -16,14 +16,14 @@
 </script>
 
 <svelte:head>
-  <title>{isNotFound ? 'Page not found' : 'Something unexpected occurred'}</title>
+  <title>{isNotFound ? 'Page not found' : 'Something went wrong'}</title>
 </svelte:head>
 
 {#if isNotFound}
   <Empty
     title="Page not found"
-    description="The page you're looking for doesn't exist or you don't have permission to view it."
-    icon={HeartCrack}
+    description="We could not find that page, or your account may not have access to it."
+    icon={AlertCircle}
     variant="page"
     layout="full-page"
     showLogo={true}
@@ -41,22 +41,14 @@
   </Empty>
 {:else}
   <Empty
-    title="Something unexpected occurred."
-    description="Don't worry, your learning is safe. It isn't your fault, it is ours. We have gotten the error notification and will push a fix ASAP. In the meantime, take a short break and come back a bit later."
-    icon={HeartCrack}
+    title="Something went wrong"
+    description="Your progress is safe. Try returning home and reopening the lesson. If the issue continues, your PathWorks team can review it."
+    icon={AlertCircle}
     variant="page"
     layout="full-page"
     showLogo={true}
   >
     <div class="flex gap-2">
-      <HoverableItem>
-        {#snippet children(isHovered)}
-          <Button href="https://classroomio.com/tools" variant="secondary">
-            <ExternalLinkIcon {isHovered} size={16} ariaHidden={true} />
-            Try Free Tools
-          </Button>
-        {/snippet}
-      </HoverableItem>
       <HoverableItem>
         {#snippet children(isHovered)}
           <Button onclick={goHome}>

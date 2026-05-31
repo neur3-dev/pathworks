@@ -2,7 +2,6 @@ import { getFirstOrg, getOrgBySiteName, getOrgsByCustomDomain } from '$features/
 
 import type { AccountOrg } from '$features/app/types';
 import type { Cookies } from '@sveltejs/kit';
-import { PUBLIC_IS_SELFHOSTED } from '$env/static/public';
 import { blockedSubdomain } from '$lib/utils/constants/app';
 import { env } from '$env/dynamic/private';
 import { getApiKeyHeaders } from '$lib/utils/services/api/server';
@@ -23,7 +22,7 @@ export async function getOrgSiteInfo(url: URL, cookies: Cookies): Promise<OrgSit
   };
 
   // Self-hosted: single org, single domain
-  if (PUBLIC_IS_SELFHOSTED === 'true') {
+  if (env.PUBLIC_IS_SELFHOSTED === 'true') {
     const apiKeyHeaders = getApiKeyHeaders();
     const firstOrg = await getFirstOrg(apiKeyHeaders);
     if (firstOrg) {
@@ -101,7 +100,9 @@ function isURLCustomDomain(url: URL) {
     return false;
   }
 
-  const notCustomDomainHosts = [env.PRIVATE_APP_HOST || '', 'classroomio.com', 'myclassroomio.com'].filter(Boolean);
+  const notCustomDomainHosts = [env.PRIVATE_APP_HOST || '', 'pathworks.neur3.dev', 'mypathworks.neur3.dev'].filter(
+    Boolean
+  );
 
   return !notCustomDomainHosts.some((host) => url.host.endsWith(host));
 }

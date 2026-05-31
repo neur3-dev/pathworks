@@ -1,4 +1,4 @@
-import { BaseApiWithErrors, classroomio, apiClient, getRequestBaseUrl } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks, apiClient, getRequestBaseUrl } from '$lib/utils/services/api';
 import type {
   AgentConversation,
   AgentConversationCreateData,
@@ -15,9 +15,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   currentConversation: AgentConversation | null = $state(null);
 
   async fetchStatus(courseId: string) {
-    await this.execute<typeof classroomio.agent.status.$get>({
+    await this.execute<typeof pathworks.agent.status.$get>({
       requestFn: () =>
-        classroomio.agent.status.$get({
+        pathworks.agent.status.$get({
           query: { courseId }
         }),
       logContext: 'fetching agent status',
@@ -28,9 +28,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   }
 
   async listConversations(courseId: string) {
-    await this.execute<typeof classroomio.agent.history.$get>({
+    await this.execute<typeof pathworks.agent.history.$get>({
       requestFn: () =>
-        classroomio.agent.history.$get({
+        pathworks.agent.history.$get({
           query: { courseId }
         }),
       logContext: 'listing conversations',
@@ -41,9 +41,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   }
 
   async loadConversation(conversationId: string) {
-    await this.execute<(typeof classroomio.agent.history)[':conversationId']['$get']>({
+    await this.execute<(typeof pathworks.agent.history)[':conversationId']['$get']>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId'].$get({
+        pathworks.agent.history[':conversationId'].$get({
           param: { conversationId }
         }),
       logContext: 'loading conversation',
@@ -59,9 +59,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   async createConversation(courseId: string, title?: string): Promise<{ id: string } | null> {
     let created: { id: string } | null = null;
 
-    await this.execute<typeof classroomio.agent.history.$post>({
+    await this.execute<typeof pathworks.agent.history.$post>({
       requestFn: () =>
-        classroomio.agent.history.$post({
+        pathworks.agent.history.$post({
           json: { courseId, title }
         }),
       logContext: 'creating conversation',
@@ -80,9 +80,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   }
 
   async saveMessages(conversationId: string, messages: AiAssistantMessage[], title?: string) {
-    await this.execute<(typeof classroomio.agent.history)[':conversationId']['$put']>({
+    await this.execute<(typeof pathworks.agent.history)[':conversationId']['$put']>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId'].$put({
+        pathworks.agent.history[':conversationId'].$put({
           param: { conversationId },
           json: { messages, title }
         }),
@@ -91,9 +91,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   }
 
   async deleteConversation(conversationId: string) {
-    await this.execute<(typeof classroomio.agent.history)[':conversationId']['$delete']>({
+    await this.execute<(typeof pathworks.agent.history)[':conversationId']['$delete']>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId'].$delete({
+        pathworks.agent.history[':conversationId'].$delete({
           param: { conversationId }
         }),
       logContext: 'deleting conversation',
@@ -110,9 +110,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   async generateCourseMeta(prompt: string): Promise<{ title: string; description: string } | null> {
     let meta: { title: string; description: string } | null = null;
 
-    await this.execute<(typeof classroomio.agent)['generate-course-title']['$post']>({
+    await this.execute<(typeof pathworks.agent)['generate-course-title']['$post']>({
       requestFn: () =>
-        classroomio.agent['generate-course-title'].$post({
+        pathworks.agent['generate-course-title'].$post({
           json: { prompt }
         }),
       logContext: 'generating course meta',
@@ -162,9 +162,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   async generateTitle(conversationId: string, firstMessageText: string): Promise<string | null> {
     let generatedTitle: string | null = null;
 
-    await this.execute<(typeof classroomio.agent.history)[':conversationId']['generate-title']['$post']>({
+    await this.execute<(typeof pathworks.agent.history)[':conversationId']['generate-title']['$post']>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId']['generate-title'].$post({
+        pathworks.agent.history[':conversationId']['generate-title'].$post({
           param: { conversationId },
           json: { firstMessageText }
         }),
@@ -189,9 +189,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   async renameConversation(conversationId: string, title: string): Promise<string | null> {
     let newTitle: string | null = null;
 
-    await this.execute<(typeof classroomio.agent.history)[':conversationId']['$patch']>({
+    await this.execute<(typeof pathworks.agent.history)[':conversationId']['$patch']>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId'].$patch({
+        pathworks.agent.history[':conversationId'].$patch({
           param: { conversationId },
           json: { title }
         }),
@@ -213,9 +213,9 @@ class AiAssistantApi extends BaseApiWithErrors {
   async summarizeConversation(messages: AiAssistantMessage[], courseId: string): Promise<string | null> {
     let summary: string | null = null;
 
-    await this.execute<(typeof classroomio.agent)['summarize']['$post']>({
+    await this.execute<(typeof pathworks.agent)['summarize']['$post']>({
       requestFn: () =>
-        classroomio.agent.summarize.$post({
+        pathworks.agent.summarize.$post({
           json: { messages, courseId }
         }),
       logContext: 'summarizing conversation',
@@ -232,7 +232,7 @@ class AiAssistantApi extends BaseApiWithErrors {
 
     await this.execute<CompactConversationRequest>({
       requestFn: () =>
-        classroomio.agent.history[':conversationId'].compact.$post({
+        pathworks.agent.history[':conversationId'].compact.$post({
           param: { conversationId }
         }),
       logContext: 'compacting conversation',

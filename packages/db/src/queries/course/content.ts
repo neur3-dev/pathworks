@@ -12,6 +12,7 @@ export type CourseContentItemRow = {
   sectionId: string | null;
   isUnlocked: boolean | null;
   isComplete: boolean | null;
+  isPublished: boolean | null;
   lessonAt: string | null;
   callUrl: string | null;
   hasNoteContent: boolean | null;
@@ -63,6 +64,7 @@ export async function getCourseContentItems(courseId: string, profileId?: string
         NULL::uuid AS "sectionId",
         NULL::boolean AS "isUnlocked",
         NULL::boolean AS "isComplete",
+        NULL::boolean AS "isPublished",
         NULL::timestamptz AS "lessonAt",
         NULL::text AS "callUrl",
         NULL::boolean AS "hasNoteContent",
@@ -85,6 +87,7 @@ export async function getCourseContentItems(courseId: string, profileId?: string
         section_id AS "sectionId",
         is_unlocked AS "isUnlocked",
         ${lessonCompletionSql} AS "isComplete",
+        public AS "isPublished",
         lesson_at AS "lessonAt",
         call_url AS "callUrl",
         (
@@ -128,6 +131,7 @@ export async function getCourseContentItems(courseId: string, profileId?: string
         COALESCE(exercise.section_id, lesson.section_id) AS "sectionId",
         exercise.is_unlocked AS "isUnlocked",
         ${exerciseCompletionSql} AS "isComplete",
+        NULL::boolean AS "isPublished",
         NULL::timestamptz AS "lessonAt",
         NULL::text AS "callUrl",
         NULL::boolean AS "hasNoteContent",
@@ -152,6 +156,7 @@ export async function getCourseContentItems(courseId: string, profileId?: string
       type: row.type as ContentType,
       order: row.order === null ? null : Number(row.order),
       hasNoteContent: row.hasNoteContent === null ? null : Boolean(row.hasNoteContent),
+      isPublished: row.isPublished === null ? null : Boolean(row.isPublished),
       hasSlideContent: row.hasSlideContent === null ? null : Boolean(row.hasSlideContent),
       videosCount: row.videosCount === null ? null : Number(row.videosCount),
       documentsCount: row.documentsCount === null ? null : Number(row.documentsCount),

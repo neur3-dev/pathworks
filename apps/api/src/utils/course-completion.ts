@@ -79,7 +79,7 @@ export function scheduleCertificationCompletionWork(params: {
           certificateUrl,
           customMessage: courseRow.certificate?.emailMessage ?? null
         },
-        from: buildEmailFromName(`${courseRow.orgName} (via ClassroomIO.com)`),
+        from: buildEmailFromName(`${courseRow.orgName} (via PathWorks.com)`),
         idempotencyKey: `course-completion:${groupMemberId}`
       });
 

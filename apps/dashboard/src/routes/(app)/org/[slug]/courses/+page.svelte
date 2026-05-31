@@ -84,8 +84,8 @@
       return;
     }
 
-    localStorage.setItem('classroomio_filter_course_sort_key', sortKey);
-    localStorage.setItem('classroomio_filter_course_order_key', selectedOrder);
+    localStorage.setItem('pathworks_filter_course_sort_key', sortKey);
+    localStorage.setItem('pathworks_filter_course_order_key', selectedOrder);
 
     if (!hasCompletedInitialUrlSync) {
       hasCompletedInitialUrlSync = true;
@@ -177,8 +177,8 @@
       $courseMetaDeta.view = courseView;
     }
 
-    const sortFromStorage = parseCourseSortValue(localStorage.getItem('classroomio_filter_course_sort_key'));
-    const orderFromStorage = parseCourseSortOrder(localStorage.getItem('classroomio_filter_course_order_key'));
+    const sortFromStorage = parseCourseSortValue(localStorage.getItem('pathworks_filter_course_sort_key'));
+    const orderFromStorage = parseCourseSortOrder(localStorage.getItem('pathworks_filter_course_order_key'));
 
     const searchParams = new URLSearchParams(window.location.search);
     const sortFromUrl = parseCourseSortValue(searchParams.get('sort'));
@@ -202,7 +202,7 @@
 </script>
 
 <svelte:head>
-  <title>Courses - ClassroomIO</title>
+  <title>Courses - PathWorks</title>
 </svelte:head>
 
 <Page.Root class="w-full">

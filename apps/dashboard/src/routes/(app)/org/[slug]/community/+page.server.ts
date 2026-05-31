@@ -1,5 +1,5 @@
 import type { CommunityQuestionsSuccess } from '$features/community/utils/types';
-import { classroomio, getApiHeaders } from '$lib/utils/services/api';
+import { pathworks, getApiHeaders } from '$lib/utils/services/api';
 import { safeServerApi } from '$lib/utils/services/api/server';
 
 export const load = async ({ parent, cookies }) => {
@@ -12,7 +12,7 @@ export const load = async ({ parent, cookies }) => {
   }
 
   const result = await safeServerApi<CommunityQuestionsSuccess>(() =>
-    classroomio.community.$get({ query: { orgId } }, getApiHeaders(cookies, orgId))
+    pathworks.neur3.devmunity.$get({ query: { orgId } }, getApiHeaders(cookies, orgId))
   );
   const questions = result.ok ? result.body.data : [];
 

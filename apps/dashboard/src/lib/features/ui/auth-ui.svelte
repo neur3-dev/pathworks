@@ -44,7 +44,7 @@
 
     const params = new URLSearchParams(window.location.search);
     console.log({ params });
-    // const redirectTo = `https://app.classroomio.com?forwardTo=${
+    // const redirectTo = `https://pathworks.neur3.dev?forwardTo=${
     //   window.location.origin + params.get('redirect')
     // }`;
     const pathname = redirectPathname || params.get('redirect') || '';
@@ -85,9 +85,9 @@
         <Avatar.Root>
           <Avatar.Image
             src={$currentOrg.avatarUrl ? $currentOrg.avatarUrl : '/logo-192.png'}
-            alt={$currentOrg.name ? $currentOrg.name : 'ClassroomIO'}
+            alt={$currentOrg.name ? $currentOrg.name : 'PathWorks'}
           />
-          <Avatar.Fallback>{$currentOrg.name ? $currentOrg.name : 'ClassroomIO'}</Avatar.Fallback>
+          <Avatar.Fallback>{$currentOrg.name ? $currentOrg.name : 'PathWorks'}</Avatar.Fallback>
         </Avatar.Root>
 
         {#if !showOnlyContent}

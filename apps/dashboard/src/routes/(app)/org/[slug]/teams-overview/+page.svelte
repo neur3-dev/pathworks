@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-  <title>{$t('programs.goals.heading')} · ClassroomIO</title>
+  <title>{$t('programs.goals.heading')} · PathWorks</title>
 </svelte:head>
 
 <Page.Root class="w-full">

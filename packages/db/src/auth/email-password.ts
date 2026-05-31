@@ -11,6 +11,13 @@ import { sendEmail } from '@cio/email';
  */
 export const config: BetterAuthOptions['emailAndPassword'] = {
   enabled: true,
+  // Block login until the verification email is clicked. Better Auth resends
+  // the verification mail on every failed sign-in attempt, so users can
+  // recover without going through forgot-password. Self-hosters without SMTP
+  // configured must either wire SMTP (docker-compose --profile mailpit for a
+  // dev catcher, or real SMTP_* env in prod) or mark verified manually:
+  //   UPDATE "user" SET email_verified = true WHERE email = '...';
+  requireEmailVerification: true,
   password: {
     hash: async (password) => {
       return await bcrypt.hash(password, 10);

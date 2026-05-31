@@ -359,7 +359,7 @@ async function sendStudentJoinEmails(input: {
         courseName: input.courseName,
         loginUrl
       },
-      from: buildEmailFromName(`${input.orgName} (via ClassroomIO.com)`),
+      from: buildEmailFromName(`${input.orgName} (via PathWorks.com)`),
       idempotencyKey: `course-welcome:${input.courseId}:${input.studentId}`
     });
   } catch (error) {
@@ -386,7 +386,7 @@ async function sendStudentJoinEmails(input: {
         studentName,
         studentEmail: input.studentEmail
       },
-      from: buildEmailFromName('ClassroomIO'),
+      from: buildEmailFromName('PathWorks'),
       idempotencyKey: `teacher-student-joined:${input.courseId}:${input.studentId}`
     });
   } catch (error) {
@@ -441,7 +441,7 @@ async function createEmailInviteAndSend(input: {
         inviteLink: createdInvite.inviteLink,
         expiresAt: getExpiryLabel(createdInvite.expiresAt)
       },
-      from: buildEmailFromName(`${input.orgName} (via ClassroomIO.com)`),
+      from: buildEmailFromName(`${input.orgName} (via PathWorks.com)`),
       idempotencyKey: `course-invite-email:${createdInvite.id}`
     });
 
@@ -532,7 +532,7 @@ export async function createStudentInvite(courseId: string, createdByProfileId: 
     };
   }
 
-  const orgName = courseOrgData.orgName || 'ClassroomIO';
+  const orgName = courseOrgData.orgName || 'PathWorks';
   const courseName = courseOrgData.courseTitle || course[0].title || 'Course';
 
   const inviteResults = await Promise.all(

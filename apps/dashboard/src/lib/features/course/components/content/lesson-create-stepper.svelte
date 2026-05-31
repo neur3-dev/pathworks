@@ -66,6 +66,7 @@
           courseId,
           lessonAt: new Date().toDateString(),
           isUnlocked: true,
+          public: false,
           order,
           sectionId
         });

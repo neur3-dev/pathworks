@@ -1,42 +1,19 @@
 <script>
-  import {
-    Hero,
-    RoiBand,
-    AiBuildsSection,
-    FeaturesSection,
-    AiTutorSection,
-    AutomationBand,
-    MultiAcademySection,
-    Testimonial,
-    PageSignupCTA
-  } from '$lib/components';
+  import { AudienceCards, FeaturesSection, Hero, LearnerSection, PageSignupCTA } from '$lib/components';
 </script>
 
 <Hero />
 
-<RoiBand />
-
-<AiBuildsSection />
+<AudienceCards />
 
 <FeaturesSection />
 
-<AiTutorSection
-  accent=""
-  title="AI-powered Teaching Assistant"
-  description="An AI teaching assistant that adapts to each student — answering questions in their own words, adjusting to their pace, and catching the ones that would otherwise land in your support inbox."
-  ctaLabel="See the academy"
-  ctaHref="/customer-education"
-  vimeoVideoId="1192910311"
-/>
-
-<AutomationBand />
-
-<MultiAcademySection />
-
-<Testimonial />
+<LearnerSection />
 
 <PageSignupCTA
-  header="Stop forwarding help articles."
-  subText="Launch a branded academy on your domain in days."
-  btnLabel="Book a Demo"
+  header="Work readiness, paced for real people."
+  subText="No timers. No autoplay. No surprise tests. Counselors, advisors, and parents enroll participants. Adults sign up for themselves. Everyone learns at their own pace."
+  btnLabel="Try a sample lesson"
+  link="/demo"
+  demo={false}
 />

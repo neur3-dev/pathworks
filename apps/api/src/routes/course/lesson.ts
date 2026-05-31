@@ -29,11 +29,13 @@ import {
 } from '@api/services/lesson';
 
 import { Hono } from '@api/utils/hono';
+import { ROLE } from '@cio/utils/constants';
 import { ZLessonDownloadContent } from '@cio/utils/validation/course';
 import { authMiddleware } from '@api/middlewares/auth';
 import { courseMemberMiddleware } from '@api/middlewares/course-member';
+import { courseTeamMemberMiddleware } from '@api/middlewares/course-team-member';
 import { generateLessonPdf } from '@api/utils/lesson';
-import { getGroupMemberIdByCourseAndProfile } from '@cio/db/queries/group';
+import { getGroupMemberIdByCourseAndProfile, getUserCourseRole } from '@cio/db/queries/group';
 import { handleError } from '@api/utils/errors';
 import { lessonLanguageRouter } from '@api/routes/course/lesson-language';
 import { zValidator } from '@hono/zod-validator';
@@ -42,15 +44,18 @@ export const lessonRouter = new Hono()
   // Lesson CRUD routes
   .get('/', authMiddleware, courseMemberMiddleware, zValidator('query', ZLessonListQuery), async (c) => {
     try {
+      const user = c.get('user')!;
       const { courseId, sectionId } = c.req.valid('query');
       const lessons = await listLessons(courseId, sectionId);
+      const roleId = await getUserCourseRole(courseId, user.id);
+      const visibleLessons = roleId === ROLE.STUDENT ? lessons.filter((lesson) => lesson.public !== false) : lessons;
 
-      return c.json({ success: true, data: lessons }, 200);
+      return c.json({ success: true, data: visibleLessons }, 200);
     } catch (error) {
       return handleError(c, error, 'Failed to list lessons');
     }
   })
-  .post('/reorder', authMiddleware, courseMemberMiddleware, zValidator('json', ZLessonReorder), async (c) => {
+  .post('/reorder', authMiddleware, courseTeamMemberMiddleware, zValidator('json', ZLessonReorder), async (c) => {
     try {
       const { lessons } = c.req.valid('json');
 
@@ -63,15 +68,22 @@ export const lessonRouter = new Hono()
   })
   .get('/:lessonId', authMiddleware, courseMemberMiddleware, zValidator('param', ZLessonGetParam), async (c) => {
     try {
+      const user = c.get('user')!;
+      const courseId = c.req.param('courseId')!;
       const { lessonId } = c.req.valid('param');
       const lesson = await getLesson(lessonId);
+      const roleId = await getUserCourseRole(courseId, user.id);
+
+      if (roleId === ROLE.STUDENT && lesson.public === false) {
+        return c.json({ success: false, error: 'Lesson not found' }, 404);
+      }
 
       return c.json({ success: true, data: lesson }, 200);
     } catch (error) {
       return handleError(c, error, 'Failed to fetch lesson');
     }
   })
-  .post('/', authMiddleware, courseMemberMiddleware, zValidator('json', ZLessonCreate), async (c) => {
+  .post('/', authMiddleware, courseTeamMemberMiddleware, zValidator('json', ZLessonCreate), async (c) => {
     try {
       const courseId = c.req.param('courseId')!;
       const data = c.req.valid('json');
@@ -86,7 +98,7 @@ export const lessonRouter = new Hono()
   .put(
     '/:lessonId',
     authMiddleware,
-    courseMemberMiddleware,
+    courseTeamMemberMiddleware,
     zValidator('param', ZLessonGetParam),
     zValidator('json', ZLessonUpdate),
     async (c) => {
@@ -102,7 +114,7 @@ export const lessonRouter = new Hono()
       }
     }
   )
-  .delete('/:lessonId', authMiddleware, courseMemberMiddleware, zValidator('param', ZLessonGetParam), async (c) => {
+  .delete('/:lessonId', authMiddleware, courseTeamMemberMiddleware, zValidator('param', ZLessonGetParam), async (c) => {
     try {
       const { lessonId } = c.req.valid('param');
       const lesson = await deleteLessonService(lessonId);

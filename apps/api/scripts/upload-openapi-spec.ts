@@ -36,9 +36,9 @@ function filterPublicApiSpec(spec: Record<string, unknown>) {
     ...spec,
     openapi: spec.openapi ?? '3.1.0',
     info: {
-      title: 'ClassroomIO Public API',
+      title: 'PathWorks Public API',
       version: '1.0.0',
-      description: 'Public API for managing organizations, audience members, and courses in ClassroomIO.'
+      description: 'Public API for managing organizations, audience members, and courses in PathWorks.'
     },
     paths: publicApiPaths,
     tags
@@ -76,17 +76,17 @@ class OpenAPISpecGenerator {
       const spec = await generateSpecs(app, {
         documentation: {
           info: {
-            title: 'ClassroomIO API',
+            title: 'PathWorks API',
             version: '1.0.0',
-            description: 'Manage your organization on classroomio via the API',
+            description: 'Manage your organization on pathworks via the API',
             contact: {
-              name: 'ClassroomIO',
-              url: 'https://classroomio.com'
+              name: 'PathWorks',
+              url: 'https://pathworks.com'
             }
           },
           servers: [
             {
-              url: 'https://api.classroomio.com',
+              url: 'https://api.pathworks.com',
               description: 'Production environment'
             },
             {

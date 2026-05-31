@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Organization Settings - ClassroomIO</title>
+  <title>Organization Settings - PathWorks</title>
 </svelte:head>
 
 <Page.Header isSticky>

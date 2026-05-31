@@ -5,14 +5,14 @@ import { getDefaultTemplate } from '../templates';
 
 export const welcomeEmail = defineEmail({
   id: 'welcome',
-  subject: 'Welcome to ClassroomIO!',
+  subject: 'Welcome to PathWorks!',
   schema: z.object({
     name: z.string().min(1)
   }),
   render: (fields) => {
     const content = `
     <p>Dear ${fields.name},</p>
-    <p>My name is Best, the founder of ClassroomIO. I saw you signed up, any questions so far?</p>
+    <p>My name is Best, the founder of PathWorks. I saw you signed up, any questions so far?</p>
     <p>
      Would you like to get a walkthrough of the platform in a 30 minutes product demo? It's free and we won't try to sell you anything, just want to learn from your use case and show you all the cool features and flows we thought about.
     </p>
@@ -20,7 +20,7 @@ export const welcomeEmail = defineEmail({
       Interested? just book a 30-minute demo slot in our calendar!
     </p>
     <div>
-      <a class="button" href="https://classroomio.com/demo">Book demo</a>
+      <a class="button" href="https://pathworks.com/demo">Book demo</a>
     </div>
     <p>
       PS: I reply personally to every email. We don't have an outsourced support team at the other end of the globe.. ;-)

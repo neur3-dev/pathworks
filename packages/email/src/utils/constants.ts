@@ -6,6 +6,7 @@ export const EMAIL_IDS = [
   'newsfeedComment',
   'newsfeedPost',
   'onPasswordReset',
+  'participantSeatInvite',
   'programGoalReminder',
   'studentCourseInvite',
   'studentCourseCompletion',
@@ -20,7 +21,7 @@ export const EMAIL_IDS = [
   'welcome'
 ] as const;
 
-const DEFAULT_EMAIL_FROM = '"Best from ClassroomIO" <notify@mail.classroomio.com>';
+const DEFAULT_EMAIL_FROM = '"Best from PathWorks" <notify@mail.pathworks.com>';
 
 export const EMAIL_FROM = env.SMTP_SENDER || DEFAULT_EMAIL_FROM;
-export const EMAIL_REPLY_TO = '"Best from ClassroomIO" <help@classroomio.com>';
+export const EMAIL_REPLY_TO = '"Best from PathWorks" <help@pathworks.com>';

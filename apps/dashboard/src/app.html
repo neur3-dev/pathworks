@@ -3,11 +3,45 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="theme-color" content="#333333" />
+    <meta name="theme-color" content="#1A5AD7" />
 
     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/logo-32.png" />
+
+    <script nonce="%sveltekit.nonce%">
+      (() => {
+        const cryptoSource = globalThis.crypto || {};
+        const getRandomValues = cryptoSource.getRandomValues?.bind(cryptoSource);
+
+        if (!globalThis.crypto) {
+          Object.defineProperty(globalThis, 'crypto', {
+            value: cryptoSource,
+            configurable: true
+          });
+        }
+
+        if (!globalThis.crypto.randomUUID) {
+          globalThis.crypto.randomUUID = () => {
+            const bytes = new Uint8Array(16);
+
+            if (getRandomValues) {
+              getRandomValues(bytes);
+            } else {
+              for (let index = 0; index < bytes.length; index += 1) {
+                bytes[index] = Math.floor(Math.random() * 256);
+              }
+            }
+
+            bytes[6] = (bytes[6] & 0x0f) | 0x40;
+            bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+            const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+            return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+          };
+        }
+      })();
+    </script>
 
     %sveltekit.head%
     <style id="app-loading-styles">
@@ -18,24 +52,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: #fff;
+        background: #f7fafc;
         z-index: 99999;
       }
       #app-loading-indicator .spinner {
         width: 3.5rem;
         height: 3.5rem;
-        color: #1d4ed8;
+        color: #1a5ad7;
         animation: app-loading-spin 1s linear infinite;
       }
       @keyframes app-loading-spin {
         to {
           transform: rotate(360deg);
         }
-      }
-      #app-loading-indicator p {
-        margin-top: 16px;
-        color: #6b7280;
-        font-family: system-ui, sans-serif;
       }
     </style>
   </head>
@@ -63,7 +92,6 @@
         <path d="M2 12h4" />
         <path d="m4.9 4.9 2.9 2.9" />
       </svg>
-      <p>Loading...</p>
     </div>
     <div style="display: contents" class="theme-container">%sveltekit.body%</div>
   </body>

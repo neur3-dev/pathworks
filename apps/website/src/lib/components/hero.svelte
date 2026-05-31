@@ -9,7 +9,7 @@
     class="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#f7f9fc_0%,#eef2fa_60%,#e5ecf7_100%)]"
   ></div>
 
-  <!-- Bordered clouds, top-left — crisp SVG silhouettes -->
+  <!-- Bordered clouds, top-left, crisp SVG silhouettes -->
   <div class="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
     <!-- Cloud 1 (largest) -->
     <svg
@@ -81,7 +81,7 @@
     </svg>
   </div>
 
-  <!-- Particle cloud — same component used in the footer at lower intensity -->
+  <!-- Particle cloud, same component used in the footer at lower intensity -->
   <ParticleField class="pointer-events-none absolute inset-0 z-[2] hidden h-full w-full md:block" />
 
   <!-- Bottom fade to next section -->
@@ -91,18 +91,18 @@
 
   <div class="relative z-10 mx-auto flex max-w-[1100px] flex-col items-center text-center">
     <h1 class="max-w-[820px] text-[clamp(2rem,4vw,3.25rem)] leading-[1.1] font-medium tracking-tight text-gray-950">
-      Teach your customers your product
-      <em class="text-blue-700 not-italic">before support has to.</em>
+      Build work skills at your own pace
+      <em class="text-blue-700 not-italic">with PathWorks.</em>
     </h1>
 
     <p class="mt-5 max-w-[580px] text-sm leading-relaxed lg:text-base">
-      Launch a branded customer academy in days. Train customers, certify power users, and drive adoption on your own
-      domain, with an AI tutor in every lesson.
+      Work-readiness training that meets you where you are. Job readiness, digital literacy, workplace communication,
+      and self-advocacy. Built for students, adults, and the counselors and advisors who support them.
     </p>
 
     <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
-      <Button data-cal-config="'layout':'month_view'" data-cal-link="classroomio/demo">Book a Demo</Button>
-      <Button href="/signup" variant="outline">Start free</Button>
+      <Button href="/demo">Try a sample lesson</Button>
+      <Button href="/#learning-design" variant="outline">See the approach</Button>
     </div>
   </div>
 
@@ -110,7 +110,7 @@
     <div class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200">
       <img
         src="/hero-academy.jpeg"
-        alt="Branded customer academy on a custom domain — catalog, programs, AI tutor"
+        alt="PathWorks learning dashboard with paths, lessons, and progress"
         width="2560"
         height="1440"
         class="block h-auto w-full"

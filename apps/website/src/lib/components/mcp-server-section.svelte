@@ -16,17 +16,17 @@
   let {
     eyebrow = 'MCP server',
     title = 'Course authoring from your coding agent.',
-    description = 'Connect Cursor, Claude Code, Codex, or OpenCode to ClassroomIO and let your agent draft courses, reorganise sections, generate exercises, and publish them without leaving your terminal.',
+    description = 'Connect Cursor, Claude Code, Codex, or OpenCode to PathWorks and let your agent draft courses, reorganise sections, generate exercises, and publish them without leaving your terminal.',
     showTools = true
   } = $props();
 
   const mcpJsonLines = [
     '<span class="text-slate-500">{</span>',
     '  <span class="text-sky-300">"mcpServers"</span><span class="text-slate-500">: {</span>',
-    '    <span class="text-sky-300">"classroomio"</span><span class="text-slate-500">: {</span>',
+    '    <span class="text-sky-300">"pathworks"</span><span class="text-slate-500">: {</span>',
     '      <span class="text-sky-300">"command"</span><span class="text-slate-500">:</span> <span class="text-emerald-300">"npx"</span><span class="text-slate-500">,</span>',
-    '      <span class="text-sky-300">"args"</span><span class="text-slate-500">: [</span><span class="text-emerald-300">"-y"</span><span class="text-slate-500">,</span> <span class="text-emerald-300">"@classroomio/mcp"</span><span class="text-slate-500">],</span>',
-    '      <span class="text-sky-300">"env"</span><span class="text-slate-500">: { </span><span class="text-sky-300">"CLASSROOMIO_API_KEY"</span><span class="text-slate-500">: </span><span class="text-emerald-300">"&lt;your-mcp-key&gt;"</span><span class="text-slate-500"> }</span>',
+    '      <span class="text-sky-300">"args"</span><span class="text-slate-500">: [</span><span class="text-emerald-300">"-y"</span><span class="text-slate-500">,</span> <span class="text-emerald-300">"@pathworks/mcp"</span><span class="text-slate-500">],</span>',
+    '      <span class="text-sky-300">"env"</span><span class="text-slate-500">: { </span><span class="text-sky-300">"PATHWORKS_API_KEY"</span><span class="text-slate-500">: </span><span class="text-emerald-300">"&lt;your-mcp-key&gt;"</span><span class="text-slate-500"> }</span>',
     '    <span class="text-slate-500">}</span>',
     '  <span class="text-slate-500">}</span>',
     '<span class="text-slate-500">}</span>'

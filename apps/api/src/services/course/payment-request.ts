@@ -26,7 +26,7 @@ export async function createPaymentRequest(data: PaymentRequestData) {
     }
 
     const courseName = course.courseTitle || '';
-    const orgName = course.orgName || 'ClassroomIO';
+    const orgName = course.orgName || 'PathWorks';
     const groupId = course.groupId;
 
     if (!groupId) {
@@ -50,7 +50,7 @@ export async function createPaymentRequest(data: PaymentRequestData) {
           studentEmail: data.studentEmail,
           studentFullname: data.studentFullname
         },
-        from: buildEmailFromName('ClassroomIO'),
+        from: buildEmailFromName('PathWorks'),
         idempotencyKey: `payment-request:teacher:${data.courseId}:${data.studentEmail}`
       });
     } catch (emailError) {
@@ -66,7 +66,7 @@ export async function createPaymentRequest(data: PaymentRequestData) {
           studentFullname: data.studentFullname,
           orgName
         },
-        from: buildEmailFromName(`${orgName} - ClassroomIO`),
+        from: buildEmailFromName(`${orgName} - PathWorks`),
         replyTo: teacherEmail,
         idempotencyKey: `payment-request:student:${data.courseId}:${data.studentEmail}`
       });

@@ -86,7 +86,7 @@
     footerNextLabel = 'Next',
     courseSlug = null,
     poweredByLabel = 'Powered by',
-    poweredByBrand = 'ClassroomIO',
+    poweredByBrand = 'PathWorks',
     showPoweredBy = true,
     children,
     topRight,

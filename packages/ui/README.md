@@ -1,6 +1,6 @@
 # @cio/ui
 
-UI component library for ClassroomIO, built with Svelte 5 and Tailwind CSS.
+UI component library for PathWorks, built with Svelte 5 and Tailwind CSS.
 
 ## Package Information
 

@@ -136,7 +136,14 @@ export async function getCourse(courseId?: string, slug?: string, profileId?: st
     }
 
     const isContentGroupingEnabled = course.metadata?.isContentGroupingEnabled ?? DEFAULT_CONTENT_GROUPING;
-    const content = buildCourseContent(course.contentItems, isContentGroupingEnabled);
+    const currentMemberRoleId = profileId
+      ? course.group?.members.find((member) => member.profileId === profileId)?.roleId
+      : null;
+    const visibleContentItems =
+      currentMemberRoleId === ROLE.STUDENT
+        ? course.contentItems.filter((item) => item.type !== ContentType.Lesson || item.isPublished !== false)
+        : course.contentItems;
+    const content = buildCourseContent(visibleContentItems, isContentGroupingEnabled);
 
     const { contentItems, org: courseOrg, ...rest } = course;
 

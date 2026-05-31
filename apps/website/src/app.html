@@ -3,15 +3,49 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="theme-color" content="#333333" />
+    <meta name="theme-color" content="#1A5AD7" />
+
+    <script>
+      (() => {
+        const cryptoSource = globalThis.crypto || {};
+        const getRandomValues = cryptoSource.getRandomValues?.bind(cryptoSource);
+
+        if (!globalThis.crypto) {
+          Object.defineProperty(globalThis, 'crypto', {
+            value: cryptoSource,
+            configurable: true
+          });
+        }
+
+        if (!globalThis.crypto.randomUUID) {
+          globalThis.crypto.randomUUID = () => {
+            const bytes = new Uint8Array(16);
+
+            if (getRandomValues) {
+              getRandomValues(bytes);
+            } else {
+              for (let index = 0; index < bytes.length; index += 1) {
+                bytes[index] = Math.floor(Math.random() * 256);
+              }
+            }
+
+            bytes[6] = (bytes[6] & 0x0f) | 0x40;
+            bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+            const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+            return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+          };
+        }
+      })();
+    </script>
 
     <!-- Fonts as <link> (not @import in app.css) so Tailwind isn’t blocked on first paint -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Geist (site body font) — synchronous so first paint has the brand font. -->
+    <!-- Geist (site body font), synchronous so first paint has the brand font. -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" />
 
-    <!-- JetBrains Mono (code blocks) — non-blocking. Preload as a stylesheet, then swap rel to apply. -->
+    <!-- JetBrains Mono (code blocks), non-blocking. Preload as a stylesheet, then swap rel to apply. -->
     <link
       rel="preload"
       as="style"
@@ -25,40 +59,6 @@
       />
     </noscript>
 
-    <!-- <title>ClassroomIO –&nbsp;The Open Source Learning Management System for Companies</title>
-  <meta name="description" content="ClassroomIO" />
-  <meta name="application-name" content="ClassroomIO" />
-  <meta name="apple-mobile-web-app-title" content="ClassroomIO" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
-
-    <!-- Facebook Meta Tags -->
-    <!-- <meta property="og:url" content="https://www.classroomio.com/" />
-  <meta property="og:image" itemprop="image" content="https://brand.cdn.clsrio.com/og/classroomio-og.png" />
-  <meta property="og:title" content="ClassroomIO –&nbsp;The Open Source Learning Management System for Companies" />
-  <meta property="og:description"
-    content="A flexible, user-friendly platform for creating, managing, and delivering courses for companies and training organisations" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1920" />
-  <meta property="og:image:height" content="1080" />
-  <meta property="og:image:secure_url" itemprop="image" content="https://brand.cdn.clsrio.com/og/classroomio-og.png" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta property="twitter:domain" content="classroomio.com" />
-  <meta property="twitter:url" content="https://www.classroomio.com/" />
-  <meta name="twitter:title" content="ClassroomIO –&nbsp;The Open Source Learning Management System for Companies" />
-  <meta name="twitter:description"
-    content="Launch your bootcamp quichttps://brand.cdn.clsrio.com/og/classroomio-og.pngnline teaching platform." />
-  <meta name="twitter:image" content="https://classroomio.com/classroomio-opengraph-image.png" /> -->
-
-    <!-- <link rel="stylesheet" href="global.css"> -->
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
-    <link rel="icon" type="image/png" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/logo-32.png" />
-
-    <!-- <link rel="stylesheet" href="global.css"> -->
     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/logo-32.png" />

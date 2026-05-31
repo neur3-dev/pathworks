@@ -11,6 +11,8 @@
   }
 
   let { header = '', subText = '', btnLabel = '', link = '', demo = true }: Props = $props();
+
+  const isExternal = link.startsWith('http://') || link.startsWith('https://');
 </script>
 
 <div
@@ -45,7 +47,7 @@
     <Button
       variant="ghost"
       data-cal-config="'layout':'month_view'"
-      data-cal-link="classroomio/demo"
+      data-cal-link="pathworks/demo"
       class="relative z-10 mt-8 bg-white!"
     >
       {btnLabel}
@@ -54,9 +56,9 @@
     <Button
       href={link}
       variant="link"
-      target="_blank"
+      target={isExternal ? '_blank' : undefined}
       class="ui:bg-secondary ui:text-secondary-foreground relative z-10 mt-8"
-      rel="noopener noreferrer nofollow"
+      rel={isExternal ? 'noopener noreferrer nofollow' : undefined}
     >
       {btnLabel}
     </Button>

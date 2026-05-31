@@ -1,12 +1,12 @@
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
   import { IconButton } from '@cio/ui/custom/icon-button';
-  import SettingsIcon from '@lucide/svelte/icons/settings';
-  import HeartIcon from '@lucide/svelte/icons/heart';
-  import TrashIcon from '@lucide/svelte/icons/trash';
-  import EditIcon from '@lucide/svelte/icons/edit';
-  import SaveIcon from '@lucide/svelte/icons/save';
-  import SearchIcon from '@lucide/svelte/icons/search';
+  import { Settings as SettingsIcon } from '@lucide/svelte';
+  import { Heart as HeartIcon } from '@lucide/svelte';
+  import { Trash as TrashIcon } from '@lucide/svelte';
+  import { Edit as EditIcon } from '@lucide/svelte';
+  import { Save as SaveIcon } from '@lucide/svelte';
+  import { Search as SearchIcon } from '@lucide/svelte';
   import { FIELDS } from './fields';
 
   const { Story } = defineMeta({

@@ -9,7 +9,7 @@ import type {
   RevokeStudentInviteRequest,
   UpdatePeopleRequest
 } from '../utils/types';
-import { BaseApiWithErrors, classroomio } from '$lib/utils/services/api';
+import { BaseApiWithErrors, pathworks } from '$lib/utils/services/api';
 
 import type { TAddCourseMembers } from '@cio/utils/validation/course/people';
 import { snackbar } from '$features/ui/snackbar/store';
@@ -26,7 +26,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async list(courseId: string) {
     return this.execute<ListPeopleRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['members'].$get({
+        pathworks.course[':courseId']['members'].$get({
           param: { courseId }
         }),
       logContext: 'listing course members',
@@ -53,7 +53,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async add(courseId: string, members: TAddCourseMembers) {
     await this.execute<AddPeopleRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['members'].$post({
+        pathworks.course[':courseId']['members'].$post({
           param: { courseId },
           json: members
         }),
@@ -96,7 +96,7 @@ export class PeopleApi extends BaseApiWithErrors {
   ) {
     const result = await this.execute<CreateStudentInviteRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['invites'].$post({
+        pathworks.course[':courseId']['invites'].$post({
           param: { courseId },
           json: payload
         }),
@@ -128,7 +128,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async listStudentInvites(courseId: string) {
     const result = await this.execute<ListStudentInvitesRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['invites'].$get({
+        pathworks.course[':courseId']['invites'].$get({
           param: { courseId }
         }),
       logContext: 'listing student invites',
@@ -154,7 +154,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async revokeStudentInvite(courseId: string, inviteId: string) {
     const result = await this.execute<RevokeStudentInviteRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['invites'][':inviteId']['revoke'].$post({
+        pathworks.course[':courseId']['invites'][':inviteId']['revoke'].$post({
           param: { courseId, inviteId }
         }),
       logContext: 'revoking student invite',
@@ -180,7 +180,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async getStudentInviteAudit(courseId: string, inviteId: string) {
     const result = await this.execute<GetStudentInviteAuditRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['invites'][':inviteId']['audit'].$get({
+        pathworks.course[':courseId']['invites'][':inviteId']['audit'].$get({
           param: { courseId, inviteId }
         }),
       logContext: 'loading invite audit',
@@ -208,7 +208,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async update(courseId: string, memberId: string, data: Partial<{ roleId: number; email: string }>) {
     await this.execute<UpdatePeopleRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['members'][':memberId'].$put({
+        pathworks.course[':courseId']['members'][':memberId'].$put({
           param: { courseId, memberId },
           json: data
         }),
@@ -245,7 +245,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async delete(courseId: string, memberId: string) {
     await this.execute<DeletePeopleRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['members'][':memberId'].$delete({
+        pathworks.course[':courseId']['members'][':memberId'].$delete({
           param: { courseId, memberId }
         }),
       logContext: 'deleting course member',
@@ -273,7 +273,7 @@ export class PeopleApi extends BaseApiWithErrors {
   async getUserCourseAnalytics(courseId: string, userId: string) {
     return this.execute<GetUserCourseAnalyticsRequest>({
       requestFn: () =>
-        classroomio.course[':courseId']['members'][':userId']['analytics'].$get({
+        pathworks.course[':courseId']['members'][':userId']['analytics'].$get({
           param: { courseId, userId }
         }),
       logContext: 'fetching user course analytics',

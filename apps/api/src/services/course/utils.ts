@@ -10,6 +10,7 @@ export type CourseContentItem = {
   sectionId: string | null;
   isUnlocked: boolean | null;
   isComplete: boolean | null;
+  isPublished: boolean | null;
   lessonAt: string | null;
   callUrl: string | null;
   hasNoteContent: boolean | null;
@@ -70,6 +71,7 @@ function mapCourseContentItems(rows: CourseContentItemRow[]): CourseContentItem[
     sectionId: row.sectionId ?? null,
     isUnlocked: row.isUnlocked ?? null,
     isComplete: row.isComplete ?? null,
+    isPublished: row.isPublished ?? null,
     lessonAt: row.lessonAt ?? null,
     callUrl: row.callUrl ?? null,
     hasNoteContent: row.hasNoteContent ?? null,

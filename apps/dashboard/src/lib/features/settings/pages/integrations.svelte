@@ -56,7 +56,7 @@
       <Field.Group>
         <Field.Description>{$t('settings.integrations.sub_heading')}</Field.Description>
         <Field.Description>{$t('settings.integrations.step_authenticate')}</Field.Description>
-        <Button variant="outline" onclick={() => window.open('https://t.me/classroomio_bot', '_blank')}>
+        <Button variant="outline" onclick={() => window.open('https://t.me/pathworks_bot', '_blank')}>
           <span class="mr-2">{$t('settings.integrations.open_bot_button')}</span>
           <ArrowTopRight />
         </Button>

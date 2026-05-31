@@ -1,8 +1,8 @@
-import { classroomio, type InferResponseType } from '$lib/utils/services/api';
+import { pathworks, type InferResponseType } from '$lib/utils/services/api';
 
-export type GetUsageRequest = typeof classroomio.agent.usage.$get;
-export type GetPurchasedRequest = (typeof classroomio.agent.usage)['purchased']['$get'];
-export type GetLeaderboardRequest = (typeof classroomio.agent.usage)['leaderboard']['$get'];
+export type GetUsageRequest = typeof pathworks.agent.usage.$get;
+export type GetPurchasedRequest = (typeof pathworks.agent.usage)['purchased']['$get'];
+export type GetLeaderboardRequest = (typeof pathworks.agent.usage)['leaderboard']['$get'];
 
 type GetUsageSuccess = Extract<InferResponseType<GetUsageRequest>, { success: true }>;
 type GetPurchasedSuccess = Extract<InferResponseType<GetPurchasedRequest>, { success: true }>;

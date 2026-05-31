@@ -1,56 +1,58 @@
 export default {
   BASIC: {
-    NAME: 'Basic',
-    DESCRIPTION: 'Free tier plan for personal use, no credit card required.',
+    NAME: 'Student',
+    DESCRIPTION:
+      'Pre-ETS Vocational Rehabilitation only. Ages 13 to 17. A parent or guardian creates the account and adds the student.',
     PRICE: {
       CURRENCY: '$',
-      MONTHLY: '0',
-      YEARLY: '0',
+      MONTHLY: '19.99',
+      YEARLY: '199.90',
       IS_PREMIUM: false
     },
     FEATURES: [
-      'Unlimited Courses',
-      'Unlimited Q/A',
-      'Unlimited Programs',
-      '20 Students',
-      'Advanced Course Builder (no video upload)',
-      '500K AI credits / month',
-      'MCP access with 20 automation credits / month',
-      'ClassroomIO branding'
+      'For Pre-ETS VR students ages 13 to 17',
+      'Parent or guardian signs up first',
+      'Full PathWorks Pre-ETS module library',
+      'Untimed lessons, save and resume',
+      'No autoplay, content warnings on sensitive topics',
+      'Module completion emails to parent',
+      'Email support',
+      'Cancel anytime'
     ],
     CTA: {
-      LABEL: 'Signup Now',
-      LINK: '/signup?plan=free',
-      DASHBOARD_LABEL: 'Downgrade',
-      DASHBOARD_LINK: '#disabled',
-      IS_DISABLED: true
+      LABEL: 'Sign up as a parent',
+      LINK: '/signup?role=parent',
+      DASHBOARD_LABEL: 'Subscribe',
+      DASHBOARD_LINK: '',
+      IS_DISABLED: false
     }
   },
   EARLY_ADOPTER: {
-    NAME: 'Early Adopters',
-    DESCRIPTION: 'For fast growing teaching businesses that aim to scale.',
+    NAME: 'Adult',
+    DESCRIPTION:
+      'Adults 18 and over. Same plan for VR participants and general work-readiness learners, laid off, unemployed, career change.',
     PRICE: {
       CURRENCY: '$',
-      MONTHLY: '35',
-      YEARLY: '350',
+      MONTHLY: '39.99',
+      YEARLY: '399.90',
       IS_PREMIUM: false
     },
     FEATURES: [
-      'Everything in Basic',
-      'Unlimited Collaborators',
-      '10K Students',
-      'Course Builder with Video Upload & Certificate',
-      '3M AI credits / month',
-      'MCP access with 500 automation credits / month',
-      'Custom Branding',
-      'Custom Domain',
-      'API with limits',
-      'Includes all upcoming features'
+      'For ages 18 and over',
+      'Self-signup, no parent or counselor required',
+      'Full module library: VR-track and work-readiness-track content',
+      'Industry-aligned curriculum: manufacturing, IT and AI, energy, logistics, and more',
+      'Untimed lessons, save and resume',
+      'No autoplay, content warnings on sensitive topics',
+      'Workplace negotiation, asking for accommodations, professional communication',
+      'Career-planning prompts and self-advocacy practice',
+      'Priority email support',
+      'Cancel anytime'
     ],
     CTA: {
-      LABEL: 'I want in 😍',
-      LINK: '/signup?plan=early-adopter',
-      DASHBOARD_LABEL: 'Upgrade now',
+      LABEL: 'Sign up',
+      LINK: '/signup?role=adult',
+      DASHBOARD_LABEL: 'Upgrade',
       DASHBOARD_LINK: '',
       IS_DISABLED: false,
       PRODUCT_ID: '1e11ad75-c422-41c1-a541-0e989281276c',
@@ -58,28 +60,32 @@ export default {
     }
   },
   ENTERPRISE: {
-    NAME: 'Enterprise',
-    DESCRIPTION: 'Best suited for larger businesses that need more control',
+    NAME: 'Counselor, Advisor & Agency',
+    DESCRIPTION:
+      'For VR counselors, workforce development advisors, and state agencies enrolling participants. VR or general work readiness, same dashboard.',
     PRICE: {
       CURRENCY: '',
-      MONTHLY: 'Request Pricing',
-      YEARLY: 'Request Pricing',
+      MONTHLY: 'Contact us',
+      YEARLY: 'Contact us',
       IS_PREMIUM: true
     },
     FEATURES: [
-      'Everything in Early Adopters plus:',
-      'Unlimited students',
-      '15M AI credits / month',
-      'Unlimited API requests',
-      'SSO',
-      '24/7 Support',
-      'Need on-prem deployment, SSO, or a commercial license? Contact us.'
+      'Bulk participant seats (5 or more)',
+      'VR flow: upload IPE / approval documentation per participant',
+      'Workforce dev flow: simpler referral form, no IPE required',
+      'Counselor dashboard with per-participant progress',
+      'WIOA Pre-ETS reporting and completion evidence (VR caseload)',
+      'General workforce-readiness reporting (advisor caseload)',
+      'WCAG 2.1 AA conformance statement (VPAT)',
+      'SSO and admin controls',
+      'BAA and DPA available',
+      'Dedicated success manager'
     ],
     CTA: {
-      LABEL: 'Contact Us',
-      LINK: 'https://cal.com/classroomio/enterprise',
-      DASHBOARD_LABEL: 'Contact Us',
-      DASHBOARD_LINK: 'https://cal.com/classroomio/enterprise',
+      LABEL: 'Contact us',
+      LINK: 'https://cal.com/pathworks/enterprise',
+      DASHBOARD_LABEL: 'Contact us',
+      DASHBOARD_LINK: 'https://cal.com/pathworks/enterprise',
       IS_DISABLED: false
     }
   }

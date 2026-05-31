@@ -35,7 +35,7 @@
         title={iframeTitle}
         class="ui:block ui:h-full ui:min-h-[240px] ui:w-full ui:border-0"
         style:aspect-ratio="16 / 9"
-        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+        allow="fullscreen; encrypted-media; picture-in-picture"
         allowfullscreen
       ></iframe>
     </div>

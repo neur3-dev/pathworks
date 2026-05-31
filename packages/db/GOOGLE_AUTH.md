@@ -1,23 +1,23 @@
 # Google OAuth across multiple apex domains
 
-This doc explains how Google sign-in works for ClassroomIO across three different host families:
+This doc explains how Google sign-in works for PathWorks across three different host families:
 
-- `app.classroomio.com` — admin dashboard
-- `<orgSiteName>.myclassroomio.com` — free-tier tenant sites
+- `app.pathworks.com` — admin dashboard
+- `<orgSiteName>.mypathworks.com` — free-tier tenant sites
 - `<customer-owned>.com` — BYOD custom domains via Cloudflare for SaaS
 
 All three need to sign users in via Google, set host-only auth cookies on the originating host, and land the user back on the page they started from.
 
 ## The problem
 
-Google OAuth requires every callback URL to be **registered ahead of time** in Google Cloud Console. Wildcards are not allowed in standard apps. We can't register `*.myclassroomio.com` or every BYOD customer's domain.
+Google OAuth requires every callback URL to be **registered ahead of time** in Google Cloud Console. Wildcards are not allowed in standard apps. We can't register `*.mypathworks.com` or every BYOD customer's domain.
 
-We also can't share auth cookies across apex domains: a cookie on `api.classroomio.com` won't be sent to a request on `acme.myclassroomio.com`. Even setting `Domain=.myclassroomio.com` won't help — the OAuth callback always lands on `api.classroomio.com` per the registered URI, and that response can only set cookies for `api.classroomio.com`.
+We also can't share auth cookies across apex domains: a cookie on `api.pathworks.com` won't be sent to a request on `acme.mypathworks.com`. Even setting `Domain=.mypathworks.com` won't help — the OAuth callback always lands on `api.pathworks.com` per the registered URI, and that response can only set cookies for `api.pathworks.com`.
 
 ## The architecture
 
 ```
-acme.myclassroomio.com                         api.classroomio.com                 Google
+acme.mypathworks.com                         api.pathworks.com                 Google
 ─────────────────────────                       ─────────────────────               ──────
 
 POST /proxy/api/auth/sign-in/social
@@ -29,10 +29,10 @@ POST /proxy/api/auth/sign-in/social
                                                        │ oAuthProxy plugin sees
                                                        │ currentURL ≠ productionURL,
                                                        │ rewrites callbackURL to
-                                                       │   acme.myclassroomio.com/
+                                                       │   acme.mypathworks.com/
                                                        │     api/auth/oauth-proxy-callback
                                                        │ and forces redirect_uri to
-                                                       │   api.classroomio.com/.../callback/google
+                                                       │   api.pathworks.com/.../callback/google
                                                        ▼
                                               ◀───── 200 { url: google authorize URL } ─────────────
    browser navigates to Google ────────────────────────────────────────────────────────────────▶
@@ -40,7 +40,7 @@ POST /proxy/api/auth/sign-in/social
                                                                                                   │ user
                                                                                                   │ consents
                                                                                                   │
-   ◀────────────────────────────────────────── 302 redirect_uri (api.classroomio.com/...) ───────
+   ◀────────────────────────────────────────── 302 redirect_uri (api.pathworks.com/...) ───────
                                                        │
    GET /api/auth/callback/google?state=...&code=... ──▶│
                                                        │
@@ -76,16 +76,16 @@ POST /proxy/api/auth/sign-in/social
                                                        │   tenant host)
                                                        ▼
    ◀────────────────────────────────────── 302 to original callbackURL ──────────────────────────
-   browser lands on acme.myclassroomio.com/, logged in.
+   browser lands on acme.mypathworks.com/, logged in.
 ```
 
-The same flow works for `app.classroomio.com` (the proxy-skip branch in `oAuthProxy` kicks in when `currentURL === productionURL`) and for BYOD domains (`learn.acme.com`) routed through Cloudflare for SaaS.
+The same flow works for `app.pathworks.com` (the proxy-skip branch in `oAuthProxy` kicks in when `currentURL === productionURL`) and for BYOD domains (`learn.acme.com`) routed through Cloudflare for SaaS.
 
 ## Pieces and where they live
 
 | Concern                                             | File                                                                       | Notes                                                                                                                                                                                        |
 | --------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Better Auth + `oAuthProxy` plugin registration      | `packages/db/src/auth.ts`                                                  | `productionURL: CONSTANTS.BASE_URL` makes `api.classroomio.com` the canonical OAuth-callback URL.                                                                                            |
+| Better Auth + `oAuthProxy` plugin registration      | `packages/db/src/auth.ts`                                                  | `productionURL: CONSTANTS.BASE_URL` makes `api.pathworks.com` the canonical OAuth-callback URL.                                                                                            |
 | Auth endpoint mount in Hono                         | `apps/api/src/app.ts` (`/api/auth/*` handler)                              | Rewrites `request.url` from `X-Forwarded-Host`/`-Proto` so the plugin sees the tenant host the user actually visited.                                                                        |
 | Cookies → token swap (outbound + inbound)           | `apps/api/src/app.ts` (`/api/auth/*` handler)                              | Stashes the encrypted `cookies=…` blob in Redis under a short token, drops Location header from 10KB+ to ~150 bytes.                                                                         |
 | Redis storage helpers                               | `apps/api/src/utils/redis/oauth-handoff.ts`                                | `storeHandoffPayload` (2-minute TTL) + `consumeHandoffPayload` (single-use, GET-and-DEL).                                                                                                    |
@@ -97,7 +97,7 @@ The same flow works for `app.classroomio.com` (the proxy-skip branch in `oAuthPr
 
 ## Why the Redis handoff exists
 
-Better Auth's `oAuthProxy` plugin handles cross-origin OAuth by encrypting **every Set-Cookie** the OAuth callback emits — `session_token`, `session_data`, `account_data`, `dontRememberToken` — into a single `cookies=<huge>` query parameter on the redirect URL. For ClassroomIO with `cookieCache.enabled: true` and `storeAccountCookie: true`, that blob hits ~5KB raw / ~10KB hex-encoded.
+Better Auth's `oAuthProxy` plugin handles cross-origin OAuth by encrypting **every Set-Cookie** the OAuth callback emits — `session_token`, `session_data`, `account_data`, `dontRememberToken` — into a single `cookies=<huge>` query parameter on the redirect URL. For PathWorks with `cookieCache.enabled: true` and `storeAccountCookie: true`, that blob hits ~5KB raw / ~10KB hex-encoded.
 
 Some hop between Render and the browser (Render's edge proxy, suspect HTTP header size limit) silently drops responses with a Location header that big — the API thinks it sent a 302, but the browser never receives one. The OAuth flow hangs.
 
@@ -113,10 +113,10 @@ Single-use (GET-and-DEL on read) and 2-minute TTL keep the surface small.
 
 You only ever need **one** OAuth client and **one** registered callback URI for unlimited tenants:
 
-- **Authorized JavaScript origins**: `https://api.classroomio.com`
-- **Authorized redirect URIs**: `https://api.classroomio.com/api/auth/callback/google`
+- **Authorized JavaScript origins**: `https://api.pathworks.com`
+- **Authorized redirect URIs**: `https://api.pathworks.com/api/auth/callback/google`
 
-Do **not** add tenant subdomains, `*.myclassroomio.com`, or BYOD customer domains — Google rejects wildcards for standard apps and the `oAuthProxy` plugin handles the redirect to the original tenant host on its own.
+Do **not** add tenant subdomains, `*.mypathworks.com`, or BYOD customer domains — Google rejects wildcards for standard apps and the `oAuthProxy` plugin handles the redirect to the original tenant host on its own.
 
 ### Sensitive scopes warning
 
@@ -129,7 +129,7 @@ On the **API** Render service:
 | Var                                         | Value                         | Why                                                                                                                                           |
 | ------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `BETTER_AUTH_SECRET`                        | random 32+ char string        | Encrypts the oauth-proxy cookies blob and signs sessions.                                                                                     |
-| `PUBLIC_SERVER_URL`                         | `https://api.classroomio.com` | Better Auth's `baseURL` and the `oAuthProxy` plugin's `productionURL`.                                                                        |
+| `PUBLIC_SERVER_URL`                         | `https://api.pathworks.com` | Better Auth's `baseURL` and the `oAuthProxy` plugin's `productionURL`.                                                                        |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | from Google Cloud Console     | OAuth client credentials.                                                                                                                     |
 | `REDIS_URL`                                 | Render Key Value internal URL | Required for the cookies-→-token handoff. Without it the handoff falls back to inline cookies and the OAuth flow breaks on tenant subdomains. |
 
@@ -139,8 +139,8 @@ On the **dashboard** Render service:
 | -------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `HOST_HEADER`        | `x-forwarded-host`            | SvelteKit adapter-node reads the effective host from this so `event.url.host` is the tenant/admin host the user is on.                         |
 | `PROTOCOL_HEADER`    | `x-forwarded-proto`           | Same, for protocol.                                                                                                                            |
-| `PRIVATE_APP_HOST`   | `myclassroomio.com`           | Used by `getSubdomain` in `layout-setup.ts` to extract the org siteName.                                                                       |
-| `PUBLIC_SERVER_URL`  | `https://api.classroomio.com` | Used at runtime only as a fallback / for `authClient`'s SSR-time URL constructor; browser code uses `${origin}/proxy` via `getRequestBaseUrl`. |
+| `PRIVATE_APP_HOST`   | `mypathworks.com`           | Used by `getSubdomain` in `layout-setup.ts` to extract the org siteName.                                                                       |
+| `PUBLIC_SERVER_URL`  | `https://api.pathworks.com` | Used at runtime only as a fallback / for `authClient`'s SSR-time URL constructor; browser code uses `${origin}/proxy` via `getRequestBaseUrl`. |
 | `PRIVATE_SERVER_URL` | API's internal Render URL     | Server-side dashboard → API calls bypass the public edge.                                                                                      |
 
 ## Verifying the flow

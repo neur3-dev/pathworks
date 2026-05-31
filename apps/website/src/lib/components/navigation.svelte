@@ -1,26 +1,16 @@
 <script lang="ts">
+  import Briefcase from '@lucide/svelte/icons/briefcase';
   import ChevronDown from '@lucide/svelte/icons/chevron-down';
-  import Gamepad from '@lucide/svelte/icons/gamepad';
-  import Github from '@lucide/svelte/icons/github';
-  import Hourglass from '@lucide/svelte/icons/hourglass';
-  import LoaderCircle from '@lucide/svelte/icons/loader-circle';
-  import LocateFixed from '@lucide/svelte/icons/locate-fixed';
+  import ClipboardList from '@lucide/svelte/icons/clipboard-list';
+  import Heart from '@lucide/svelte/icons/heart';
   import Menu from '@lucide/svelte/icons/menu';
-  import MessagesSquare from '@lucide/svelte/icons/messages-square';
-  import MousePointerClick from '@lucide/svelte/icons/mouse-pointer-click';
-  import Server from '@lucide/svelte/icons/server';
   import Sparkles from '@lucide/svelte/icons/sparkles';
-  import Timer from '@lucide/svelte/icons/timer';
-  import Webhook from '@lucide/svelte/icons/webhook';
   import X from '@lucide/svelte/icons/x';
   import { page } from '$app/state';
   import { fly } from 'svelte/transition';
   import type { HTMLAttributes } from 'svelte/elements';
   import * as NavigationMenu from '@cio/ui/base/navigation-menu';
-  import LibraryBigIcon from '@lucide/svelte/icons/library-big';
   import { cn } from '@cio/ui/tools';
-
-  let { stars }: { stars: number } = $props();
 
   type ListItemProps = HTMLAttributes<HTMLAnchorElement> & {
     title: string;
@@ -64,110 +54,44 @@
     expandedMobileGroup = null;
   }
 
-  const solutions: NavCollectionItem[] = [
+  const audiences: NavCollectionItem[] = [
     {
-      key: 'customer-education',
-      title: 'Customer Education',
-      subtitle: 'Customer academies for SaaS.',
-      href: '/customer-education'
+      key: 'for-counselors',
+      title: 'For Counselors & Advisors',
+      subtitle: 'VR caseload or workforce dev referral.',
+      href: '/for-counselors'
     },
     {
-      key: 'compliance-training',
-      title: 'Compliance Training',
-      subtitle: 'Turn policies and SOPs into proof.',
-      href: '/compliance-training'
+      key: 'for-parents',
+      title: 'For Parents',
+      subtitle: 'Set up your Pre-ETS student (13–17).',
+      href: '/for-parents'
     },
     {
-      key: 'partner-training',
-      title: 'Partner Training',
-      subtitle: 'A separate academy for your channel.',
-      href: '/partner-training'
-    }
-  ];
-
-  const developers: NavCollectionItem[] = [
-    {
-      key: 'automation',
-      title: 'Automation',
-      subtitle: 'API, Webhooks, and MCP server.',
-      href: '/automation'
+      key: 'for-participants',
+      title: 'For VR Participants',
+      subtitle: 'Adults with a disability barrier.',
+      href: '/for-participants'
     },
     {
-      key: 'self-hosting',
-      title: 'Self-hosting & Docs',
-      subtitle: 'Run ClassroomIO in your own VPC.',
-      href: 'https://classroomio.com/docs'
-    },
-    {
-      key: 'mcp-recipes',
-      title: 'MCP Recipes',
-      subtitle: 'Ready-to-run agent prompts.',
-      href: '/mcp-recipes'
-    },
-    {
-      key: 'github',
-      title: 'GitHub',
-      subtitle: 'Star, read the source, fork.',
-      href: '/github'
-    }
-  ];
-
-  const freeTools: NavCollectionItem[] = [
-    {
-      key: 'progress',
-      title: 'Progress Tracker',
-      subtitle: 'Monitor learning journeys.',
-      href: '/tools/progress'
-    },
-    {
-      key: 'pomodoro',
-      title: 'Pomodoro Timer',
-      subtitle: 'Boost focus and productivity.',
-      href: '/tools/pomodoro'
-    },
-    {
-      key: 'name-picker',
-      title: 'Name Picker',
-      subtitle: 'Randomly select names.',
-      href: '/tools/name-picker'
-    },
-    {
-      key: 'stopwatch',
-      title: 'Activity Stopwatch',
-      subtitle: 'Track time accurately.',
-      href: '/tools/stopwatch'
-    },
-    {
-      key: 'tic-tac-toe',
-      title: 'Tic Tac Toe',
-      subtitle: 'Play the classic game.',
-      href: '/tools/tic-tac-toe'
+      key: 'for-job-seekers',
+      title: 'For Job Seekers',
+      subtitle: 'Laid off, unemployed, career change.',
+      href: '/for-job-seekers'
     }
   ];
 
   const navItems: NavItem[] = [
     {
-      key: 'solutions',
-      title: 'Solutions',
+      key: 'audiences',
+      title: 'Who PathWorks is for',
       href: '/',
-      items: solutions
+      items: audiences
     },
     {
-      key: 'developers',
-      title: 'Developers',
-      href: '/automation',
-      items: developers
-    },
-    {
-      key: 'free-tools',
-      title: 'Free Tools',
-      href: '/tools',
-      items: freeTools
-    },
-    {
-      key: 'blog',
-      title: 'Blog',
-      href: '/blog'
+      key: 'industries',
+      title: 'Industries',
+      href: '/industries'
     },
     {
       key: 'pricing',
@@ -176,21 +100,11 @@
     }
   ];
 
-  let isSolutionsActive = $derived(!!solutions.some((s) => activeLink.includes(s.key)));
-  let isDevelopersActive = $derived(!!developers.some((d) => activeLink.includes(d.key)));
-  let isFreeToolsActive = $derived(activeLink.startsWith('/tools'));
+  let isAudiencesActive = $derived(!!audiences.some((a) => activeLink.startsWith(a.href)));
 
   function isNavItemActive(navItem: NavItem) {
-    if (navItem.key === 'solutions') {
-      return isSolutionsActive;
-    }
-
-    if (navItem.key === 'developers') {
-      return isDevelopersActive;
-    }
-
-    if (navItem.key === 'free-tools') {
-      return isFreeToolsActive;
+    if (navItem.key === 'audiences') {
+      return isAudiencesActive;
     }
 
     return navItem.href ? activeLink.startsWith(navItem.href) : false;
@@ -207,30 +121,14 @@
           {...restProps}
         >
           <div class="shrink-0">
-            {#if key === 'compliance-training'}
-              <LibraryBigIcon size={24} />
-            {:else if key === 'partner-training'}
-              <LocateFixed size={24} />
-            {:else if key === 'customer-education'}
-              <MessagesSquare size={24} />
-            {:else if key === 'automation'}
-              <Webhook size={24} />
-            {:else if key === 'self-hosting'}
-              <Server size={24} />
-            {:else if key === 'mcp-recipes'}
+            {#if key === 'for-counselors'}
+              <ClipboardList size={24} />
+            {:else if key === 'for-parents'}
+              <Heart size={24} />
+            {:else if key === 'for-participants'}
               <Sparkles size={24} />
-            {:else if key === 'github'}
-              <Github size={24} />
-            {:else if key === 'progress'}
-              <LoaderCircle size={24} />
-            {:else if key === 'pomodoro'}
-              <Hourglass size={24} />
-            {:else if key === 'name-picker'}
-              <MousePointerClick size={24} />
-            {:else if key === 'stopwatch'}
-              <Timer size={24} />
-            {:else if key === 'tic-tac-toe'}
-              <Gamepad size={24} />
+            {:else if key === 'for-job-seekers'}
+              <Briefcase size={24} />
             {/if}
           </div>
           <div class="ml-3 text-start">
@@ -251,8 +149,8 @@
   <div class="mx-auto flex w-full items-center justify-between gap-20 px-4 py-1 lg:w-[90%] lg:px-0">
     <a href="/" class="w-[10%]">
       <div class="flex w-full items-center">
-        <img loading="lazy" width="28" height="28" src="/logo-512.png" alt="classroomio logo" class="w-7" />
-        <h1 class="ml-2 text-base font-medium">ClassroomIO</h1>
+        <img loading="lazy" width="28" height="28" src="/logo-512.png" alt="PathWorks logo" class="w-7" />
+        <h1 class="ml-2 text-base font-medium">PathWorks</h1>
       </div>
     </a>
 
@@ -304,33 +202,11 @@
     </section>
 
     <div class="hidden! flex-row items-center justify-between gap-3 lg:flex!">
-      <a href="/discord" target="_blank" class="flex items-center transition-opacity duration-200 hover:opacity-80">
-        <img loading="lazy" alt="discord logo" src="/discord-blue.png" class="h-5 w-6 cursor-pointer" />
-      </a>
-      <div class="flex items-center">
-        <a
-          href="/github"
-          target="_blank"
-          class="group flex items-center gap-1.5 rounded-md p-2 transition-all duration-200 ease-in-out hover:bg-gray-100"
-        >
-          <img
-            loading="lazy"
-            alt="github logo"
-            src="/github-mark.png"
-            class="h-5 w-5 cursor-pointer transition-transform duration-200 group-hover:scale-110"
-          />
-          <span
-            class="text-sm leading-none font-medium text-gray-600 transition-colors duration-200 group-hover:text-black"
-          >
-            {stars}
-          </span>
-        </a>
-      </div>
       <a
         class="text-sm font-medium transition-opacity duration-200 after:ml-2 after:content-['→'] hover:opacity-80"
-        href="https://app.classroomio.com"
+        href="https://pathworks.neur3.dev/login"
       >
-        Dashboard
+        Sign in
       </a>
     </div>
 
@@ -345,7 +221,7 @@
         class="absolute top-0 right-0 h-screen w-[60%] border-2 bg-white px-3 pt-3 pb-2 sm:block md:w-[40%] md:p-7 lg:hidden"
       >
         <div class="mb-5 flex justify-between py-2">
-          <img loading="lazy" width="20" height="20" src="/logo-512.png" alt="classroomio logo" class="w-[15%]" />
+          <img loading="lazy" width="20" height="20" src="/logo-512.png" alt="PathWorks logo" class="w-[15%]" />
           <button class="mr-5" onclick={handleShowSolutions}>
             <X size={24} />
           </button>
@@ -398,34 +274,10 @@
         </nav>
         <div class="mt-5 flex flex-col items-start gap-y-2 border-t pt-5">
           <a
-            href="/discord"
-            target="_blank"
-            class="flex w-full items-center rounded-md px-4 py-4 text-left text-sm transition-all duration-200 hover:bg-gray-100 md:text-lg"
-          >
-            <img loading="lazy" alt="discord logo" src="/discord-blue.png" class="mr-2 h-5 w-6 cursor-pointer" />
-            <span>Discord</span>
-          </a>
-          <a
-            href="/github"
-            target="_blank"
-            class="group flex w-full items-center rounded-md px-4 py-4 text-left text-sm transition-all duration-200 hover:bg-gray-100 md:text-lg"
-          >
-            <img
-              loading="lazy"
-              alt="github logo"
-              src="/github-mark.png"
-              class="h-5 w-5 cursor-pointer transition-transform duration-200 group-hover:scale-110"
-            />
-            <span class="ml-3 transition-colors duration-200 group-hover:text-black">Github</span>
-            <span class="ml-1 text-sm font-medium text-gray-600 transition-colors duration-200 group-hover:text-black"
-              >({stars})</span
-            >
-          </a>
-          <a
             class="w-full rounded-md px-4 py-4 text-left text-sm font-semibold transition-all duration-200 after:ml-2 after:content-['→'] hover:bg-gray-100 md:text-lg"
-            href="https://app.classroomio.com"
+            href="https://pathworks.neur3.dev/login"
           >
-            Dashboard
+            Sign in
           </a>
         </div>
       </div>

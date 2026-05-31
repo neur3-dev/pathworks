@@ -18,7 +18,7 @@
       return goto('/');
     }
 
-    return goto('https://classroomio.com');
+    return goto('https://pathworks.neur3.dev');
   }
 </script>
 

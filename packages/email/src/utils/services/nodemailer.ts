@@ -16,16 +16,21 @@ const setupTransporter = async () => {
   try {
     const smtpPort = parseInt(env.SMTP_PORT || '465', 10);
     const useImplicitTls = smtpPort === 465;
+    const insecure = env.SMTP_INSECURE === 'true';
 
     transporter = nodemailer.createTransport({
       host: env.SMTP_HOST,
       port: smtpPort,
-      secure: useImplicitTls,
-      requireTLS: !useImplicitTls,
+      secure: useImplicitTls && !insecure,
+      requireTLS: !useImplicitTls && !insecure,
+      // ignoreTLS makes nodemailer skip STARTTLS even when the server advertises
+      // it - mailpit advertises but doesn't actually implement the upgrade.
+      ignoreTLS: insecure,
       auth: {
         user: env.SMTP_USER,
         pass: env.SMTP_PASSWORD
-      }
+      },
+      ...(insecure ? { tls: { rejectUnauthorized: false } } : {})
     });
 
     await transporter.verify();
