@@ -1,6 +1,7 @@
 import * as schema from '@db/schema';
 import { db } from '@db/drizzle';
 import { and, eq } from 'drizzle-orm';
+import { ROLE } from '@cio/utils/constants';
 
 const INVITE_EXPIRY_DAYS = 14;
 
@@ -136,4 +137,66 @@ export async function getBuyerById(id: string): Promise<BuyerLookup | null> {
     .limit(1);
 
   return row ?? null;
+}
+
+/**
+ * Returns the first org the buyer belongs to, used to place a newly-accepted
+ * participant in the same org.
+ */
+export async function getBuyerOrgId(buyerUserId: string): Promise<string | null> {
+  const [row] = await db
+    .select({ organizationId: schema.organizationmember.organizationId })
+    .from(schema.organizationmember)
+    .where(eq(schema.organizationmember.profileId, buyerUserId))
+    .orderBy(schema.organizationmember.roleId)
+    .limit(1);
+
+  return row?.organizationId ?? null;
+}
+
+/**
+ * Add an accepted-invite participant to an org as a student. No-ops if
+ * already a member so the call is safe to repeat.
+ */
+export async function addParticipantToOrg(
+  orgId: string,
+  participantUserId: string,
+  participantEmail: string
+): Promise<void> {
+  const [existing] = await db
+    .select({ id: schema.organizationmember.id })
+    .from(schema.organizationmember)
+    .where(
+      and(
+        eq(schema.organizationmember.organizationId, orgId),
+        eq(schema.organizationmember.profileId, participantUserId)
+      )
+    )
+    .limit(1);
+
+  if (existing) return;
+
+  await db.insert(schema.organizationmember).values({
+    organizationId: orgId,
+    profileId: participantUserId,
+    email: participantEmail,
+    roleId: ROLE.STUDENT,
+    verified: true
+  });
+}
+
+/**
+ * Fallback org resolution for participants who were accepted before the
+ * org-membership step was added. Looks up the org via the seat → buyer path.
+ */
+export async function getParticipantOrgIdViaSeat(participantUserId: string): Promise<string | null> {
+  const [row] = await db
+    .select({ organizationId: schema.organizationmember.organizationId })
+    .from(schema.seat)
+    .innerJoin(schema.organizationmember, eq(schema.organizationmember.profileId, schema.seat.buyerUserId))
+    .where(and(eq(schema.seat.participantUserId, participantUserId), eq(schema.seat.status, 'active')))
+    .orderBy(schema.organizationmember.roleId)
+    .limit(1);
+
+  return row?.organizationId ?? null;
 }

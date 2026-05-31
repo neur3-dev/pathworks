@@ -1,4 +1,11 @@
-import { activateSeat, getBuyerById, getSeatByToken, linkParticipantToBuyer } from '@cio/db/queries';
+import {
+  activateSeat,
+  addParticipantToOrg,
+  getBuyerById,
+  getBuyerOrgId,
+  getSeatByToken,
+  linkParticipantToBuyer
+} from '@cio/db/queries';
 import { env } from '$env/dynamic/public';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -52,7 +59,7 @@ export const load: PageServerLoad = async ({ params }) => {
  * (__dirname undefined in ES module scope).
  */
 export const actions: Actions = {
-  default: async ({ params, request, fetch: localFetch, cookies }) => {
+  default: async ({ params, request, fetch: localFetch }) => {
     const data = await request.formData();
     const name = String(data.get('name') ?? '').trim();
     const password = String(data.get('password') ?? '');
@@ -146,6 +153,22 @@ export const actions: Actions = {
         buyerKind,
         buyerId: buyer.id
       });
+    }
+
+    // Add participant to the buyer's org as a student so they can access
+    // learning paths and courses immediately after logging in.
+    try {
+      const orgId = await getBuyerOrgId(buyer.id);
+      if (orgId) {
+        await addParticipantToOrg(orgId, participantId, row.participantEmail);
+      } else {
+        console.warn('[accept-invite] buyer has no org — participant will not see modules', {
+          buyerId: buyer.id,
+          participantId
+        });
+      }
+    } catch (err) {
+      console.error('[accept-invite] addParticipantToOrg failed', err);
     }
 
     // Redirect to login since we couldn't forward the session cookie cleanly

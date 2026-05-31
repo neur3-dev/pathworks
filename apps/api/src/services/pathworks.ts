@@ -130,5 +130,19 @@ export async function resolveParticipantOrgId(userId: string, requestedOrgId?: s
     LIMIT 1
   `)) as unknown as Array<{ orgId: string }>;
 
-  return rows[0]?.orgId ?? null;
+  if (rows[0]?.orgId) return rows[0].orgId;
+
+  // Fallback for participants who accepted an invite before the org-membership
+  // step was added: resolve via their active seat → buyer's org.
+  const seatRows = (await db.execute(sql`
+    SELECT om.organization_id AS "orgId"
+    FROM seat s
+    JOIN organizationmember om ON om.profile_id = s.buyer_user_id
+    WHERE s.participant_user_id = ${userId}
+      AND s.status = 'active'
+    ORDER BY om.role_id ASC
+    LIMIT 1
+  `)) as unknown as Array<{ orgId: string }>;
+
+  return seatRows[0]?.orgId ?? null;
 }
