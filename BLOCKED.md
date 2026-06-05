@@ -133,34 +133,29 @@ squash commit `ca62bdc`). These checks failed on the PR but were bypassed via
 `--admin` because they are pre-existing, not introduced by the seat/onboarding
 fixes that PR shipped.
 
-## CI-1: Typecheck job missing workspace build order
+## CI-1: Typecheck job missing workspace build order — RESOLVED 2026-06-05
 
 **Workflow:** `.github/workflows/pathworks-ci.yml` → `Typecheck + build` job
-**Failing run example:** https://github.com/neur3-dev/pathworks/actions/runs/26703732170/job/78701074017
 
-The "Typecheck core packages" step runs `tsc` against `@cio/db`, `@cio/api`,
-etc. without first building their workspace dependencies. Result: dozens of
-`TS2307: Cannot find module '@cio/email'` / `'@cio/utils/constants'` /
-`'@cio/utils/validation/organization'` errors that don't reproduce locally
-(local builds resolve them through `dist/`).
+The "Typecheck core packages" step ran `pnpm --filter X build` for db/api/
+dashboard sequentially, which skips transitive workspace deps and failed with
+`TS2307: Cannot find module '@cio/email'` / `'@cio/utils/constants'` etc.
 
-**Fix direction:** prepend a `pnpm -r --filter ./packages/* build` (or a
-turbo-aware `pnpm turbo run build --filter=...^...`) before the typecheck
-step so dependent packages' `dist/` outputs exist when downstream `tsc`
-runs. Alternative: use TS project references / `tsc -b` from the repo root
-so the build order is implicit.
+**Fix applied:** replaced the three sequential filters with a single
+turbo-aware `pnpm turbo run build --filter=@cio/dashboard...`. The `...` pulls
+in the full upstream graph and turbo's `build → ^build` pipeline builds
+dependent packages' `dist/` outputs first. Verified locally: `pnpm build`
+→ 20/20 tasks successful.
 
-## CI-2: Two real Svelte lint errors
+## CI-2: Two real Svelte lint errors — RESOLVED 2026-06-05
 
 **Workflow:** `.github/workflows/pathworks-ci.yml` → `Format + PathWorks lint` job
-**Failing run example:** https://github.com/neur3-dev/pathworks/actions/runs/26703732170/job/78701074022
 
-ESLint reports two violations in dashboard svelte files (not the seat work):
+ESLint reported two violations:
 
-- `svelte/prefer-svelte-reactivity` — "Found a mutable instance of the
-  built-in URL class. Use SvelteURL instead" (line 77:17)
-- `svelte/require-each-key` — "Each block should have a key" (line 107:23)
+- `svelte/prefer-svelte-reactivity` — `apps/dashboard/src/lib/features/pathworks/api.svelte.ts:77`
+  (mutable `new URL`) → swapped for `SvelteURL` from `svelte/reactivity`.
+- `svelte/require-each-key` — `apps/dashboard/src/routes/counselor/+page.svelte:107`
+  → added stable `(reasonIndex)` key to the `{#each}` block.
 
-The exact files are in the job log. Fix is mechanical: swap `new URL(...)`
-for `SvelteURL` from `svelte/reactivity`, and add a stable key to the
-`{#each}` block.
+Verified locally: the exact CI eslint command exits 0.

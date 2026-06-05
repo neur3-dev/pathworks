@@ -54,10 +54,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Typecheck core packages
-        run: |
-          pnpm --filter @cio/db build
-          pnpm --filter @cio/api build
-          pnpm --filter @cio/dashboard build
+        # Build dashboard plus its full upstream workspace graph (db, api, ui,
+        # email, utils, ...) via turbo so dependent dist/ outputs exist before
+        # downstream tsc runs. Plain `pnpm --filter X build` skips transitive
+        # workspace deps and fails with TS2307 (CI-1).
+        run: pnpm turbo run build --filter=@cio/dashboard...
 
   drizzle:
     name: Drizzle migration sanity

@@ -104,7 +104,7 @@
                       >Needs attention</span
                     >
                     <div class="mt-2 space-y-1 text-xs text-slate-500">
-                      {#each getAttentionReasons(participant.attentionReasons) as reason}
+                      {#each getAttentionReasons(participant.attentionReasons) as reason, reasonIndex (reasonIndex)}
                         <div>{reason}</div>
                       {/each}
                     </div>

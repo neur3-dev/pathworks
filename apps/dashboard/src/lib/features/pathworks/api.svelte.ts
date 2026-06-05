@@ -1,4 +1,5 @@
 import { BaseApiWithErrors, getRequestBaseUrl, pathworks, type InferResponseType } from '$lib/utils/services/api';
+import { SvelteURL } from 'svelte/reactivity';
 
 type LearningPathsRequest = (typeof pathworks.pathworks)['learning-paths']['$get'];
 type LearningPathsResponse = Extract<InferResponseType<LearningPathsRequest>, { success: true }>;
@@ -74,7 +75,7 @@ export class PathWorksApi extends BaseApiWithErrors {
 
   getCounselorProgressExportUrl(token: string, participantId: string) {
     const baseUrl = getRequestBaseUrl();
-    const url = new URL('/pathworks/counselor-progress-export', baseUrl || window.location.origin);
+    const url = new SvelteURL('/pathworks/counselor-progress-export', baseUrl || window.location.origin);
     url.searchParams.set('token', token);
     url.searchParams.set('participantId', participantId);
     return url.toString();

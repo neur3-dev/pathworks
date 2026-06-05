@@ -30,7 +30,7 @@ function getBaseMetaTags(url: URL) {
           width: 1920,
           height: 1080,
           secureUrl: '/pathworks-og.png',
-          type: 'image/jpeg'
+          type: 'image/png'
         }
       ]
     },
