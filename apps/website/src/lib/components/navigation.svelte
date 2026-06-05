@@ -11,6 +11,9 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import * as NavigationMenu from '@cio/ui/base/navigation-menu';
   import { cn } from '@cio/ui/tools';
+  import { dashboardUrl } from '$lib/config';
+
+  const loginUrl = dashboardUrl('/login');
 
   type ListItemProps = HTMLAttributes<HTMLAnchorElement> & {
     title: string;
@@ -204,7 +207,7 @@
     <div class="hidden! flex-row items-center justify-between gap-3 lg:flex!">
       <a
         class="text-sm font-medium transition-opacity duration-200 after:ml-2 after:content-['→'] hover:opacity-80"
-        href="https://pathworks-domain.invalid/login"
+        href={loginUrl}
       >
         Sign in
       </a>
@@ -275,7 +278,7 @@
         <div class="mt-5 flex flex-col items-start gap-y-2 border-t pt-5">
           <a
             class="w-full rounded-md px-4 py-4 text-left text-sm font-semibold transition-all duration-200 after:ml-2 after:content-['→'] hover:bg-gray-100 md:text-lg"
-            href="https://pathworks-domain.invalid/login"
+            href={loginUrl}
           >
             Sign in
           </a>

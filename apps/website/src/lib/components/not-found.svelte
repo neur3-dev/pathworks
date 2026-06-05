@@ -18,7 +18,7 @@
       return goto('/');
     }
 
-    return goto('https://pathworks-domain.invalid');
+    return goto('/');
   }
 </script>
 

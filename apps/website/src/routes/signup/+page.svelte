@@ -5,8 +5,9 @@
   import ClipboardList from '@lucide/svelte/icons/clipboard-list';
   import Heart from '@lucide/svelte/icons/heart';
   import User from '@lucide/svelte/icons/user';
+  import { dashboardUrl } from '$lib/config';
 
-  const DASHBOARD_SIGNUP = 'https://pathworks-domain.invalid/signup';
+  const DASHBOARD_SIGNUP = dashboardUrl('/signup');
 
   type SignupPath = {
     key: string;

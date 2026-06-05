@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { dashboardUrl } from '$lib/config';
+</script>
+
 <footer
   class="ui:border-border relative overflow-hidden border-t bg-[linear-gradient(to_top,#eef3fb_0%,#f8fafc_100%)] px-[5%] py-12 lg:px-[10%]"
 >
@@ -138,7 +142,7 @@
         <ul class="space-y-3">
           <li>
             <a
-              href="https://pathworks-domain.invalid/login"
+              href={dashboardUrl('/login')}
               class="ui:text-muted-foreground ui:hover:text-foreground text-sm transition-colors">Sign in</a
             >
           </li>
