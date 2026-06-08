@@ -1,6 +1,6 @@
 import { escapeSvelte, mdsvex } from 'mdsvex';
 
-import adapter from '@sveltejs/adapter-cloudflare';
+import adapter from '@sveltejs/adapter-node';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import path from 'path';

@@ -15,6 +15,7 @@
   "devDependencies": {
     "@cio/tsconfig": "workspace:*",
     "@sveltejs/adapter-cloudflare": "^7.0.0",
+    "@sveltejs/adapter-node": "^2.0.0",
     "@sveltejs/kit": "^2.5.27",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tailwindcss/typography": "^0.5.9",

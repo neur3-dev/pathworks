@@ -1,0 +1,24 @@
+FROM node:20.19.3-slim
+
+WORKDIR /app
+
+ENV CI=true
+
+RUN corepack enable && corepack prepare pnpm@10.19.0 --activate
+
+COPY . .
+
+RUN pnpm install --frozen-lockfile --ignore-scripts --filter @cio/website...
+RUN find . -name 'tsconfig.tsbuildinfo' -delete
+RUN NODE_OPTIONS="--max-old-space-size=6144" \
+    pnpm -r --filter @cio/website... build
+
+RUN test -f apps/website/build/index.js || (echo "ERROR: Website build output not found at apps/website/build/index.js" && exit 1)
+
+EXPOSE 3083
+
+ENV NODE_ENV=production \
+    PORT=3083
+
+WORKDIR /app/apps/website
+CMD ["node", "build/index.js"]
